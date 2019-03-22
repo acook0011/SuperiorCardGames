@@ -51,11 +51,11 @@ public class TexasHoldem
         for (int i = 0; i < river.size(); i++){
             check.add(river.get(i));
         }
-        Collections.sort(check);
+        Collections.sort(check, Collections.reverseOrder());
         // This whole 'Checking' section needs to be reworked
         // Booleans aren't going to work as well as I thought they would
         if (checkFourKind(check)){
-            System.out.println("You have a Four of a Kind!");
+            System.out.println("You have Four of a Kind!");
         }
         if (checkHouse(check)){
             System.out.println("You have a Full House!");
@@ -65,6 +65,15 @@ public class TexasHoldem
         }
         if (checkFlush(check)){
             System.out.println("You have a Flush!");
+        }
+        if (checkThreeKind(check)){
+            System.out.println("You have Three of a Kind!");
+        }
+        if (checkTwoPair(check)){
+            System.out.println("You have Two Pair!");
+        }
+        if (checkPair(check)){
+            System.out.println("You have a Pair!");
         }
     }
     
@@ -110,7 +119,7 @@ public class TexasHoldem
     public boolean checkStraight(ArrayList<Card> x){
         int count = 1; 
         for (int i = 1; i < x.size(); i++){
-            if (x.get(i).getRank() == x.get(i-1).getRank()-1){
+            if (x.get(i).getRank() == x.get(i-1).getRank()+1){
                 count++;
             }else{ // Resets
                 count = 1;
@@ -167,11 +176,11 @@ public class TexasHoldem
                     count++;
                 }
                 if (count == 2){
-                    x.remove(i);
-                    x.remove(j);
-                    i--;
-                    j = x.size()-1;
-                    pcount++;
+                    //x.remove(i);
+                    //x.remove(j);
+                    //i--;
+                    //j = x.size()-1;
+                    //pcount++;
                 }
             }
             count = 0;

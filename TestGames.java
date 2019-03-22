@@ -13,5 +13,9 @@ public class TestGames
         Holdem.getHands();
         Holdem.dealRiver();
         Holdem.checkOdds();
+        
+        Blackjack Jack = new Blackjack();
+        Jack.dealHand();
+        
     }
 }
