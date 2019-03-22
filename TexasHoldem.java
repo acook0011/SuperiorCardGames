@@ -16,13 +16,12 @@ public class TexasHoldem
         init();
     }
     
-    private void init()
-    {
-        deck = new Deck();
-	deck.shuffle();
-	p1Hand = new ArrayList<Card>(2);
-	p2Hand = new ArrayList<Card>(2);
-	river = new ArrayList<Card>(5);
+    private void init(){
+    deck = new Deck();
+    deck.shuffle();
+    p1Hand = new ArrayList<Card>(2);
+    p2Hand = new ArrayList<Card>(2);
+    river = new ArrayList<Card>(5);
     }
     
     public void dealHand(){
@@ -35,11 +34,144 @@ public class TexasHoldem
     }
     
     public void dealRiver(){
-        river.add(deck.deal());
-        river.add(deck.deal());
-        river.add(deck.deal());
-        river.add(deck.deal());
-        river.add(deck.deal());
+        for (int i = 0; i <= 5; i++){
+            river.add(deck.deal());
+        }
+        System.out.println(river);
+    }
+    
+    public void checkOdds(){
+        ArrayList<Card> check = new ArrayList<Card>(7);
+        // Adds Hand
+        for (int i = 0; i < p1Hand.size(); i++){
+            check.add(p1Hand.get(i));
+        }
+        // Adds River
+        for (int i = 0; i < river.size(); i++){
+            check.add(river.get(i));
+        }
+        Collections.sort(check);
+        ;
+    }
+    
+    // Four of a Kind
+    public boolean checkFourKind(ArrayList<Card> x){
+        int count = 0;
+        for (int i = 0; i < x.size(); i++){
+            for (int j = 0; j < x.size(); j++){
+                if (x.get(i).getRank() == x.get(j).getRank()){
+                    count++;
+                }
+                if (count == 4){
+                    return true;
+                }
+            }
+            count = 1;
+        }
+        return false;
+    }
+    
+    // Straight
+    public boolean checkStraight(ArrayList<Card> x){
+        int count = 1; 
+        for (int i = 1; i < x.size(); i++){
+            if (x.get(i).getRank() == x.get(i-1).getRank()-1){
+                count++;
+            }else{ // Resets
+                count = 1;
+            }
+        }
+        if (count >= 5){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    // Flush
+    public boolean checkFlush(ArrayList<Card> x){
+        int count = 1;
+        for (int i = 1; i < x.size(); i++){
+            if (x.get(i).getSuit().equals(x.get(i-1).getSuit())){
+                count++;
+            }else{ // Resets
+                count = 1;
+            }
+        }
+        if (count >= 5){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    // Three of a Kind
+    public boolean checkThreeKind(ArrayList<Card> x){
+        int count = 0;
+        for (int i = 0; i < x.size(); i++){
+            for (int j = 0; j < x.size(); j++){
+                if (x.get(i).getRank() == x.get(j).getRank()){
+                    count++;
+                }
+                if (count == 3){
+                    return true;
+                }
+            }
+            count = 1;
+        }
+        return false;
+    }
+    
+    // Two-Pair
+    public boolean checkTwoPair(ArrayList<Card> x){
+        int count = 0;
+        int pcount = 0;
+        for (int i = 0; i < x.size(); i++){
+            for (int j = 0; j < x.size(); j++){
+                if (x.get(i).getRank() == x.get(j).getRank()){
+                    count++;
+                }
+                if (count == 2){
+                    x.remove(i);
+                    x.remove(j);
+                    i--;
+                    j = x.size()-1;
+                    pcount++;
+                }
+            }
+            count = 1;
+        }
+        if (pcount == 2){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    // Pair
+    public boolean checkPair(ArrayList<Card> x){
+        int count = 0;
+        for (int i = 0; i < x.size(); i++){
+            for (int j = 0; j < x.size(); j++){
+                if (x.get(i).getRank() == x.get(j).getRank()){
+                    count++;
+                }
+                if (count == 2){
+                    return true;
+                }
+            }
+            count = 1;
+        }
+        return false;
+    }
+    
+    // 'Get' methods
+    public void getHands(){
+        System.out.println(p1Hand);
+        System.out.println(p2Hand);
+    }
+    
+    public void getRiver(){
         System.out.println(river);
     }
 }
