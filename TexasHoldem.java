@@ -12,16 +12,17 @@ public class TexasHoldem
     private ArrayList<Card> p1Hand;
     private ArrayList<Card> p2Hand;
     private ArrayList<Card> river;
+    
     public TexasHoldem(){
         init();
     }
     
     private void init(){
-    deck = new Deck();
-    deck.shuffle();
-    p1Hand = new ArrayList<Card>(2);
-    p2Hand = new ArrayList<Card>(2);
-    river = new ArrayList<Card>(5);
+        deck = new Deck();
+        deck.shuffle();
+        p1Hand = new ArrayList<Card>(2);
+        p2Hand = new ArrayList<Card>(2);
+        river = new ArrayList<Card>(5);
     }
     
     public void dealHand(){
@@ -51,7 +52,20 @@ public class TexasHoldem
             check.add(river.get(i));
         }
         Collections.sort(check);
-        ;
+        // This whole 'Checking' section needs to be reworked
+        // Booleans aren't going to work as well as I thought they would
+        if (checkFourKind(check)){
+            System.out.println("You have a Four of a Kind!");
+        }
+        if (checkHouse(check)){
+            System.out.println("You have a Full House!");
+        }
+        if (checkStraight(check)){
+            System.out.println("You have a Straight!");
+        }
+        if (checkFlush(check)){
+            System.out.println("You have a Flush!");
+        }
     }
     
     // Four of a Kind
@@ -75,6 +89,7 @@ public class TexasHoldem
     public boolean checkHouse(ArrayList<Card> x){
         int count = 0;
         for (int i = 0; i < x.size(); i++){
+            count = 0;
             for (int j = 0; j < x.size(); j++){
                 if (x.get(i).getRank() == x.get(j).getRank()){
                     count++;
@@ -84,10 +99,13 @@ public class TexasHoldem
                     j = x.size();
                 }
             }
-            count = 1;
+        }
+        if (count == 3){
+            
         }
         return false;
     }
+    
     // Straight
     public boolean checkStraight(ArrayList<Card> x){
         int count = 1; 
