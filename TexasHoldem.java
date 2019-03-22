@@ -66,11 +66,28 @@ public class TexasHoldem
                     return true;
                 }
             }
-            count = 1;
+            count = 0;
         }
         return false;
     }
     
+    // Full House
+    public boolean checkHouse(ArrayList<Card> x){
+        int count = 0;
+        for (int i = 0; i < x.size(); i++){
+            for (int j = 0; j < x.size(); j++){
+                if (x.get(i).getRank() == x.get(j).getRank()){
+                    count++;
+                }
+                if (count == 3){
+                    i = x.size();
+                    j = x.size();
+                }
+            }
+            count = 1;
+        }
+        return false;
+    }
     // Straight
     public boolean checkStraight(ArrayList<Card> x){
         int count = 1; 
@@ -117,7 +134,7 @@ public class TexasHoldem
                     return true;
                 }
             }
-            count = 1;
+            count = 0;
         }
         return false;
     }
@@ -139,7 +156,7 @@ public class TexasHoldem
                     pcount++;
                 }
             }
-            count = 1;
+            count = 0;
         }
         if (pcount == 2){
             return true;
@@ -160,7 +177,7 @@ public class TexasHoldem
                     return true;
                 }
             }
-            count = 1;
+            count = 0;
         }
         return false;
     }
