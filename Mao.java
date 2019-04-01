@@ -8,7 +8,8 @@ public class Mao
         //Let's get ready!
         Scanner searcher = new Scanner(System.in);
         Deck deck =  new Deck();
-        Card ontop = deck.deal();
+        ArrayList<Card> pile = new ArrayList<Card>();
+        pile.add(deck.deal());
         Boolean jibes = false;
         Boolean gameOn = true;
         int choice;
@@ -33,18 +34,23 @@ public class Mao
         while(gameOn){
             //Alice thinks...
             jibes = false;
+            //Alice determines whether what just happened was legal...
+            for(int i=0; i<ahypos.size(); i++){
+                
+            }
             //Alice figures out whose turn it is...
             for(int i=0; i<ahypos.size(); i++){
                 
             }
             while(!jibes){
             }
+            //Alice chooses a card to play...
+            
             //Bob thinks...
     
             //Charlie thinks...
     
             //Human thinks...
-            
             System.out.println("What would like to do?");
             System.out.println("Type a number and then press enter.");
             System.out.println("0 - Do nothing");
@@ -70,6 +76,24 @@ public class Mao
                         System.out.println("2 - Playing an incorrect card");
                         System.out.println("3 - Drawing out of turn");
                         System.out.println("4 - False judgement");
+                        switch (searcher.nextInt()){
+                            case 1: switch (criminal){
+                                        case 1: ahand.add(pile.get(pile.size()-1));
+                                            ahand.add(deck.deal());
+                                            case 2: bhand.add(pile.get(pile.size()-1));
+                                            bhand.add(deck.deal());
+                                            case 3: chand.add(pile.get(pile.size()-1));
+                                            chand.add(deck.deal());
+                            }
+                            case 2: switch (criminal){
+                                        case 1: ahand.add(pile.get(pile.size()-1));
+                                            ahand.add(deck.deal());
+                                            case 2: bhand.add(pile.get(pile.size()-1));
+                                            bhand.add(deck.deal());
+                                            case 3: chand.add(pile.get(pile.size()-1));
+                                            chand.add(deck.deal());
+                                    }
+                        }
             }
         }
     }
