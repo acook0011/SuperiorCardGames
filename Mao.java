@@ -24,6 +24,8 @@ public class Mao
         ArrayList<Integer> ahypos = new ArrayList<Integer>();
         ArrayList<Integer> bhypos = new ArrayList<Integer>();
         ArrayList<Integer> chypos = new ArrayList<Integer>();
+        
+        //Dealing the cards...
         for(int i = 0; i<7; i++){
             ahand.add(deck.deal());
             bhand.add(deck.deal());
@@ -31,6 +33,7 @@ public class Mao
             hhand.add(deck.deal());
         }
         
+        //Here is one round...
         while(gameOn){
             //Alice thinks...
             jibes = false;
@@ -79,19 +82,19 @@ public class Mao
                         switch (searcher.nextInt()){
                             case 1: switch (criminal){
                                         case 1: ahand.add(pile.get(pile.size()-1));
-                                            ahand.add(deck.deal());
-                                            case 2: bhand.add(pile.get(pile.size()-1));
-                                            bhand.add(deck.deal());
-                                            case 3: chand.add(pile.get(pile.size()-1));
-                                            chand.add(deck.deal());
+                                        ahand.add(deck.deal());
+                                        case 2: bhand.add(pile.get(pile.size()-1));
+                                        bhand.add(deck.deal());
+                                        case 3: chand.add(pile.get(pile.size()-1));
+                                        chand.add(deck.deal());
                             }
                             case 2: switch (criminal){
                                         case 1: ahand.add(pile.get(pile.size()-1));
-                                            ahand.add(deck.deal());
-                                            case 2: bhand.add(pile.get(pile.size()-1));
-                                            bhand.add(deck.deal());
-                                            case 3: chand.add(pile.get(pile.size()-1));
-                                            chand.add(deck.deal());
+                                        ahand.add(deck.deal());
+                                        case 2: bhand.add(pile.get(pile.size()-1));
+                                        bhand.add(deck.deal());
+                                        case 3: chand.add(pile.get(pile.size()-1));
+                                        chand.add(deck.deal());
                                     }
                         }
             }
