@@ -17,7 +17,7 @@ public class Blackjack
         deck = new Deck();
         p1 = new ArrayList<Card>();
         comp = new ArrayList<Card>();
-        
+        Scanner reader = new Scanner(System.in);
         // Deals initial hands
         deck.shuffle();
         p1.add(deck.deal());
@@ -25,21 +25,25 @@ public class Blackjack
         comp.add(deck.deal());
         comp.add(deck.deal());
         
-        System.out.println("You were dealt: \n" +
-                           "- " + p1.get(0) + "\n" +
-                           "- " + p1.get(1) + "\n");
         int score = value(p1.get(0)) + value(p1.get(1));
-        System.out.println(score(p1));
+        System.out.println(score);
         
         
         Boolean over = false;
         Boolean playing = true;
+        int count = 0;
         int totalAce = 0;
         while (playing){
+          // Displays current hand 
+          System.out.println("Your current hand: ");
+          for (int i = 0; i < p1.size(); i++){
+              System.out.println("- " + p1.get(i));
+          }
+          System.out.println("Score: " + score);
+          
           // Checks if 21
           if (score == 21){
               playing = false;
-              System.out.println("You got 21!");
           }
           // Checks if over 21
            else if (score > 21){
@@ -58,14 +62,32 @@ public class Blackjack
               // If still over 21 after accounting for Aces
               if (score > 21){
                   playing = false;
-                  System.out.println("You B U S T E D !");
               }
           }
-          // 
+          // Continues to Play
           else {
-              
+              System.out.println("Hit? [Y/N]");
+              Boolean valid = false;
+              while (!valid){
+                  String reply = reader.nextLine();
+                  if (reply.toUpperCase().equals("Y")){
+                      p1.add(deck.deal());
+                      score += value(p1.get(count+2));
+                      valid = true;
+                  } else if (reply.toUpperCase().equals("N")){
+                      valid = true;
+                      playing = false;
+                  } else {
+                      System.out.println("Respond with Y or N.");
+                  }
+              }
           }
+          
+          
+          count++;
         }
+        
+        
     }
     
     public static int score(ArrayList<Card> hand){
