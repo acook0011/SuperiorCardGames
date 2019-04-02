@@ -1,11 +1,11 @@
 
 /**
- * Write a description of class TestGames here.
+ * Write a description of class TestJack here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class TestGames
+public class TestJack
 {
     public static void main(String [] args){
         Blackjack.Jack();

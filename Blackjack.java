@@ -27,7 +27,8 @@ public class Blackjack
         
         int score = value(p1.get(0)) + value(p1.get(1));
         System.out.println(score);
-        
+        System.out.println("Dealer's visible hand: \n" + 
+                           "- " + comp.get(1));
         
         Boolean over = false;
         Boolean playing = true;
@@ -87,7 +88,53 @@ public class Blackjack
           count++;
         }
         
-        
+        // Computer/Dealer's turn
+        int scoreD = value(comp.get(0)) + value(comp.get(1));
+        over = false;
+        playing = true;
+        count = 0;
+        totalAce = 0;
+        while (playing){
+          // Displays current hand 
+          System.out.println("Your current hand: ");
+          for (int i = 0; i < comp.size(); i++){
+              System.out.println("- " + comp.get(i));
+          }
+          System.out.println("Score: " + scoreD);
+          
+          // Checks if 21
+          if (scoreD == 21){
+              playing = false;
+          }
+          // Checks if over 21
+           else if (scoreD > 21){
+              // Checks if there are Aces
+              int aceCount = 0;
+              for (int i = 0; i < p1.size(); i++){
+                  if (p1.get(i).getRank() == 1){
+                      aceCount++;
+                      if (totalAce < aceCount){
+                          totalAce++;
+                          scoreD -= 10;
+                          i = p1.size();
+                      }
+                  }
+              }
+              // If still over 21 after accounting for Aces
+              if (scoreD > 21){
+                  playing = false;
+              }
+          }
+          // Continues to Play
+          else if (scoreD >= 17){
+              System.out.println("Dealer stays.");
+              playing = false;
+          } else{
+              comp.add(deck.deal());
+          }
+          
+          count++;
+        }
     }
     
     public static int score(ArrayList<Card> hand){
