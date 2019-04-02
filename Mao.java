@@ -148,10 +148,22 @@ public class Mao
                     return str;
             case 2: str += " drew a card.";
                     return str;
-            case 3: str += " accused";
+            case 3: str += " penalized";
                     switch ((move/100)%100){
                         case 1: str += " you";
-                        case 2: str +=
+                        case 2: str += " Alice";
+                        case 3: str += " Bob";
+                        case 4: str += " Charlie";
+                    }
+                    switch (move%10){
+                        case 1: str += " for playing out of turn.";
+                        case 2: str += " for playing an incorrect card.";
+                        case 3: str += " for drawing out of turn.";
+                        case 4: str += " for false judgement.";
+                    }
+                    return str;
+            default: return "Sorry.";
         }
     }
 }
+
