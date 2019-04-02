@@ -11,7 +11,7 @@ import java.util.Scanner;
  * @version April Fools Day 2019
  */
 
-public class GabeHoldsEmToo
+public class HoldEm
 {
    // I use arrayLists and arrays so that I can keep the number
    // of players dynamic
@@ -47,7 +47,7 @@ public class GabeHoldsEmToo
    /** default constructor that makes a new game
     * 
     */
-   public GabeHoldsEmToo()
+   public HoldEm()
    {
        this(2);
    }
@@ -57,7 +57,7 @@ public class GabeHoldsEmToo
     *  default number of players is 2, one human and one computer
     *  numPlayers cannot be greater than 8 or less than 2
     */
-   public GabeHoldsEmToo(int i) 
+   public HoldEm(int i) 
    {
        this.numPlayers = i;
        
