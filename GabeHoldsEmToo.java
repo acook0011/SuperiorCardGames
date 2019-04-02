@@ -44,8 +44,8 @@ public class GabeHoldsEmToo
        System.out.println("Welcome to Texas Hold'Em");
        while(true) 
        {
-           System.out.println("You want to start with" + numPlayers + " players, correct?");
-           if(input.nextLine().substring(0,1).equalsIgnoreCase("n"))
+           System.out.println("Would you like to start with " + numPlayers + " players?");
+           if(input.next().substring(0,1).equalsIgnoreCase("n"))
            {
                System.out.println("Terribly sorry for the mix-up, how many players would you like?");
                this.numPlayers = input.nextInt();
@@ -66,9 +66,10 @@ public class GabeHoldsEmToo
        }
        
        while(true) {
+           money = new ArrayList<Integer>(numPlayers);
            System.out.println("Okay, now that we have " + numPlayers + " players, should they all");
            System.out.println("start with the same amount of chips (y/n)");
-           if(input.nextLine().substring(0,1).equalsIgnoreCase("n"))
+           if(input.next().substring(0,1).equalsIgnoreCase("n"))
            {
                for(int j = 0; j < numPlayers; j++)
                {
