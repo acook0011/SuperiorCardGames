@@ -122,12 +122,36 @@ public class Mao
             case 3: str += "Bob";
             case 4: str += "Charle";
         }
-        switch(move/10000%10){
+        switch((move/1000)%10){
             case 1: str += " played";
+                    switch(move%100){
+                        case 1: str += " an ace";
+                        case 2: str += " a two";
+                        case 3: str += " a three";
+                        case 4: str += " a four";
+                        case 5: str += " a five";
+                        case 6: str += " a six";
+                        case 7: str += " a seven";
+                        case 8: str += " an eight";
+                        case 9: str += " a nine";
+                        case 10: str += " a ten";
+                        case 11: str += " a jack";
+                        case 12: str += " a queen";
+                        case 13: str += " a king";
+                    }
+                    switch((move/100)%100){
+                        case 1: str += " of clubs.";
+                        case 2: str += " of diamonds.";
+                        case 3: str += " of hearts.";
+                        case 4: str += " of spades.";
+                    }
+                    return str;
             case 2: str += " drew a card.";
                     return str;
             case 3: str += " accused";
-            
+                    switch ((move/100)%100){
+                        case 1: str += " you";
+                        case 2: str +=
         }
     }
 }
