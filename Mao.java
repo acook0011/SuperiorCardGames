@@ -166,5 +166,48 @@ public class Mao
             default: return "Sorry.";
         }
     }
+    public static String cardType(int type){
+        String str = "";
+        switch (type/100){
+            case 1: switch (type%10){
+                        case 1: str += " a red card"; break;
+                        case 2: str += " a black card"; break;
+            }
+            return str;
+            case 2: switch (type%10){
+                        case 1: str += " a club"; break;
+                        case 2: str += " a diamond"; break;
+                        case 3: str += " a heart"; break;
+                        case 4: str += " a spade"; break;
+            }
+            return str;
+            case 3: str += " a numbered card with rank greater than";
+                    switch ((type/10)%10){
+                        case 1: str += " 1"; break;
+                        case 2: str += " 2"; break;
+                        case 3: str += " 3"; break;
+                        case 4: str += " 4"; break;
+                        case 5: str += " 5"; break;
+                        case 6: str += " 6"; break;
+                        case 7: str += " 7"; break;
+                        case 8: str += " 8"; break;
+                        case 9: str += " 9"; break;   
+                    }
+                    str += " and less than";
+                    switch(type%10){
+                        case 0: str += " 10";
+                        case 1: str += " 11";
+                        case 3: str += " 3";
+                        case 4: str += " 4";
+                        case 5: str += " 5";
+                        case 6: str += " 6";
+                        case 7: str += " 7";
+                        case 8: str += " 8";
+                        case 9: str += " 9";
+                    }
+                    return str;
+        }
+        return "wip";
+    }
 }
 
