@@ -16,10 +16,33 @@ public class GabeHoldsEmToo
    // I use arrayLists and arrays so that I can keep the number
    // of players dynamic
    private ArrayList<Card[]> hands;         // keeps track of all the hands
+   
    private ArrayList<Integer> money;        // keeps track of all the money
+   
    private int numPlayers;                  // keeps track of the number of players
+   
    Scanner input = new Scanner(System.in);  // scanner for reading user input throughout
                                             // the game
+                                            
+   private Deck d;                          // the deck of the game
+   
+   private Card[] river;                    // the river that is dealt out and any
+                                            // player can use and play off of
+                                            
+   private int dealer;                      // integer representation of the dealer
+   
+   private int turn;                        // represents which player's turn it is
+   
+   private int blind;                       // represents the value of the big blind
+   
+   private Random randy = new Random();     // used for random chance stuff
+   
+   private boolean[] allIn;                 // keeps track of whether each player
+                                            // is all in, iniitalized to all false
+                                            // at the beginning of every hand
+   
+   private boolean[] folded;                // keeps track of whether each player
+                                            // has folded during each hand
    
    /** default constructor that makes a new game
     * 
@@ -44,8 +67,8 @@ public class GabeHoldsEmToo
        System.out.println("Welcome to Texas Hold'Em");
        while(true) 
        {
-           System.out.println("You want to start with" + numPlayers + " players, correct?");
-           if(input.nextLine().substring(0,1).equalsIgnoreCase("n"))
+           System.out.println("Would you like to start with " + numPlayers + " players?");
+           if(input.next().substring(0,1).equalsIgnoreCase("n"))
            {
                System.out.println("Terribly sorry for the mix-up, how many players would you like?");
                this.numPlayers = input.nextInt();
@@ -66,9 +89,10 @@ public class GabeHoldsEmToo
        }
        
        while(true) {
+           money = new ArrayList<Integer>(numPlayers);
            System.out.println("Okay, now that we have " + numPlayers + " players, should they all");
            System.out.println("start with the same amount of chips (y/n)");
-           if(input.nextLine().substring(0,1).equalsIgnoreCase("n"))
+           if(input.next().substring(0,1).equalsIgnoreCase("n"))
            {
                for(int j = 0; j < numPlayers; j++)
                {
@@ -108,13 +132,66 @@ public class GabeHoldsEmToo
            System.out.println("Is this correct?");
            if(input.next().substring(0,1).equalsIgnoreCase("n"))
                 System.out.println("Okay, we will start over!");
-           else
-            break;
+           
+           System.out.println();
+           System.out.println("What would you like the big blind value to be?");
+           System.out.println("(This value must be even and greater than 0)");
+           blind = input.nextInt();
+           while(blind < 2 || blind%2!=0)
+           {
+               System.out.println("That value was invalid, please enter an even number greater");
+               System.out.println("than 0");
+               blind = input.nextInt();
+           }
+           
        }
        //END INIT MESSAGE
        
-       
+       hands = new ArrayList<Card[]>(numPlayers);
+       d = new Deck();
+       allIn = new boolean[numPlayers];
+       folded = new boolean[numPlayers];
+       dealer = randy.nextInt(numPlayers);
+       this.play();
    }
+   
+   public void play() {
+       // reset and shuffle the deck of cards
+       d.reset();
+       d.shuffle();
+       
+       for(int i = 0; i < numPlayers; i++)
+       {
+           allIn[i] = false;
+           folded[i] = false;
+       }
+       
+       // this method will shift dealer up, or if it's about
+       // to spill over it will reset back to 0
+       this.rotateDealer();
+       
+       // this will print out who is currently big blind, small blind
+       // and dealer
+       this.printPositions();
+       
+       // place initial bets for small blinds and big blinds
+       // this method needs to check for all ins
+       this.placeBlinds();
+       
+       // deal all of the cards
+       this.dealHands();
+       
+       // does the first round of betting
+       this.firstRoundBet();
+       
+       // deal and reveal first 3 cards;
+       this.dealFlop();
+       
+       // does second round of betting
+       this.bet();
+       
+       
+    }
    
    
    
