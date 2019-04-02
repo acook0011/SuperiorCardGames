@@ -1,6 +1,7 @@
 import java.util.*;
 /**
  * Mao
+ * Gavin's playhouse
  */
 public class Mao
 {
@@ -117,49 +118,49 @@ public class Mao
     public static String stringMove(int move){
         String str = "";
         switch(move/10000){
-            case 1: str += "You";
-            case 2: str += "Alice";
-            case 3: str += "Bob";
-            case 4: str += "Charle";
+            case 1: str += "You"; break;
+            case 2: str += "Alice"; break;
+            case 3: str += "Bob"; break;
+            case 4: str += "Charle"; break;
         }
         switch((move/1000)%10){
             case 1: str += " played";
                     switch(move%100){
-                        case 1: str += " an ace";
-                        case 2: str += " a two";
-                        case 3: str += " a three";
-                        case 4: str += " a four";
-                        case 5: str += " a five";
-                        case 6: str += " a six";
-                        case 7: str += " a seven";
-                        case 8: str += " an eight";
-                        case 9: str += " a nine";
-                        case 10: str += " a ten";
-                        case 11: str += " a jack";
-                        case 12: str += " a queen";
-                        case 13: str += " a king";
+                        case 1: str += " an ace"; break;
+                        case 2: str += " a two"; break;
+                        case 3: str += " a three"; break;
+                        case 4: str += " a four"; break;
+                        case 5: str += " a five"; break;
+                        case 6: str += " a six"; break;
+                        case 7: str += " a seven"; break;
+                        case 8: str += " an eight"; break;
+                        case 9: str += " a nine"; break;
+                        case 10: str += " a ten"; break;
+                        case 11: str += " a jack"; break;
+                        case 12: str += " a queen"; break;
+                        case 13: str += " a king"; break;
                     }
-                    switch((move/100)%100){
-                        case 1: str += " of clubs.";
-                        case 2: str += " of diamonds.";
-                        case 3: str += " of hearts.";
-                        case 4: str += " of spades.";
+                    switch((move/100)%10){
+                        case 1: str += " of clubs."; break;
+                        case 2: str += " of diamonds."; break;
+                        case 3: str += " of hearts."; break;
+                        case 4: str += " of spades."; break;
                     }
                     return str;
             case 2: str += " drew a card.";
                     return str;
             case 3: str += " penalized";
-                    switch ((move/100)%100){
-                        case 1: str += " you";
-                        case 2: str += " Alice";
-                        case 3: str += " Bob";
-                        case 4: str += " Charlie";
+                    switch ((move/100)%10){
+                        case 1: str += " you"; break;
+                        case 2: str += " Alice"; break;
+                        case 3: str += " Bob"; break;
+                        case 4: str += " Charlie"; break;
                     }
                     switch (move%10){
-                        case 1: str += " for playing out of turn.";
-                        case 2: str += " for playing an incorrect card.";
-                        case 3: str += " for drawing out of turn.";
-                        case 4: str += " for false judgement.";
+                        case 1: str += " for playing out of turn."; break;
+                        case 2: str += " for playing an incorrect card."; break;
+                        case 3: str += " for drawing out of turn."; break;
+                        case 4: str += " for false judgement."; break;
                     }
                     return str;
             default: return "Sorry.";
