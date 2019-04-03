@@ -57,6 +57,7 @@ public class Blackjack
                           totalAce++;
                           score -= 10;
                           i = p1.size();
+                          count--;
                       }
                   }
               }
@@ -73,18 +74,18 @@ public class Blackjack
                   String reply = reader.nextLine();
                   if (reply.toUpperCase().equals("Y")){
                       p1.add(deck.deal());
-                      score += value(p1.get(count+2));
+                      score += value(p1.get(p1.size()-1));
                       valid = true;
                   } else if (reply.toUpperCase().equals("N")){
-                      valid = true;
                       playing = false;
+                      valid = true;
                   } else {
                       System.out.println("Respond with Y or N.");
                   }
               }
           }
           
-          
+          System.out.print('\u000C');
           count++;
         }
         
@@ -96,7 +97,7 @@ public class Blackjack
         totalAce = 0;
         while (playing){
           // Displays current hand 
-          System.out.println("Your current hand: ");
+          System.out.println("Dealer's current hand: ");
           for (int i = 0; i < comp.size(); i++){
               System.out.println("- " + comp.get(i));
           }
@@ -117,6 +118,7 @@ public class Blackjack
                           totalAce++;
                           scoreD -= 10;
                           i = p1.size();
+                          count--;
                       }
                   }
               }
@@ -125,14 +127,18 @@ public class Blackjack
                   playing = false;
               }
           }
-          // Continues to Play
-          else if (scoreD >= 17){
+          // Stops hitting
+          else if (scoreD >= 17 || scoreD > score){
               System.out.println("Dealer stays.");
               playing = false;
-          } else{
+          } 
+          // Continues playing
+          else{
               comp.add(deck.deal());
+              scoreD += value(comp.get(comp.size()-1));
           }
           
+          System.out.print('\u000C');
           count++;
         }
     }
