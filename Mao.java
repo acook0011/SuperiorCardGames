@@ -115,6 +115,7 @@ public class Mao
             default: return 0;
         }
     }
+    //Translating a 5-digit integer representing a move to a string.
     public static String stringMove(int move){
         String str = "";
         switch(move/10000){
@@ -166,21 +167,22 @@ public class Mao
             default: return "Sorry.";
         }
     }
+    //Translating a 3-digit integer representing a type of card to a string.
     public static String cardType(int type){
         String str = "";
         switch (type/100){
             case 1: switch (type%10){
                         case 1: str += " a red card"; break;
                         case 2: str += " a black card"; break;
-            }
-            return str;
+                    }
+                    return str;
             case 2: switch (type%10){
                         case 1: str += " a club"; break;
                         case 2: str += " a diamond"; break;
                         case 3: str += " a heart"; break;
                         case 4: str += " a spade"; break;
-            }
-            return str;
+                    }
+                return str;
             case 3: str += " a numbered card with rank greater than";
                     switch ((type/10)%10){
                         case 1: str += " 1"; break;
@@ -206,8 +208,56 @@ public class Mao
                         case 9: str += " 9";
                     }
                     return str;
+            case 4: str += " a numbered card with rank divisible by";
+                    switch (type%10){
+                        case 0: str += " 0"; break;
+                        case 1: str += " 1"; break;
+                        case 2: str += " 2"; break;
+                        case 3: str += " 3"; break;
+                        case 4: str += " 4"; break;
+                        case 5: str += " 5"; break;
+                        case 6: str += " 6"; break;
+                        case 7: str += " 7"; break;
+                        case 8: str += " 8"; break;
+                        case 9: str += " 9"; break;
+                    }
+                    return str;
+            case 5: str += " a face card";
+                    return str;
+            case 6: str += " an ace";
+            case 7: str += " a king";
+                    return str;
+            case 8: str += " a queen";
+                    return str;
+            case 9: str += " a jack";
+                    return str;
+            default: return "Sorry.";
         }
-        return "wip";
+    }
+    //Translating a 10-digit integer representing a rule to a string.
+    public static String stringRule(int rule){
+        String str = "Rule created by";
+        switch (rule/1000000000){
+            case 1: str += " Human:"; break;
+            case 2: str += " Alice:"; break;
+            case 3: str += " Bob:"; break;
+            case 4: str += " Charlie:"; break;
+        }
+        switch ((rule/100000000)%10){
+            case 0: switch((rule/10000000)%10){
+                        case 1:str += " Skip the turn of 1 player whenever"; break;
+                        default:str += " Skip the turn of "+(rule/10000000)%10+" players whenever"; break;
+            }
+            switch ((rule/1000000)%10){
+                case 1: str += cardType((rule%1000))+" is played.";
+                        return str;
+                case 2: str += cardType((rule/1000)%1000000)+" is followed by"+cardType((rule%1000))+".";
+                        return str;
+            }
+            case 1: str += " Now,"+cardType(((rule%1000000)/1000))+" can only be followed by"+cardType((rule%1000))+".";
+                    return str;
+        }
+        return "Sorry.";
     }
 }
 
