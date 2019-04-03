@@ -43,6 +43,8 @@ public class HoldEm
    
    private boolean[] folded;                // keeps track of whether each player
                                             // has folded during each hand
+                                            
+   private int pot;
    
    /** default constructor that makes a new game
     * 
@@ -132,7 +134,9 @@ public class HoldEm
            System.out.println("Is this correct?");
            if(input.next().substring(0,1).equalsIgnoreCase("n"))
                 System.out.println("Okay, we will start over!");
-           
+           else break;
+        }
+        
            System.out.println();
            System.out.println("What would you like the big blind value to be?");
            System.out.println("(This value must be even and greater than 0)");
@@ -143,8 +147,8 @@ public class HoldEm
                System.out.println("than 0");
                blind = input.nextInt();
            }
-           
-       }
+           System.out.println("Okay, blinds are " + blind + ". (Hit [enter] to continue");
+           input.nextLine();
        //END INIT MESSAGE
        
        hands = new ArrayList<Card[]>(numPlayers);
@@ -153,9 +157,10 @@ public class HoldEm
        folded = new boolean[numPlayers];
        dealer = randy.nextInt(numPlayers);
        this.play();
-   }
+    }
    
    public void play() {
+       System.out.println();
        // reset and shuffle the deck of cards
        d.reset();
        d.shuffle();
@@ -165,34 +170,113 @@ public class HoldEm
            allIn[i] = false;
            folded[i] = false;
        }
+       pot = 0;
        
        // this method will shift dealer up, or if it's about
        // to spill over it will reset back to 0
-       this.rotateDealer();
-       
+       dealer = this.rotateDealer(1);
+
        // this will print out who is currently big blind, small blind
        // and dealer
        this.printPositions();
-       
+           
        // place initial bets for small blinds and big blinds
        // this method needs to check for all ins
        this.placeBlinds();
        
+       /*
        // deal all of the cards
        this.dealHands();
        
-       // does the first round of betting
-       this.firstRoundBet();
-       
-       // deal and reveal first 3 cards;
-       this.dealFlop();
-       
-       // does second round of betting
-       this.bet();
-       
-       
+       while(true) {
+           // does the first round of betting
+           this.firstRoundBet();
+           
+           // deal and reveal first 3 cards;
+           this.deal(3);
+           
+           // does second round of betting
+           this.bet();
+           
+           // deal the next card and reveal them all to this point
+           this.deal(1);
+           
+           // does third round of betting
+           this.bet();
+           
+           // deal the last card and reveal them all to this point
+           this.deal(1);
+           
+           // does last round of betting
+           this.bet();
+           
+           // reveals the non-folded cards
+           this.reveal();
+           
+           // judges the relative hand strength and reveals the winner
+           this.judge();
+           
+           // assigns the pot to the winner
+           this.givePot();
+           
+           // reveals post-game menu
+           this.revealPostGameMenu();
+        }
+        */
+        
+    }
+    
+    private int rotateDealer(int i)
+    {
+        return ((dealer+i) % numPlayers);
+    }
+    
+    
+    private void printPositions()
+    {
+        System.out.println("The dealer is " + getDName());
+        System.out.println("Small blind is " + getSBName());
+        System.out.println("Big blind is " + getBBName());
+    }
+    
+    // these next three methods for for getting the "name" of
+    // the dealer, small blind, and big blind
+    private String getDName() {
+        return printPossibleHuman(rotateDealer(0));
+    }
+    
+    private String getSBName() {
+        return printPossibleHuman(rotateDealer(1));
+    }
+    
+    private String getBBName() {
+        return printPossibleHuman(rotateDealer(2));
+    }
+    
+    // these next three methods are for getting the "index" of
+    // the dealer, small blind, and big blind
+    private int getDIndex()
+    {
+        return dealer;
+    }
+    
+    private int getSBIndex()
+    {
+        return rotateDealer(1);
+    }
+    
+    private int getBBIndex()
+    {
+        return rotateDealer(2);
+    }   
+
+    private String printPossibleHuman(int i)
+    {
+        if(i == 0) return "YOU";
+        return "Player " + (i+1);
     }
    
-   
-   
+   private void placeBlinds() {
+       
+    }
 }
