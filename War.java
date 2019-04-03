@@ -24,5 +24,12 @@ public class War
         System.out.println(curd.subList(25,51));
     }
     
-    
+    public ArrayList getDeck(){
+        Deck deck = new Deck();
+        deck.shuffle();
+        Card[] card = deck.deal(52);
+        ArrayList<Card> newDeck = new ArrayList<Card>(Arrays.asList(card));
+        
+        return newDeck;
+    }
 }
