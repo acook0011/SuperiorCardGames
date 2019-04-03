@@ -275,7 +275,8 @@ public class HoldEm
         if(i == 0) return "YOU";
         return "Player " + (i+1);
     }
-   
+    
+   //I LEFT OFF ON THIS METHOD
    private void placeBlinds() {
        
     }
