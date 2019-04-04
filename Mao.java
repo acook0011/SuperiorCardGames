@@ -197,15 +197,15 @@ public class Mao
                     }
                     str += " and less than";
                     switch(type%10){
-                        case 0: str += " 10"; break;
-                        case 1: str += " 11"; break;
-                        case 3: str += " 3"; break;
-                        case 4: str += " 4"; break;
-                        case 5: str += " 5"; break;
-                        case 6: str += " 6"; break;
-                        case 7: str += " 7"; break;
-                        case 8: str += " 8"; break;
-                        case 9: str += " 9"; break;
+                        case 1: str += " 3"; break;
+                        case 2: str += " 4"; break;
+                        case 3: str += " 5"; break;
+                        case 4: str += " 6"; break;
+                        case 5: str += " 7"; break;
+                        case 6: str += " 8"; break;
+                        case 7: str += " 9"; break;
+                        case 8: str += " 10"; break;
+                        case 9: str += " 11"; break;
                     }
                     return str;
             case 4: str += " a numbered card with rank divisible by";
@@ -257,12 +257,30 @@ public class Mao
         return "Sorry.";
     }
     //Making up a rule.
-    public static int ruleMaker(int player){
+    public static int randyRules(int player){
         Random randall = new Random();
         int skipOrPlay = randall.nextInt(2);
         switch (skipOrPlay){
-            case 0: break;      
+            case 0: int howManyPeeps = randall.nextInt(3)+1;
+                    int howManyCards = randall.nextInt(2)+1;
+                    switch (howManyCards){
+                        case 1: return player*100000000+howManyPeeps*1000000+randomCardType();
+                        case 2: return player*100000000+howManyPeeps*1000000+randomCardType()*1000+randomCardType();
+                    }
+            case 1: return 1000000000+player*100000000+randomCardType()*1000+randomCardType();
         }
         return 0;
+    }
+    public static int randomCardType(){
+        Random randall = new Random();
+        int catergory = randall.nextInt(9)+1;
+        switch (catergory){
+            case 1: return 100+randall.nextInt(2)+1;
+            case 2: return 200+randall.nextInt(4)+1;
+            case 3: int min = randall.nextInt(9)+1;
+                    return 300+min*10+(randall.nextInt(9-min+1)+3);
+            case 4: return 400+randall.nextInt(9)+1;
+            default: return catergory*100;
+        }
     }
 }
