@@ -171,19 +171,20 @@ public class Mao
     public static String cardType(int type){
         String str = "";
         switch (type/100){
+            case 0: return " any "+type;
             case 1: switch (type%10){
-                        case 1: return " a red card";
-                        case 2: return " a black card";
+                        case 1: return " any red card";
+                        case 2: return " any black card";
                     }
                     return str;
             case 2: switch (type%10){
-                        case 1: return " a club";
-                        case 2: return " a diamond";
-                        case 3: return " a heart";
-                        case 4: return " a spade";
+                        case 1: return " any club";
+                        case 2: return " any diamond";
+                        case 3: return " any heart";
+                        case 4: return " any spade";
                     }
                 return "Sorry";
-            case 3: str += " a numbered card with rank greater than";
+            case 3: str += " any card with rank greater than";
                     switch ((type/10)%10){
                         case 1: str += " 1"; break;
                         case 2: str += " 2"; break;
@@ -208,7 +209,7 @@ public class Mao
                         case 9: str += " 11"; break;
                     }
                     return str;
-            case 4: str += " a numbered card with rank divisible by";
+            case 4: str += " any card with rank divisible by";
                     switch (type%10){
                         case 0: str += " 10"; break;
                         case 1: str += " 1"; break;
@@ -222,11 +223,11 @@ public class Mao
                         case 9: str += " 9"; break;
                     }
                     return str;
-            case 5: return " a face card";
-            case 6: return " an ace";
-            case 7: return " a king";
-            case 8: return " a queen";
-            case 9: return " a jack";
+            case 5: return " any face card";
+            case 6: return " any ace";
+            case 7: return " any king";
+            case 8: return " any queen";
+            case 9: return " any jack";
             default: return "Sorry.";
         }
     }
@@ -240,9 +241,9 @@ public class Mao
             case 4: str += " Charlie:"; break;
         }
         switch (rule/1000000000){
-            case 0: switch((rule/100000000)%10){
-                        case 1:str += " Skip the turn of 1 player whenever"; break;
-                        default:str += " Skip the turn of "+(rule/10000000)%10+" players whenever"; break;
+            case 0: switch((rule/10000000)%10){
+                        case 1:str += " Skip the turn of 1 player when"; break;
+                        default:str += " Skip the turn of "+(rule/10000000)%10+" players when"; break;
             }
             switch ((rule/1000000)%10){
                 case 1: str += cardType((rule%1000))+" is played.";
@@ -251,7 +252,7 @@ public class Mao
                         return str;
                 default: return str;
             }
-            case 1: str += " Now,"+cardType(((rule%1000000)/1000))+" can only be followed by"+cardType((rule%1000))+", even if this was previously illegal.";
+            case 1: str += " Now,"+cardType(((rule%1000000)/1000))+" may and must be followed by"+cardType((rule%1000))+".";
                     return str;
         }
         return "Sorry.";
@@ -264,8 +265,8 @@ public class Mao
             case 0: int howManyPeeps = randall.nextInt(3)+1;
                     int howManyCards = randall.nextInt(2)+1;
                     switch (howManyCards){
-                        case 1: return player*100000000+howManyPeeps*1000000+randomCardType();
-                        case 2: return player*100000000+howManyPeeps*1000000+randomCardType()*1000+randomCardType();
+                        case 1: return player*100000000+howManyPeeps*10000000+howManyCards*1000000+randomCardType();
+                        case 2: return player*100000000+howManyPeeps*10000000+howManyCards*1000000+randomCardType()*1000+randomCardType();
                     }
             case 1: return 1000000000+player*100000000+randomCardType()*1000+randomCardType();
         }
@@ -273,13 +274,14 @@ public class Mao
     }
     public static int randomCardType(){
         Random randall = new Random();
-        int catergory = randall.nextInt(9)+1;
+        int catergory = randall.nextInt(10);
         switch (catergory){
+            case 0: return randall.nextInt(8)+2;
             case 1: return 100+randall.nextInt(2)+1;
             case 2: return 200+randall.nextInt(4)+1;
             case 3: int min = randall.nextInt(9)+1;
-                    return 300+min*10+(randall.nextInt(9-min+1)+3);
-            case 4: return 400+randall.nextInt(9)+1;
+                    return 300+min*10+(randall.nextInt(9-min)+min+1);
+            case 4: return 400+randall.nextInt(5)+1;
             default: return catergory*100;
         }
     }
