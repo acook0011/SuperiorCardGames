@@ -238,15 +238,15 @@ public class Mao{
     }
     public static int randomCardType(){
         Random randall = new Random();
-        int catergory = randall.nextInt(10);
-        switch(catergory){
+        int category = randall.nextInt(10);
+        switch(category){
             case 0: return randall.nextInt(8)+2;
             case 1: return 100+randall.nextInt(2)+1;
             case 2: return 200+randall.nextInt(4)+1;
             case 3: int min = randall.nextInt(9)+1;
                     return 300+min*10+(randall.nextInt(9-min)+min+1);
             case 4: return 400+randall.nextInt(5)+1;
-            default: return catergory*100;
+            default: return category*100;
         }
     }
 }
