@@ -3,8 +3,7 @@ import java.util.*;
  * Mao
  * Gavin's playhouse
  */
-public class Mao
-{
+public class Mao{
     public static void playMao(){
         //Let's get ready!
         Scanner searcher = new Scanner(System.in);
@@ -61,7 +60,7 @@ public class Mao
             System.out.println("2 - Draw a card");
             System.out.println("3 - Penalize a player for breaking a rule");
             choice = searcher.nextInt();
-            switch (choice){
+            switch(choice){
                 case 0: break;
                 case 1: System.out.println("Which card would you like to play?");
                         System.out.println("Type a number from 1 to "+hhand.size()+" indicating a position in your hand and then press enter.");
@@ -83,8 +82,8 @@ public class Mao
                         System.out.println("3 - Drawing out of turn");
                         System.out.println("4 - False judgement");
                         int why = searcher.nextInt();
-                        switch (why){
-                            case 1: switch (criminal){
+                        switch(why){
+                            case 1: switch(criminal){
                                         case 1: ahand.add(pile.get(pile.size()-1));
                                         ahand.add(deck.deal());
                                         case 2: bhand.add(pile.get(pile.size()-1));
@@ -92,7 +91,7 @@ public class Mao
                                         case 3: chand.add(pile.get(pile.size()-1));
                                         chand.add(deck.deal());
                             }
-                            case 2: switch (criminal){
+                            case 2: switch(criminal){
                                         case 1: ahand.add(pile.get(pile.size()-1));
                                         ahand.add(deck.deal());
                                         case 2: bhand.add(pile.get(pile.size()-1));
@@ -107,7 +106,7 @@ public class Mao
     }
     //Finding the rank of a card.
     public static int numberSuit(Card card){
-        switch (card.getSuit().toString()){
+        switch(card.getSuit().toString()){
             case "spades": return 4;
             case "hearts": return 3;
             case "diamonds": return 2;
@@ -151,13 +150,13 @@ public class Mao
             case 2: str += " drew a card.";
                     return str;
             case 3: str += " penalized";
-                    switch ((move/100)%10){
+                    switch((move/100)%10){
                         case 1: str += " you"; break;
                         case 2: str += " Alice"; break;
                         case 3: str += " Bob"; break;
                         case 4: str += " Charlie"; break;
                     }
-                    switch (move%10){
+                    switch(move%10){
                         case 1: str += " for playing out of turn."; break;
                         case 2: str += " for playing an incorrect card."; break;
                         case 3: str += " for drawing out of turn."; break;
@@ -170,59 +169,24 @@ public class Mao
     //Translating a 3-digit integer representing a type of card to a string.
     public static String cardType(int type){
         String str = "";
-        switch (type/100){
+        switch(type/100){
             case 0: return " any "+type;
-            case 1: switch (type%10){
+            case 1: switch(type%10){
                         case 1: return " any red card";
                         case 2: return " any black card";
                     }
                     return str;
-            case 2: switch (type%10){
+            case 2: switch(type%10){
                         case 1: return " any club";
                         case 2: return " any diamond";
                         case 3: return " any heart";
                         case 4: return " any spade";
                     }
                 return "Sorry";
-            case 3: str += " any card with rank greater than";
-                    switch ((type/10)%10){
-                        case 1: str += " 1"; break;
-                        case 2: str += " 2"; break;
-                        case 3: str += " 3"; break;
-                        case 4: str += " 4"; break;
-                        case 5: str += " 5"; break;
-                        case 6: str += " 6"; break;
-                        case 7: str += " 7"; break;
-                        case 8: str += " 8"; break;
-                        case 9: str += " 9"; break;   
-                    }
-                    str += " and less than";
-                    switch(type%10){
-                        case 1: str += " 3"; break;
-                        case 2: str += " 4"; break;
-                        case 3: str += " 5"; break;
-                        case 4: str += " 6"; break;
-                        case 5: str += " 7"; break;
-                        case 6: str += " 8"; break;
-                        case 7: str += " 9"; break;
-                        case 8: str += " 10"; break;
-                        case 9: str += " 11"; break;
-                    }
-                    return str;
-            case 4: str += " any card with rank divisible by";
-                    switch (type%10){
-                        case 0: str += " 10"; break;
-                        case 1: str += " 1"; break;
-                        case 2: str += " 2"; break;
-                        case 3: str += " 3"; break;
-                        case 4: str += " 4"; break;
-                        case 5: str += " 5"; break;
-                        case 6: str += " 6"; break;
-                        case 7: str += " 7"; break;
-                        case 8: str += " 8"; break;
-                        case 9: str += " 9"; break;
-                    }
-                    return str;
+            case 3: return " any card with rank greater than "+(type/10)%10+" and less than "+(type%10+2);
+            case 4: if(type%10==1)
+                        return " any numbered card";
+                    return " any card with rank divisible by "+type%10;
             case 5: return " any face card";
             case 6: return " any ace";
             case 7: return " any king";
@@ -234,18 +198,18 @@ public class Mao
     //Translating a 10-digit integer representing a rule to a string.
     public static String stringRule(int rule){
         String str = "Rule created by";
-        switch ((rule/100000000)%10){
+        switch((rule/100000000)%10){
             case 1: str += " Human:"; break;
             case 2: str += " Alice:"; break;
             case 3: str += " Bob:"; break;
             case 4: str += " Charlie:"; break;
         }
-        switch (rule/1000000000){
+        switch(rule/1000000000){
             case 0: switch((rule/10000000)%10){
                         case 1:str += " Skip the turn of 1 player when"; break;
                         default:str += " Skip the turn of "+(rule/10000000)%10+" players when"; break;
             }
-            switch ((rule/1000000)%10){
+            switch((rule/1000000)%10){
                 case 1: str += cardType((rule%1000))+" is played.";
                         return str;
                 case 2: str += cardType((rule/1000)%1000)+" is followed by"+cardType((rule%1000))+".";
@@ -261,10 +225,10 @@ public class Mao
     public static int randyRules(int player){
         Random randall = new Random();
         int skipOrPlay = randall.nextInt(2);
-        switch (skipOrPlay){
+        switch(skipOrPlay){
             case 0: int howManyPeeps = randall.nextInt(3)+1;
                     int howManyCards = randall.nextInt(2)+1;
-                    switch (howManyCards){
+                    switch(howManyCards){
                         case 1: return player*100000000+howManyPeeps*10000000+howManyCards*1000000+randomCardType();
                         case 2: return player*100000000+howManyPeeps*10000000+howManyCards*1000000+randomCardType()*1000+randomCardType();
                     }
@@ -275,7 +239,7 @@ public class Mao
     public static int randomCardType(){
         Random randall = new Random();
         int catergory = randall.nextInt(10);
-        switch (catergory){
+        switch(catergory){
             case 0: return randall.nextInt(8)+2;
             case 1: return 100+randall.nextInt(2)+1;
             case 2: return 200+randall.nextInt(4)+1;
