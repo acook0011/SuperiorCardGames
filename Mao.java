@@ -172,17 +172,17 @@ public class Mao
         String str = "";
         switch (type/100){
             case 1: switch (type%10){
-                        case 1: str += " a red card"; break;
-                        case 2: str += " a black card"; break;
+                        case 1: return " a red card";
+                        case 2: return " a black card";
                     }
                     return str;
             case 2: switch (type%10){
-                        case 1: str += " a club"; break;
-                        case 2: str += " a diamond"; break;
-                        case 3: str += " a heart"; break;
-                        case 4: str += " a spade"; break;
+                        case 1: return " a club";
+                        case 2: return " a diamond";
+                        case 3: return " a heart";
+                        case 4: return " a spade";
                     }
-                return str;
+                return "Sorry";
             case 3: str += " a numbered card with rank greater than";
                     switch ((type/10)%10){
                         case 1: str += " 1"; break;
@@ -197,20 +197,20 @@ public class Mao
                     }
                     str += " and less than";
                     switch(type%10){
-                        case 0: str += " 10";
-                        case 1: str += " 11";
-                        case 3: str += " 3";
-                        case 4: str += " 4";
-                        case 5: str += " 5";
-                        case 6: str += " 6";
-                        case 7: str += " 7";
-                        case 8: str += " 8";
-                        case 9: str += " 9";
+                        case 0: str += " 10"; break;
+                        case 1: str += " 11"; break;
+                        case 3: str += " 3"; break;
+                        case 4: str += " 4"; break;
+                        case 5: str += " 5"; break;
+                        case 6: str += " 6"; break;
+                        case 7: str += " 7"; break;
+                        case 8: str += " 8"; break;
+                        case 9: str += " 9"; break;
                     }
                     return str;
             case 4: str += " a numbered card with rank divisible by";
                     switch (type%10){
-                        case 0: str += " 0"; break;
+                        case 0: str += " 10"; break;
                         case 1: str += " 1"; break;
                         case 2: str += " 2"; break;
                         case 3: str += " 3"; break;
@@ -222,42 +222,47 @@ public class Mao
                         case 9: str += " 9"; break;
                     }
                     return str;
-            case 5: str += " a face card";
-                    return str;
-            case 6: str += " an ace";
-            case 7: str += " a king";
-                    return str;
-            case 8: str += " a queen";
-                    return str;
-            case 9: str += " a jack";
-                    return str;
+            case 5: return " a face card";
+            case 6: return " an ace";
+            case 7: return " a king";
+            case 8: return " a queen";
+            case 9: return " a jack";
             default: return "Sorry.";
         }
     }
     //Translating a 10-digit integer representing a rule to a string.
     public static String stringRule(int rule){
         String str = "Rule created by";
-        switch (rule/1000000000){
+        switch ((rule/100000000)%10){
             case 1: str += " Human:"; break;
             case 2: str += " Alice:"; break;
             case 3: str += " Bob:"; break;
             case 4: str += " Charlie:"; break;
         }
-        switch ((rule/100000000)%10){
-            case 0: switch((rule/10000000)%10){
+        switch (rule/1000000000){
+            case 0: switch((rule/100000000)%10){
                         case 1:str += " Skip the turn of 1 player whenever"; break;
                         default:str += " Skip the turn of "+(rule/10000000)%10+" players whenever"; break;
             }
             switch ((rule/1000000)%10){
                 case 1: str += cardType((rule%1000))+" is played.";
                         return str;
-                case 2: str += cardType((rule/1000)%1000000)+" is followed by"+cardType((rule%1000))+".";
+                case 2: str += cardType((rule/1000)%1000)+" is followed by"+cardType((rule%1000))+".";
                         return str;
+                default: return str;
             }
-            case 1: str += " Now,"+cardType(((rule%1000000)/1000))+" can only be followed by"+cardType((rule%1000))+".";
+            case 1: str += " Now,"+cardType(((rule%1000000)/1000))+" can only be followed by"+cardType((rule%1000))+", even if this was previously illegal.";
                     return str;
         }
         return "Sorry.";
     }
+    //Making up a rule.
+    public static int ruleMaker(int player){
+        Random randall = new Random();
+        int skipOrPlay = randall.nextInt(2);
+        switch (skipOrPlay){
+            case 0: break;      
+        }
+        return 0;
+    }
 }
-
