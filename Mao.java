@@ -244,7 +244,7 @@ public class Mao{
             case 1: return 100+randall.nextInt(2)+1;
             case 2: return 200+randall.nextInt(4)+1;
             case 3: int min = randall.nextInt(9)+1;
-                    return 300+min*10+(randall.nextInt(9-min)+min+1);
+                    return 300+min*10+(randall.nextInt(9-min+1)+min+1);
             case 4: return 400+randall.nextInt(5)+1;
             default: return category*100;
         }

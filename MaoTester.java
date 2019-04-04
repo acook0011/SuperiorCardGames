@@ -17,7 +17,7 @@ public class MaoTester
             System.out.println(alice+": "+Mao.stringRule(alice));
             System.out.println(bob+": "+Mao.stringRule(bob));
             System.out.println(charlie+": "+Mao.stringRule(charlie));
-            System.out.println("Play again?");
+            System.out.println("Want some more, eh? Just press 'y'!");
             str = thunter.nextLine();
         }
     }
