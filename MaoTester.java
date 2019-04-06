@@ -9,9 +9,12 @@ public class MaoTester
         String str;
         Deck deck = new Deck();
         System.out.println("1 - Cook up some random rules.");
-        System.out.println("2 - Check whether certain random card is of a certain random type.");
+        System.out.println("2 - Check whether a certain random card is of a certain random type.");
         System.out.println("Anything else - Leave immediately.");
         str = thunter.nextLine();
+        System.out.println();
+        System.out.println();
+        System.out.println();
         while(str.equals("1")||str.equals("2")){
             switch(str){
                 case "1":   int human = Mao.randyRules(1);

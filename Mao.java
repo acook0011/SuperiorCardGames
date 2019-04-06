@@ -169,10 +169,10 @@ public class Mao{
                         case 4: return " any spade";
                     }
                 return "Sorry";
-            case 3: return " any card with rank between "+(type/10)%10+" and "+(type%10+2);
-            case 4: if(type%10==1)
+            case 3: if(type==319)
                         return " any numbered card";
-                    return " any card with rank divisible by "+type%10;
+                    return " any card with rank between "+(type/10)%10+" and "+(type%10+2);
+            case 4: return " any card with rank divisible by "+type%10;
             case 5: return " any face card";
             case 6: return " any ace";
             case 7: return " any king";
@@ -232,7 +232,7 @@ public class Mao{
             case 2: return 200+randall.nextInt(4)+1;
             case 3: int min = randall.nextInt(8)+1;
                     return 300+min*10+(randall.nextInt(9-min)+min+1);
-            case 4: return 400+randall.nextInt(5)+1;
+            case 4: return 400+randall.nextInt(4)+2;
             default: return category*100;
         }
     }
