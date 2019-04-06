@@ -12,8 +12,6 @@ public class Mao{
         ArrayList<Integer> game = new ArrayList<Integer>();
         pile.add(deck.deal());
         Boolean gameOn = true;
-        int choice;
-        int cardPlay;
         
         ArrayList<Card> ahand = new ArrayList<Card>();
         ArrayList<Card> bhand = new ArrayList<Card>();
@@ -39,19 +37,7 @@ public class Mao{
             //Bob thinks...
             
             //Alice thinks...
-            Boolean jibes = false;
-            //Alice determines whether what just happened was legal...
-            for(int i=0; i<ahypos.size(); i++){
-                // 
-            }
-            //Alice figures out whose turn it is...
-            for(int i=0; i<ahypos.size(); i++){
-                
-            }
-            //Alice chooses a card to play...
-            while(!jibes){
-            }
-            
+                      
             //Human thinks...
             System.out.println("What would like to do?");
             System.out.println("Type a number and then press enter.");
@@ -59,12 +45,12 @@ public class Mao{
             System.out.println("1 - Play a card");
             System.out.println("2 - Draw a card");
             System.out.println("3 - Penalize a player for breaking a rule");
-            choice = searcher.nextInt();
+            int choice = searcher.nextInt();
             switch(choice){
                 case 0: break;
                 case 1: System.out.println("Which card would you like to play?");
                         System.out.println("Type a number from 1 to "+hhand.size()+" indicating a position in your hand and then press enter.");
-                        cardPlay = searcher.nextInt()-1;
+                        int cardPlay = searcher.nextInt()-1;
                         Card playedCard = hhand.remove(cardPlay);
                         game.add(10000+1000+numberSuit(playedCard)*100+playedCard.getRank());
                 case 2: hhand.add(deck.deal());
@@ -104,7 +90,7 @@ public class Mao{
             }
         }
     }
-    //Finding the rank of a card.
+    //Finding the suit of a card.
     public static int numberSuit(Card card){
         switch(card.getSuit().toString()){
             case "spades": return 4;
@@ -236,6 +222,7 @@ public class Mao{
         }
         return 0;
     }
+    //Picking random type of card.
     public static int randomCardType(){
         Random randall = new Random();
         int category = randall.nextInt(10);
@@ -247,6 +234,32 @@ public class Mao{
                     return 300+min*10+(randall.nextInt(10-min)+min+1);
             case 4: return 400+randall.nextInt(5)+1;
             default: return category*100;
+        }
+    }
+    //Checking whether move jibes with a rule.
+    public static Boolean jibes(int prevPlaya, Card top, int move, int rule){
+        switch(rule/1000000000){
+            case 0: 
+        }
+        return true;
+    }
+    //Checking whether a certain card is of a certain type.
+    public static Boolean itsAMatch(Card card, int type){
+        switch(type/100){
+            case 0: return(card.getRank()==type%10);
+            case 1: if(numberSuit(card)==2||numberSuit(card)==3)
+                        return type%10==1;
+                    else
+                        return type%10==2;
+            case 2: return numberSuit(card)==type%10;
+            case 3: return card.getRank()>(type/10)%10&&card.getRank()<type%10;
+            case 4: return card.getRank()>1&&card.getRank()<11&&card.getRank()%(type%10)==0;
+            case 5: return card.getRank()>10&&card.getRank()<14;
+            case 6: return card.getRank()==1;
+            case 7: return card.getRank()==13;
+            case 8: return card.getRank()==12;
+            case 9: return card.getRank()==13;
+            default: return false;
         }
     }
 }
