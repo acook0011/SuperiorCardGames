@@ -230,8 +230,8 @@ public class Mao{
             case 0: return randall.nextInt(8)+2;
             case 1: return 100+randall.nextInt(2)+1;
             case 2: return 200+randall.nextInt(4)+1;
-            case 3: int min = randall.nextInt(9)+1;
-                    return 300+min*10+(randall.nextInt(10-min)+min+1);
+            case 3: int min = randall.nextInt(8)+1;
+                    return 300+min*10+(randall.nextInt(9-min)+min+1);
             case 4: return 400+randall.nextInt(5)+1;
             default: return category*100;
         }
@@ -252,13 +252,13 @@ public class Mao{
                     else
                         return type%10==2;
             case 2: return numberSuit(card)==type%10;
-            case 3: return card.getRank()>(type/10)%10&&card.getRank()<type%10;
+            case 3: return card.getRank()>(type/10)%10&&card.getRank()<type%10+2;
             case 4: return card.getRank()>1&&card.getRank()<11&&card.getRank()%(type%10)==0;
             case 5: return card.getRank()>10&&card.getRank()<14;
             case 6: return card.getRank()==1;
             case 7: return card.getRank()==13;
             case 8: return card.getRank()==12;
-            case 9: return card.getRank()==13;
+            case 9: return card.getRank()==11;
             default: return false;
         }
     }
