@@ -237,16 +237,21 @@ public class Mao{
         }
     }
     //Checking whether move jibes with a rule.
-    public static Boolean jibes(int prevPlaya, Card top, int move, int rule){
-        switch(rule/1000000000){
-            case 0: 
+    public static int whoTurn(int move1, int move2, ArrayList<Integer> rules){
+        for(int i = rules.size()-1; i>=0; i--){
+            switch(rules.get(i)/1000000000){
+                case 0: if(itsAMatch(move2%1000,rules.get(i)%1000))
+                            return move2/10000+1+(rules.get(i)/10000000)%10;
+                case 1: if(itsAMatch(move2%1000,rules.get(i)%1000)&&itsAMatch(move1%1000,(rules.get(i)/1000)%1000))
+                            return move2/10000+1+(rules.get(i)/10000000)%10;
+            }
         }
-        return true;
+        return move2/10000+1;
     }
     //Checking whether a certain card is of a certain type.
     public static Boolean itsAMatch(Card card, int type){
         switch(type/100){
-            case 0: return(card.getRank()==type%10);
+            case 0: return card.getRank()==type%10;
             case 1: if(numberSuit(card)==2||numberSuit(card)==3)
                         return type%10==1;
                     else
@@ -260,6 +265,24 @@ public class Mao{
             case 8: return card.getRank()==12;
             case 9: return card.getRank()==11;
             default: return false;
+        }
+    }
+    public static Boolean itsAMatch(int card, int type){
+        switch(type/100){
+            case 0: return card%100==type%10;
+            case 1: if(card/100==2||card/100==3)
+                        return type%10==1;
+                    else
+                        return type%10==2;
+            case 2: return card/100==type%10;
+            case 3: return card%100>(type/10)%10&&card%100<type%10+2;
+            case 4: return card%100>1&&card%100<11&&card%100%(type%10)==0;
+            case 5: return card%100>10&&card%100<14;
+            case 6: return card%100==1;
+            case 7: return card%100==13;
+            case 8: return card%100==12;
+            case 9: return card%100==11;
+            default: return false; 
         }
     }
 }

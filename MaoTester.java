@@ -8,7 +8,8 @@ public class MaoTester
         Scanner thunter = new Scanner(System.in);
         String str;
         System.out.println("1 - Cook up some random rules.");
-        System.out.println("2 - Check whether a certain random card is of a certain random type.");
+        System.out.println("2 - Check whether a random card is of a random type.");
+        System.out.println("3 - Check out whoTurn.");
         System.out.println("Anything else - Leave immediately.");
         str = thunter.nextLine();
         System.out.println();
@@ -34,6 +35,11 @@ public class MaoTester
                             System.out.println(type+":"+Mao.cardType(type));
                             System.out.println(Mao.itsAMatch(card,type));
                             break;
+                case "3":   System.out.println("Enter a move as a 5-digit integer");
+                            int move1 = thunter.nextInt();
+                            System.out.println("Enter the move that followed it.");
+                            int move2 = thunter.nextInt();
+                            System.out.println("Now, make up some rules.");
                 default:    break;
             }
             str = thunter.nextLine();
