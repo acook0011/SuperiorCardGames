@@ -107,7 +107,7 @@ public class Mao{
             case 1: str += "You"; break;
             case 2: str += "Alice"; break;
             case 3: str += "Bob"; break;
-            case 4: str += "Charle"; break;
+            case 4: str += "Charlie"; break;
         }
         switch((move/1000)%10){
             case 1: str += " played";
@@ -241,12 +241,12 @@ public class Mao{
         for(int i = rules.size()-1; i>=0; i--){
             switch(rules.get(i)/1000000000){
                 case 0: if(itsAMatch(move2%1000,rules.get(i)%1000))
-                            return move2/10000+1+(rules.get(i)/10000000)%10;
+                            return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
                 case 1: if(itsAMatch(move2%1000,rules.get(i)%1000)&&itsAMatch(move1%1000,(rules.get(i)/1000)%1000))
-                            return move2/10000+1+(rules.get(i)/10000000)%10;
+                            return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
             }
         }
-        return move2/10000+1;
+        return (move2/10000)%4+1;
     }
     //Checking whether a certain card is of a certain type.
     public static Boolean itsAMatch(Card card, int type){
@@ -283,6 +283,15 @@ public class Mao{
             case 8: return card%100==12;
             case 9: return card%100==11;
             default: return false; 
+        }
+    }
+    public static String numToPlaya(int num){
+        switch(num){
+            case 1: return "Human";
+            case 2: return "Alice";
+            case 3: return "Bob";
+            case 4: return "Charlie";
+            default: return "Nobody";
         }
     }
 }

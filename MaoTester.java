@@ -6,6 +6,7 @@ public class MaoTester
 {
     public static void main(String [] args){
         Scanner thunter = new Scanner(System.in);
+        Random blaine = new Random();
         String str;
         System.out.println("1 - Cook up some random rules.");
         System.out.println("2 - Check whether a random card is of a random type.");
@@ -15,7 +16,7 @@ public class MaoTester
         System.out.println();
         System.out.println();
         System.out.println();
-        while(str.equals("1")||str.equals("2")){
+        while(str.equals("1")||str.equals("2")||str.equals("3")){
             switch(str){
                 case "1":   int human = Mao.randyRules(1);
                             int alice = Mao.randyRules(2);
@@ -35,11 +36,41 @@ public class MaoTester
                             System.out.println(type+":"+Mao.cardType(type));
                             System.out.println(Mao.itsAMatch(card,type));
                             break;
-                case "3":   System.out.println("Enter a move as a 5-digit integer");
-                            int move1 = thunter.nextInt();
-                            System.out.println("Enter the move that followed it.");
-                            int move2 = thunter.nextInt();
-                            System.out.println("Now, make up some rules.");
+                case "3":   ArrayList<Integer> rules = new ArrayList<Integer>();
+                            int move1 = 0;
+                            int move2 = 0;
+                            System.out.println("You wanna make up some moves or should I do it? Type 1 or 2.");
+                            if(thunter.nextInt()==1){
+                                System.out.println("Enter a move as a 5-digit integer");
+                                move1 = thunter.nextInt();
+                                System.out.println("Enter the move that followed it.");
+                                move2 = thunter.nextInt();
+                            }else{
+                                move1 = (blaine.nextInt(4)+1)*10000+1000+(blaine.nextInt(4)+1)*100+blaine.nextInt(13)+1;
+                                move2 = (blaine.nextInt(4)+1)*10000+1000+(blaine.nextInt(4)+1)*100+blaine.nextInt(13)+1;
+                            }
+                            System.out.println("You wanna make up some rules or should I? Type 1 or 2.");
+                            if(thunter.nextInt()==1){
+                                System.out.println("Type the nine- or ten-digit integer representing a rule.");
+                                System.out.println("Keep doing this till you want to stop. Then, press -1.");
+                                int rule = thunter.nextInt();
+                                while(rule!=-1){
+                                    rules.add(rule);
+                                }
+                            }else{
+                                System.out.println("No problem! How many would you like?");
+                                int amount = thunter.nextInt();
+                                for(int i=0; i<amount; i++){
+                                    rules.add(Mao.randyRules(blaine.nextInt(4)+1));
+                                }
+                            }
+                            System.out.println("Okay, so here are the rules.");
+                            for(int i=0; i<rules.size(); i++)
+                                System.out.println(Mao.stringRule(rules.get(i)));
+                            System.out.println("And here are the moves!");
+                            System.out.println(Mao.stringMove(move1));
+                            System.out.println(Mao.stringMove(move2));
+                            System.out.println("According to these rules, it is "+Mao.numToPlaya(Mao.whoTurn(move1, move2, rules))+"'s turn.");
                 default:    break;
             }
             str = thunter.nextLine();
