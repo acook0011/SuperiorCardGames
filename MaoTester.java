@@ -7,7 +7,6 @@ public class MaoTester
     public static void main(String [] args){
         Scanner thunter = new Scanner(System.in);
         String str;
-        Deck deck = new Deck();
         System.out.println("1 - Cook up some random rules.");
         System.out.println("2 - Check whether a certain random card is of a certain random type.");
         System.out.println("Anything else - Leave immediately.");
@@ -27,7 +26,8 @@ public class MaoTester
                             System.out.println(bob+": "+Mao.stringRule(bob));
                             System.out.println(charlie+": "+Mao.stringRule(charlie));
                             break;
-                case "2":   deck.shuffle();
+                case "2":   Deck deck = new Deck();
+                            deck.shuffle();
                             Card card = deck.deal();
                             int type = Mao.randomCardType();
                             System.out.println("Card: "+card);
