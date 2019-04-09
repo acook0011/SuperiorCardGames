@@ -19,15 +19,33 @@ public class Blackjack
     
     public static void Jack(){
         deck = new Deck();
+        p = new ArrayList<ArrayList<Card>>(); // p.get(0) = Dealer
         p1 = new ArrayList<Card>();
         comp = new ArrayList<Card>();
         Scanner reader = new Scanner(System.in);
+        
+        deck.shuffle();
+        System.out.println("How many will be gambling against The Dealer? ");
+        int players = reader.nextInt();
+        dealHand(p, players);
+        System.out.println("\nDealer's visible hand: \n" + 
+                           "- " + p.get(0).get(0) + "\n");
+        for (int i = 1; i < players+1; i++){
+            System.out.println("Player " + i + "'s Hand: \n" +
+                               "- " + p.get(i).get(0) + "\n" +
+                               "- " + p.get(i).get(1) + "\n");
+        }
+        
+        // OLD BELOW I still need to implement proper multiplayer
+        
         // Deals initial hands
         deck.shuffle();
         p1.add(deck.deal());
         p1.add(deck.deal());
         comp.add(deck.deal());
         comp.add(deck.deal());
+        
+        
         Boolean playing = true;
         int score = score(p1);
         System.out.println(score);
@@ -125,6 +143,18 @@ public class Blackjack
         }
         System.out.println(score(p1));
 
+    }
+    
+    public static ArrayList<ArrayList<Card>> dealHand(ArrayList<ArrayList<Card>> p, int players){
+        // 0 = The Dealer
+        for (int i = 0; i < players+1; i++){
+            p.add(new ArrayList<Card>());
+        }
+        for (int i = 0; i < players+1; i++){
+            p.get(i).add(deck.deal());
+            p.get(i).add(deck.deal());
+        }
+        return p;
     }
     
     public static int score(ArrayList<Card> hand){
