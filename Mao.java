@@ -239,11 +239,9 @@ public class Mao{
     //Checking whether move jibes with a rule.
     public static int whoTurn(int move1, int move2, ArrayList<Integer> rules){
         for(int i = rules.size()-1; i>=0; i--){
-            switch(rules.get(i)/1000000000){
-                case 0: if(itsAMatch(move2%1000,rules.get(i)%1000))
-                            return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
-                case 1: if(itsAMatch(move2%1000,rules.get(i)%1000)&&itsAMatch(move1%1000,(rules.get(i)/1000)%1000))
-                            return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
+            if(rules.get(i)/1000000000==0){
+                if(itsAMatch(move2%1000,rules.get(i)%1000))
+                    return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
             }
         }
         return (move2/10000)%4+1;
