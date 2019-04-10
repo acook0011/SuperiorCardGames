@@ -113,18 +113,11 @@ public class Mao{
             case 1: str += " played";
                     switch(move%100){
                         case 1: str += " an ace"; break;
-                        case 2: str += " a two"; break;
-                        case 3: str += " a three"; break;
-                        case 4: str += " a four"; break;
-                        case 5: str += " a five"; break;
-                        case 6: str += " a six"; break;
-                        case 7: str += " a seven"; break;
-                        case 8: str += " an eight"; break;
-                        case 9: str += " a nine"; break;
-                        case 10: str += " a ten"; break;
+                        case 8: str += " an 8"; break;
                         case 11: str += " a jack"; break;
                         case 12: str += " a queen"; break;
                         case 13: str += " a king"; break;
+                        default: str += " a "+move%100;
                     }
                     switch((move/100)%10){
                         case 1: str += " of clubs."; break;
@@ -261,13 +254,14 @@ public class Mao{
                 }
             }
         }
-        veryGoodCards.add(200+(move/100)%100);
+        veryGoodCards.add(200+(move/100)%10);
         int rank = 0;
         switch(move%100){
-            case 1: rank = 600;
-            case 13: rank = 700;
-            case 12: rank = 800;
-            case 11: rank = 900;
+            case 1: rank = 600; break;
+            case 13: rank = 700; break;
+            case 12: rank = 800; break;
+            case 11: rank = 900; break;
+            default: rank = move%100; break;
         }
         veryGoodCards.add(rank);
         return veryGoodCards;

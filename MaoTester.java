@@ -55,10 +55,11 @@ public class MaoTester
                             System.out.println("You wanna make up some rules or should I? Type 1 or 2.");
                             if(looker.nextInt()==1){
                                 System.out.println("Type the nine- or ten-digit integer representing a rule.");
-                                System.out.println("Keep doing this till you want to stop. Then, press -1.");
+                                System.out.println("Keep doing this until you want to stop. Then, press -1.");
                                 int rule = looker.nextInt();
                                 while(rule!=-1){
                                     rules.add(rule);
+                                    rule = looker.nextInt();
                                 }
                             }else{
                                 System.out.println("No problem! How many would you like?");
@@ -70,9 +71,11 @@ public class MaoTester
                             System.out.println("Okay, so here are the rules.");
                             for(int i=0; i<rules.size(); i++)
                                 System.out.println(rules.get(i)+": "+Mao.stringRule(rules.get(i)));
+                            System.out.println();
                             System.out.println("And here are the moves!");
                             System.out.println(move1+": "+Mao.stringMove(move1));
                             System.out.println(move2+": "+Mao.stringMove(move2));
+                            System.out.println();
                             System.out.println(Mao.whoTurn(move1,move2,rules)+": According to these rules, it is "+Mao.numToPlaya(Mao.whoTurn(move1, move2, rules))+"'s turn.");
                             break;
                 case "4":   ArrayList<Integer> rodrick = new ArrayList<Integer>();
@@ -87,10 +90,11 @@ public class MaoTester
                             System.out.println("You wanna make up some rules or should I? Type 1 or 2.");
                             if(looker.nextInt()==1){
                                 System.out.println("Type the nine- or ten-digit integer representing a rule.");
-                                System.out.println("Keep doing this till you want to stop. Then, press -1.");
+                                System.out.println("Keep doing this until you want to stop. Then, press -1.");
                                 int rule = looker.nextInt();
                                 while(rule!=-1){
                                     rodrick.add(rule);
+                                    rule = looker.nextInt();
                                 }
                             }else{
                                 System.out.println("No problem! How many would you like?");
@@ -102,9 +106,16 @@ public class MaoTester
                             System.out.println("Okay, so here are the rules.");
                             for(int i=0; i<rodrick.size(); i++)
                                 System.out.println(rodrick.get(i)+": "+Mao.stringRule(rodrick.get(i)));
+                            System.out.println();
                             System.out.println("And here is the move!");
                             System.out.println(move+": "+Mao.stringMove(move));
-                            System.out.println("According to these rules,"+Mao.whatNext(move,rodrick)+" must be played.");
+                            System.out.println();
+                            String goodies;
+                            if(Mao.whatNext(move,rodrick).size()==1)
+                                str = Mao.cardType(Mao.whatNext(move,rodrick).get(0));
+                            else
+                                str = Mao.cardType(Mao.whatNext(move,rodrick).get(0))+" or"+Mao.cardType(Mao.whatNext(move,rodrick).get(1));
+                            System.out.println(Mao.whatNext(move,rodrick)+": According to these rules,"+str+" must be played.");
                 default:    break;
             }
             System.out.println();
