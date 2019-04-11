@@ -46,6 +46,12 @@ public class HoldEm
                                             
    private int pot;
    
+   private int[] inForHand;                 // keeps track of how far in each player
+                                            // is during each dealt hand
+   
+   private int[] rdBet;                     // keeps track of how far in each players
+                                            // is during each round of betting
+                                            
    /** default constructor that makes a new game
     * 
     */
@@ -165,6 +171,8 @@ public class HoldEm
        folded = new boolean[numPlayers];
        dealer = randy.nextInt(numPlayers);
        System.out.println("Beginning first hand!");
+       inForHand = new int[numPlayers];
+       rdBet = new int[numPlayers];
        this.play();
     }
    
@@ -178,6 +186,7 @@ public class HoldEm
        {
            allIn[i] = false;
            folded[i] = false;
+           inForHand[i] = 0;
        }
        pot = 0;
        
@@ -193,14 +202,15 @@ public class HoldEm
        // this method needs to check for all ins
        this.placeBlinds();
        
-       /*
        // deal all of the cards
        this.dealHands();
+       
        
        while(true) {
            // does the first round of betting
            this.firstRoundBet();
-           
+           break;
+           /*
            // deal and reveal first 3 cards;
            this.deal(3);
            
@@ -230,8 +240,9 @@ public class HoldEm
            
            // reveals post-game menu
            this.revealPostGameMenu();
+           */
         }
-        */
+        
         
     }
     
@@ -300,6 +311,7 @@ public class HoldEm
            System.out.println(pH(sb) + " is ALL IN");
            pot+= money.get(sb);
            money.set(sb, 0);
+           inForHand[sb]+= blind/2;
            allIn[sb] = true;
        }
        else if(money.get(sb) < blind/2)
@@ -307,12 +319,14 @@ public class HoldEm
            System.out.println(pH(sb) + " goes ALL IN with " + money.get(sb) + " chips.");
            allIn[sb] = true;
            pot+= money.get(sb);
+           inForHand[sb]+= money.get(sb);
            money.set(sb, 0);
        }
        else
        {
            System.out.println(pH(sb) + " places their blind of " + blind/2 + " chips in the pot");
            pot+=blind/2;
+           inForHand[sb]+= blind/2;
            money.set(sb, money.get(sb) - blind/2);
        }
        
@@ -323,6 +337,7 @@ public class HoldEm
            System.out.println(pH(bb) + " places all " + blind + " in the pot");
            System.out.println(pH(bb) + " is ALL IN");
            pot+= money.get(bb);
+           inForHand[bb]+= money.get(bb);
            money.set(bb, 0);
            allIn[bb] = true;
        }
@@ -330,6 +345,7 @@ public class HoldEm
        {
            System.out.println(pH(bb) + " goes ALL IN with " + money.get(bb) + " chips.");
            allIn[bb] = true;
+           inForHand[bb]+= money.get(bb);
            pot+= money.get(bb);
            money.set(bb, 0);
        }
@@ -337,9 +353,73 @@ public class HoldEm
        {
            System.out.println(pH(bb) + " places blind of " + blind + " chips in the pot");
            pot+=blind;
+           inForHand[bb]+= blind;
            money.set(bb, money.get(bb) - blind);
        }
        
-       System.out.println("Here is the pot: " + pot);
+       System.out.println("Here is the pot after the blinds: " + pot);
+    }
+    
+    private void dealHands() {
+       for(int i = 0; i < numPlayers; i++)
+            hands.add(d.deal(2)); 
+    }
+    
+    private void firstRoundBet() {
+        int sb = this.getSBIndex();
+        int bb = this.getBBIndex();
+        int curBet;
+        int temp;
+        if(allIn[bb])
+            curBet = inForHand[bb];
+        else
+            curBet = blind;
+        
+        for(int i = 0; i < numPlayers; i++)
+        {
+            rdBet[i] = 0;
+        }
+        
+        rdBet[sb] = inForHand[sb];
+        rdBet[bb] = inForHand[bb];
+        
+        int lastBetter = bb;
+            
+        turn = rotateDealer(3);
+        
+        System.out.println("it is " + pH(turn) + "'s turn");
+        if(turn == 0 && !allIn[0] && !folded[0])
+        {
+            System.out.println();
+            System.out.println("It's your turn, here some some stats:");
+            System.out.println("Pot: " + pot);
+            System.out.println("Current bet: " + curBet);
+            System.out.println("Money that you have in this hand already: " + inForHand[0]);
+            System.out.println("What would you like to do?");
+            
+
+            //displays check as a possibility if it is
+            if(rdBet[0] == curBet)
+                System.out.println(" 1 - Check ");
+            else //displays raise as a possibility if it is
+                System.out.println(" 1 - Call " + curBet);
+            System.out.println(" 2 - Raise ");
+            System.out.println(" 3 - Fold ");
+            
+            temp = input.nextInt();
+            if(temp % 3 == 1)
+            {
+                //code for call/check
+            } else if(temp % 3 == 2)
+            {
+                //code for raise
+            } else if(temp % 3 == 0)
+            {
+                //code for fold
+            }
+        } else
+        {
+            //code if it is the AI's turn
+        }
     }
 }
