@@ -13,14 +13,32 @@ public class Mao{
         pile.add(deck.deal());
         Boolean gameOn = true;
         
+        //Everybody's hands
         ArrayList<Card> ahand = new ArrayList<Card>();
         ArrayList<Card> bhand = new ArrayList<Card>();
         ArrayList<Card> chand = new ArrayList<Card>();
         ArrayList<Card> hhand = new ArrayList<Card>();
-        ArrayList<Integer> rules = new ArrayList<Integer>();
-        ArrayList<Integer> ahypos = new ArrayList<Integer>();
-        ArrayList<Integer> bhypos = new ArrayList<Integer>();
-        ArrayList<Integer> chypos = new ArrayList<Integer>();
+        
+        //The real rules
+        ArrayList<Integer> arules = new ArrayList<Integer>();
+        ArrayList<Integer> brules = new ArrayList<Integer>();
+        ArrayList<Integer> crules = new ArrayList<Integer>();
+        ArrayList<Integer> hrules = new ArrayList<Integer>();
+        
+        //Alice's hypotheses
+        ArrayList<Integer> abhypos = new ArrayList<Integer>();
+        ArrayList<Integer> achypos = new ArrayList<Integer>();
+        ArrayList<Integer> ahhypos = new ArrayList<Integer>();
+        
+        //Bob's hypotheses
+        ArrayList<Integer> bahypos = new ArrayList<Integer>();
+        ArrayList<Integer> bchypos = new ArrayList<Integer>();
+        ArrayList<Integer> bhhypos = new ArrayList<Integer>();
+        
+        //Charlie's hypotheses
+        ArrayList<Integer> cahypos = new ArrayList<Integer>();
+        ArrayList<Integer> cbhypos = new ArrayList<Integer>();
+        ArrayList<Integer> chhypos = new ArrayList<Integer>();
         
         //Dealing the cards...
         for(int i = 0; i<7; i++){
