@@ -17,4 +17,8 @@ public class War
         ArrayList<Card> newDeck = new ArrayList<Card>(Arrays.asList(card));
         return newDeck;
     }
+    
+    public void play(List d1, List d2){
+        
+    }
 }
