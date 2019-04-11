@@ -330,4 +330,96 @@ public class Mao{
             default: return "Nobody";
         }
     }
+    //Getting a rule from the human.
+    public static int humanRule(){
+        Scanner inspector = new Scanner(System.in);
+        int rule = 0;
+        int yea = 2;
+        while(yea==2){
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println("What type of rule is this going to be?");
+            System.out.println("1 - Skipping turns.");
+            System.out.println("2 - Changing what type of cards may be played.");
+            int genre = inspector.nextInt();
+            if(genre==1){
+                System.out.println("How many players will we be skipping? Type 1, 2, or 3.");
+                int losers = inspector.nextInt();
+                System.out.println("Under what condition will these players be skipped?");
+                System.out.println("1 - When a card of a certain type is played.");
+                System.out.println("2 - When a card of a certain type is played on a card of a certain type.");
+                int numKillers = inspector.nextInt();
+                if(numKillers == 1){
+                    System.out.println("So what type of card makes these turns get skipped?");
+                    int card1 = humanType();
+                    rule = 100000000+losers*10000000+numKillers*1000000+card1;
+                }else{
+                    System.out.println("So what type of card must be played first?");
+                    int card1 = humanType();
+                    System.out.println("And what type of card must be played second?");
+                    int card2 = humanType();
+                    rule =  100000000+losers*10000000+numKillers*1000000+1000*card1+card2;
+                }
+            }else{
+                System.out.println("So what type of card are we changing the requirements for?");
+                int card1 = humanType();
+                System.out.println("And what type of card must be played on this card?");
+                int card2 = humanType();
+                rule = 1100000000+card1*1000+card2;
+            }
+            System.out.println("Your rule is as follows: ");
+            System.out.println(stringRule(rule));
+            System.out.println("Is this correct?");
+            System.out.println("1 - It's perfect! Let's get on with the game!");
+            System.out.println("2 - That's not really what I had in mind. Can we please start over the rule-making process, sir?");
+            yea = inspector.nextInt();
+        }
+        return rule;
+    }
+    //Getting a card type from the human.
+    public static int humanType(){
+        Scanner retriever = new Scanner(System.in);
+        System.out.println("1 - Cards of a specific rank.");
+        System.out.println("2 - Cards of a specific color.");
+        System.out.println("3 - Cards of a specific suit.");
+        System.out.println("4 - Just any face cards.");
+        System.out.println("5 - Just any numbered cards.");
+        System.out.println("6 - Numbered cards with rank in a specific range.");
+        System.out.println("7 - Numbered cards with rank devisible by a specific number.");
+        int genre = retriever.nextInt();
+        switch(genre){
+            case 1: System.out.println("Just type the number indicating the required rank.");
+                    System.out.println("TIP: 1 = Ace, 11 = Jack, 12 = Queen, 13 = King.");
+                    int rank = retriever.nextInt();
+                    switch(rank){
+                        case 1: return 600;
+                        case 11: return 900;
+                        case 12: return 800;
+                        case 13: return 700;
+                        default: return rank;
+                    }
+            case 2: System.out.println("What color?");
+                    System.out.println("1 - red.");
+                    System.out.println("2 - black.");
+                    return 100+retriever.nextInt();
+            case 3: System.out.println("What suit?");
+                    System.out.println("1 - clubs.");
+                    System.out.println("2 - diamonds.");
+                    System.out.println("3 - hearts.");
+                    System.out.println("4 - spades.");
+                    return 200+retriever.nextInt();
+            case 4: return 500;
+            case 5: return 319;
+            case 6: System.out.println("What is the minimum (exclusive)?");
+                    int min = retriever.nextInt();
+                    System.out.println("What is the maximum (exclusive)?");
+                    int max = retriever.nextInt();
+                    return 300+10*min+max-2;
+            case 7: System.out.println("Divisible by what?");
+                    System.out.println("TIP: This must be 2, 3, 4, or 5");
+                    return retriever.nextInt();
+            default: return 0;
+        }
+    }
 }

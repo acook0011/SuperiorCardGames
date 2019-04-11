@@ -13,12 +13,13 @@ public class MaoTester
         System.out.println("2 - Check whether a random card is of a random type.");
         System.out.println("3 - Check out whoTurn.");
         System.out.println("4 - Check out whatNext.");
+        System.out.println("5 - Make a rule using nothing but the English language.");
         System.out.println("Anything else - Leave immediately.");
         str = thunter.nextLine();
         System.out.println();
         System.out.println();
         System.out.println();
-        while(str.equals("1")||str.equals("2")||str.equals("3")||str.equals("4")){
+        while(str.equals("1")||str.equals("2")||str.equals("3")||str.equals("4")||str.equals("5")){
             switch(str){
                 case "1":   int human = Mao.randyRules(1);
                             int alice = Mao.randyRules(2);
@@ -116,6 +117,8 @@ public class MaoTester
                             else
                                 str = Mao.cardType(Mao.whatNext(move,rodrick).get(0))+" or"+Mao.cardType(Mao.whatNext(move,rodrick).get(1));
                             System.out.println(Mao.whatNext(move,rodrick)+": According to these rules,"+str+" must be played.");
+                case "5":   int rule = Mao.humanRule();
+                            System.out.println("Good job.");
                 default:    break;
             }
             System.out.println();
