@@ -20,6 +20,7 @@ public class Blackjack
     public static void Jack(){
         deck = new Deck();
         p = new ArrayList<ArrayList<Card>>(); // p.get(0) = Dealer
+        
         p1 = new ArrayList<Card>();
         comp = new ArrayList<Card>();
         Scanner reader = new Scanner(System.in);
@@ -27,6 +28,11 @@ public class Blackjack
         deck.shuffle();
         System.out.println("How many will be gambling against The Dealer? ");
         int players = reader.nextInt();
+        score = new int[players+1];
+        bust = new boolean[players+1];
+        for (int i = 0; i < bust.length; i++){
+            bust[i] = false;
+        }
         dealHand(p, players);
         System.out.println("\nDealer's visible hand: \n" + 
                            "- " + p.get(0).get(0) + "\n");
@@ -36,6 +42,7 @@ public class Blackjack
                                "- " + p.get(i).get(1) + "\n");
         }
         
+        play(p, score, bust);
         // OLD BELOW I still need to implement proper multiplayer
         
         // Deals initial hands
@@ -155,6 +162,72 @@ public class Blackjack
             p.get(i).add(deck.deal());
         }
         return p;
+    }
+    
+    public static ArrayList<ArrayList<Card>> play(ArrayList<ArrayList<Card>> p, 
+                                                  int[] score, boolean[] bust){                                                      
+        Scanner reader = new Scanner(System.in);
+        Boolean[] stay = new Boolean[bust.length];
+        for (int i = 0; i < stay.length; i++){
+            stay[i] = false;
+        }
+        Boolean playing = true;
+        // Players
+        while (playing){
+         for (int x = 1; x < p.size(); x++){
+          
+          if (!bust[x] || !stay[x]){
+           // Displays current hand
+           System.out.println("~~Player " + x + "'s turn~~"); 
+           score[x] = score(p.get(x));
+           System.out.println("Player " + x + "'s current hand: ");
+           for (int i = 0; i < p.get(x).size(); i++){
+              System.out.println("- " + p.get(x).get(i));
+           }
+           System.out.println("Score: " + score(p.get(x)));
+           
+           System.out.println("Hit? [Y/N]");
+           Boolean valid = false;
+           while (!valid){
+               String reply = reader.nextLine();
+               if (reply.toUpperCase().equals("Y")){
+                   p.get(x).add(deck.deal());
+                   score[x] = score(p.get(x));
+                   System.out.println("Player " + x + " was dealt a " + 
+                               p.get(x).get(p.get(x).size()-1) +
+                              "\nNew Score: " + score[x]);
+                   // Checks if 21
+                   if (score[x] == 21){
+                       System.out.println("Player " + x + " reached 21!");
+                       stay[x] = true;
+                   }
+                   // Checks if over 21
+                   else if (score[x] > 21){
+                       System.out.println("YOU B U S T E D");
+                       bust[x] = true;
+                   } 
+                   valid = true;
+                } else if (reply.toUpperCase().equals("N")){
+                   stay[x] = true;
+                   valid = true;
+                } else {
+                      System.out.println("Respond with Y or N.");
+                }
+            }
+            System.out.println();
+           }
+         }
+         int a = p.size(); // Amount of players who have not busted or stayed
+         for (int j = 1; j < p.size(); j++){
+            if (!bust[j] || !stay[j]){
+                a--;
+            }
+         }
+         if (a == 0){
+            playing = false;
+         }
+       }
+       return p;
     }
     
     public static int score(ArrayList<Card> hand){
