@@ -147,8 +147,16 @@ public class HoldEm
                System.out.println("than 0");
                blind = input.nextInt();
            }
-           System.out.println("Okay, blinds are " + blind + ". (Hit [enter] to continue");
-           input.nextLine();
+           System.out.println("Okay, blinds are " + blind + ". (Hit [enter] to continue)");
+           String temp = input.next();
+           
+           System.out.println();
+           System.out.println("Okay, here are the players: ");
+           System.out.println("The human/Player 1 has " + money.get(0) + " chips");
+           for(int f = 1; f < numPlayers; f++)
+           {
+               System.out.println("Player " + (f+1) + " has " + money.get(f) + " chips");
+           }
        //END INIT MESSAGE
        
        hands = new ArrayList<Card[]>(numPlayers);
@@ -156,6 +164,7 @@ public class HoldEm
        allIn = new boolean[numPlayers];
        folded = new boolean[numPlayers];
        dealer = randy.nextInt(numPlayers);
+       System.out.println("Beginning first hand!");
        this.play();
     }
    
@@ -242,15 +251,15 @@ public class HoldEm
     // these next three methods for for getting the "name" of
     // the dealer, small blind, and big blind
     private String getDName() {
-        return printPossibleHuman(rotateDealer(0));
+        return pH(rotateDealer(0));
     }
     
     private String getSBName() {
-        return printPossibleHuman(rotateDealer(1));
+        return pH(rotateDealer(1));
     }
     
     private String getBBName() {
-        return printPossibleHuman(rotateDealer(2));
+        return pH(rotateDealer(2));
     }
     
     // these next three methods are for getting the "index" of
@@ -270,7 +279,9 @@ public class HoldEm
         return rotateDealer(2);
     }   
 
-    private String printPossibleHuman(int i)
+    //this method returns you if its the human or the player number if it's
+    //an AI
+    private String pH(int i)
     {
         if(i == 0) return "YOU";
         return "Player " + (i+1);
@@ -278,6 +289,57 @@ public class HoldEm
     
    //I LEFT OFF ON THIS METHOD
    private void placeBlinds() {
+       int sb = getSBIndex();
+       int bb = getBBIndex();
+       System.out.println();
+       System.out.println("Blinds are " + blind/2 + "/" + blind + ".");
+       System.out.println(pH(sb) + " owes " + blind/2 + " as small blind");
+       if(money.get(sb) == blind/2)
+       {
+           System.out.println(pH(sb) + " places all " + blind/2 + " in the pot");
+           System.out.println(pH(sb) + " is ALL IN");
+           pot+= money.get(sb);
+           money.set(sb, 0);
+           allIn[sb] = true;
+       }
+       else if(money.get(sb) < blind/2)
+       {
+           System.out.println(pH(sb) + " goes ALL IN with " + money.get(sb) + " chips.");
+           allIn[sb] = true;
+           pot+= money.get(sb);
+           money.set(sb, 0);
+       }
+       else
+       {
+           System.out.println(pH(sb) + " places their blind of " + blind/2 + " chips in the pot");
+           pot+=blind/2;
+           money.set(sb, money.get(sb) - blind/2);
+       }
        
+       //begin big blind
+       System.out.println(pH(bb) + " owes " + blind + " as big blind");
+       if(money.get(bb) == blind)
+       {
+           System.out.println(pH(bb) + " places all " + blind + " in the pot");
+           System.out.println(pH(bb) + " is ALL IN");
+           pot+= money.get(bb);
+           money.set(bb, 0);
+           allIn[bb] = true;
+       }
+       else if(money.get(bb) < blind)
+       {
+           System.out.println(pH(bb) + " goes ALL IN with " + money.get(bb) + " chips.");
+           allIn[bb] = true;
+           pot+= money.get(bb);
+           money.set(bb, 0);
+       }
+       else
+       {
+           System.out.println(pH(bb) + " places blind of " + blind + " chips in the pot");
+           pot+=blind;
+           money.set(bb, money.get(bb) - blind);
+       }
+       
+       System.out.println("Here is the pot: " + pot);
     }
 }
