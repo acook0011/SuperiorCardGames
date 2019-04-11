@@ -341,7 +341,7 @@ public class Mao{
             System.out.println();
             System.out.println("What type of rule is this going to be?");
             System.out.println("1 - Skipping turns.");
-            System.out.println("2 - Changing what type of cards may be played.");
+            System.out.println("2 - Changing what type of cards may and must be played.");
             int genre = inspector.nextInt();
             if(genre==1){
                 System.out.println("How many players will we be skipping? Type 1, 2, or 3.");
@@ -386,7 +386,7 @@ public class Mao{
         System.out.println("4 - Just any face cards.");
         System.out.println("5 - Just any numbered cards.");
         System.out.println("6 - Numbered cards with rank in a specific range.");
-        System.out.println("7 - Numbered cards with rank devisible by a specific number.");
+        System.out.println("7 - Numbered cards with rank divisible by a specific number.");
         int genre = retriever.nextInt();
         switch(genre){
             case 1: System.out.println("Just type the number indicating the required rank.");
@@ -418,7 +418,7 @@ public class Mao{
                     return 300+10*min+max-2;
             case 7: System.out.println("Divisible by what?");
                     System.out.println("TIP: This must be 2, 3, 4, or 5");
-                    return retriever.nextInt();
+                    return 400+retriever.nextInt();
             default: return 0;
         }
     }
