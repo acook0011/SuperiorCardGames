@@ -13,14 +13,32 @@ public class Mao{
         pile.add(deck.deal());
         Boolean gameOn = true;
         
+        //Everybody's hands
         ArrayList<Card> ahand = new ArrayList<Card>();
         ArrayList<Card> bhand = new ArrayList<Card>();
         ArrayList<Card> chand = new ArrayList<Card>();
         ArrayList<Card> hhand = new ArrayList<Card>();
-        ArrayList<Integer> rules = new ArrayList<Integer>();
-        ArrayList<Integer> ahypos = new ArrayList<Integer>();
-        ArrayList<Integer> bhypos = new ArrayList<Integer>();
-        ArrayList<Integer> chypos = new ArrayList<Integer>();
+        
+        //The real rules
+        ArrayList<Integer> arules = new ArrayList<Integer>();
+        ArrayList<Integer> brules = new ArrayList<Integer>();
+        ArrayList<Integer> crules = new ArrayList<Integer>();
+        ArrayList<Integer> hrules = new ArrayList<Integer>();
+        
+        //Alice's hypotheses
+        ArrayList<Integer> abhypos = new ArrayList<Integer>();
+        ArrayList<Integer> achypos = new ArrayList<Integer>();
+        ArrayList<Integer> ahhypos = new ArrayList<Integer>();
+        
+        //Bob's hypotheses
+        ArrayList<Integer> bahypos = new ArrayList<Integer>();
+        ArrayList<Integer> bchypos = new ArrayList<Integer>();
+        ArrayList<Integer> bhhypos = new ArrayList<Integer>();
+        
+        //Charlie's hypotheses
+        ArrayList<Integer> cahypos = new ArrayList<Integer>();
+        ArrayList<Integer> cbhypos = new ArrayList<Integer>();
+        ArrayList<Integer> chhypos = new ArrayList<Integer>();
         
         //Dealing the cards...
         for(int i = 0; i<7; i++){
@@ -113,18 +131,11 @@ public class Mao{
             case 1: str += " played";
                     switch(move%100){
                         case 1: str += " an ace"; break;
-                        case 2: str += " a two"; break;
-                        case 3: str += " a three"; break;
-                        case 4: str += " a four"; break;
-                        case 5: str += " a five"; break;
-                        case 6: str += " a six"; break;
-                        case 7: str += " a seven"; break;
-                        case 8: str += " an eight"; break;
-                        case 9: str += " a nine"; break;
-                        case 10: str += " a ten"; break;
+                        case 8: str += " an 8"; break;
                         case 11: str += " a jack"; break;
                         case 12: str += " a queen"; break;
                         case 13: str += " a king"; break;
+                        default: str += " a "+move%100;
                     }
                     switch((move/100)%10){
                         case 1: str += " of clubs."; break;
@@ -236,17 +247,42 @@ public class Mao{
             default: return category*100;
         }
     }
-    //Checking whether move jibes with a rule.
+    //Finding out who's turn it is.
     public static int whoTurn(int move1, int move2, ArrayList<Integer> rules){
         for(int i = rules.size()-1; i>=0; i--){
-            switch(rules.get(i)/1000000000){
-                case 0: if(itsAMatch(move2%1000,rules.get(i)%1000))
-                            return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
-                case 1: if(itsAMatch(move2%1000,rules.get(i)%1000)&&itsAMatch(move1%1000,(rules.get(i)/1000)%1000))
-                            return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
+            if(rules.get(i)/1000000000==0){
+                switch((rules.get(i)/1000000)%10){
+                    case 1: if(itsAMatch(move2%1000,rules.get(i)%1000))
+                                return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
+                    case 2: if((itsAMatch(move2%1000,rules.get(i)%1000))&&(itsAMatch(move1%1000,(rules.get(i)/1000)%1000)))
+                                return (move2/10000+(rules.get(i)/10000000)%10)%4+1;
+                }
             }
         }
         return (move2/10000)%4+1;
+    }
+    //Finding out what kind of card is playable.
+    public static ArrayList<Integer> whatNext(int move, ArrayList<Integer> rules){
+        ArrayList<Integer> veryGoodCards = new ArrayList<Integer>();
+        for(int i = rules.size()-1; i>=0; i--){
+            if(rules.get(i)/1000000000==1){
+                if(itsAMatch(move%1000,(rules.get(i)/1000)%1000)){
+                    veryGoodCards.add(rules.get(i)%1000);
+                    return veryGoodCards;
+                }
+            }
+        }
+        veryGoodCards.add(200+(move/100)%10);
+        int rank = 0;
+        switch(move%100){
+            case 1: rank = 600; break;
+            case 13: rank = 700; break;
+            case 12: rank = 800; break;
+            case 11: rank = 900; break;
+            default: rank = move%100; break;
+        }
+        veryGoodCards.add(rank);
+        return veryGoodCards;
     }
     //Checking whether a certain card is of a certain type.
     public static Boolean itsAMatch(Card card, int type){
