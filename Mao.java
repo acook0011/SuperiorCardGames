@@ -48,65 +48,29 @@ public class Mao{
             hhand.add(deck.deal());
         }
         
-        //Here is one round...
-        while(gameOn){
-            //Charlie thinks...
-            
-            //Bob thinks...
-            
-            //Alice thinks...
-                      
-            //Human thinks...
-            System.out.println("What would like to do?");
-            System.out.println("Type a number and then press enter.");
-            System.out.println("0 - Do nothing");
-            System.out.println("1 - Play a card");
-            System.out.println("2 - Draw a card");
-            System.out.println("3 - Penalize a player for breaking a rule");
-            int choice = searcher.nextInt();
-            switch(choice){
-                case 0: break;
-                case 1: System.out.println("Which card would you like to play?");
-                        System.out.println("Type a number from 1 to "+hhand.size()+" indicating a position in your hand and then press enter.");
-                        int cardPlay = searcher.nextInt()-1;
-                        Card playedCard = hhand.remove(cardPlay);
-                        game.add(10000+1000+numberSuit(playedCard)*100+playedCard.getRank());
-                case 2: hhand.add(deck.deal());
-                        game.add(10000+2000);
-                case 3: System.out.println("Who are you penalizing?");
-                        System.out.println("Type a number and then press enter.");
-                        System.out.println("1 - Alice");
-                        System.out.println("2 - Bob");
-                        System.out.println("3 - Charlie");
-                        int criminal = searcher.nextInt();
-                        System.out.println("Whatever for?");
-                        System.out.println("Type a number and then press enter.");
-                        System.out.println("1 - Playing out of turn");
-                        System.out.println("2 - Playing an incorrect card");
-                        System.out.println("3 - Drawing out of turn");
-                        System.out.println("4 - False judgement");
-                        int why = searcher.nextInt();
-                        switch(why){
-                            case 1: switch(criminal){
-                                        case 1: ahand.add(pile.get(pile.size()-1));
-                                        ahand.add(deck.deal());
-                                        case 2: bhand.add(pile.get(pile.size()-1));
-                                        bhand.add(deck.deal());
-                                        case 3: chand.add(pile.get(pile.size()-1));
-                                        chand.add(deck.deal());
-                            }
-                            case 2: switch(criminal){
-                                        case 1: ahand.add(pile.get(pile.size()-1));
-                                        ahand.add(deck.deal());
-                                        case 2: bhand.add(pile.get(pile.size()-1));
-                                        bhand.add(deck.deal());
-                                        case 3: chand.add(pile.get(pile.size()-1));
-                                        chand.add(deck.deal());
-                                    }
-                        }
-                        game.add(10000+3000+(criminal+1)*100+why);
-            }
+        System.out.println("Welcome, friend. Do you know how to play Computer Mao?");
+        System.out.println("1 - Yes, and I want to play now.");
+        System.out.println("2 - Yes, but I don't want to play now.");
+        System.out.println("3 - No, but I want to play now.");
+        System.out.println("4 - No, and I don't want to play now.");
+        int gamer = searcher.nextInt();
+        switch(gamer){
+            case 1: mao();
+            case 2: System.out.println("I get it. No worries. Just come on back anytime if you change your mind.");
+            case 3: System.out.println("Pull up chair, fella. I can teach you right now.");
+                    letsLearn();
+            case 4: System.out.println("That's fine. There are plenty of other card games out there.");
         }
+    }
+    public static void mao(){
+        
+    }
+    public static void letsLearn(){
+        System.out.println("Mao is a shedding card game. That means that the object of the game is to get rid of all the cards in your hand.");
+        System.out.println("Every player starts with a hand of seven cards. There is one card face-up in the center of the table.");
+        System.out.println("When it's your turn, you can place a card from your hand on the card in the center.");
+        System.out.println("The card you play must be either the same suit or the same rank as the card in the center.");
+        System.out.println("If you are unable to or don't want to play, take a card from the draw pile and add it to your hand instead of playing.");
     }
     //Finding the suit of a card.
     public static int numberSuit(Card card){
