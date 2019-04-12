@@ -14,12 +14,13 @@ public class MaoTester
         System.out.println("3 - Check out whoTurn.");
         System.out.println("4 - Check out whatNext.");
         System.out.println("5 - Make a rule using nothing but the English language.");
+        System.out.println("6 - Play Computer Mao.");
         System.out.println("Anything else - Leave immediately.");
         str = thunter.nextLine();
         System.out.println();
         System.out.println();
         System.out.println();
-        while(str.equals("1")||str.equals("2")||str.equals("3")||str.equals("4")||str.equals("5")){
+        while(str.equals("1")||str.equals("2")||str.equals("3")||str.equals("4")||str.equals("5")||str.equals("6")){
             switch(str){
                 case "1":   int human = Mao.randyRules(1);
                             int alice = Mao.randyRules(2);
@@ -120,6 +121,11 @@ public class MaoTester
                             break;
                 case "5":   int rule = Mao.humanRule();
                             System.out.println("Good job.");
+                            break;
+                case "6":   Mao.playMao();
+                            System.out.println();
+                            System.out.println("That's all I have so far.");
+                            break;
                 default:    break;
             }
             System.out.println();

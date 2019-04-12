@@ -56,21 +56,45 @@ public class Mao{
         int gamer = searcher.nextInt();
         switch(gamer){
             case 1: mao();
+                    break;
             case 2: System.out.println("I get it. No worries. Just come on back anytime if you change your mind.");
-            case 3: System.out.println("Pull up chair, fella. I can teach you right now.");
+                    break;
+            case 3: System.out.println("Pull up chair, fella. I can teach you.");
                     letsLearn();
+                    break;
             case 4: System.out.println("That's fine. There are plenty of other card games out there.");
+                    break;
         }
     }
     public static void mao(){
         
     }
     public static void letsLearn(){
-        System.out.println("Mao is a shedding card game. That means that the object of the game is to get rid of all the cards in your hand.");
-        System.out.println("Every player starts with a hand of seven cards. There is one card face-up in the center of the table.");
-        System.out.println("When it's your turn, you can place a card from your hand on the card in the center.");
-        System.out.println("The card you play must be either the same suit or the same rank as the card in the center.");
-        System.out.println("If you are unable to or don't want to play, take a card from the draw pile and add it to your hand instead of playing.");
+        Scanner spot = new Scanner(System.in);
+        int understand = 2;
+        while(understand==2){
+            System.out.println();
+            System.out.println("Mao is a shedding card game. That means that the object of the game is to get rid of all the cards in your hand.");
+            System.out.println("Every player starts with a hand of seven cards. There is one card face-up in the center of the table.");
+            System.out.println("We take turns. It goes you, Alice, Bob, Charlie, you, Alice, Bob, Charlie, you, Alice, Bob, Charlie, and so on.");
+            System.out.println("When it's your turn, you can place a card from your hand on top of the card in the center.");
+            System.out.println("The card you play must be either the same suit or the same rank as the card in the center.");
+            System.out.println("If you are unable to or don't want to play, take a card from the draw pile and add it to your hand instead of playing.");
+            System.out.println("When someone empties their hand, they win, and the round is over.");
+            System.out.println("The player who won creates a new secret rule, and the next round begins with the new rule in effect.");
+            System.out.println("It is up to the other players to try to figure out the rule and play accordingly.");
+            System.out.println("You may play as many rounds as you want, and all rules stay in effect as long as no other rule contradicts them.");
+            System.out.println("Sometimes, a player may do something that you believe to be against the rules.");
+            System.out.println("If this happens, punish them! Their action will be undone, and they will recieve a one-card penalty.");
+            System.out.println("During the game, I (the computer) will ask you what you want to do.");
+            System.out.println("If it's your turn, play or draw. If not, you can penalize another player or just sit tight and do nothing.");
+            System.out.println("I think that just about covers everything. Get it?");
+            System.out.println();
+            System.out.println();
+            System.out.println("1 - I understand and agree to the rules you just said. Let's play!");
+            System.out.println("2 - I don't understand. Can you please repeat?");
+            understand = spot.nextInt();
+        }
     }
     //Finding the suit of a card.
     public static int numberSuit(Card card){
