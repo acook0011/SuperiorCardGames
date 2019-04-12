@@ -117,6 +117,7 @@ public class MaoTester
                             else
                                 str = Mao.cardType(Mao.whatNext(move,rodrick).get(0))+" or"+Mao.cardType(Mao.whatNext(move,rodrick).get(1));
                             System.out.println(Mao.whatNext(move,rodrick)+": According to these rules,"+str+" must be played.");
+                            break;
                 case "5":   int rule = Mao.humanRule();
                             System.out.println("Good job.");
                 default:    break;
