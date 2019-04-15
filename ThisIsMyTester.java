@@ -25,7 +25,7 @@ public class ThisIsMyTester
         
         System.out.println("Ready for War!?");
         if (reader.nextLine().toLowerCase().equals("yes")){
-
+            war.play(Deck1, Deck2);
         }
     }
 }
