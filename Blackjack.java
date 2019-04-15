@@ -42,6 +42,19 @@ public class Blackjack
         }
         play(p, score, bust);
         
+        if (bust[0]){
+            System.out.println("The Dealer busted at " + score[0]);
+        } else {
+            System.out.println("The Dealer scored " + score[0]);
+        }
+        
+        for (int x = 1; x < players+1; x++){
+            if (bust[x]){
+                System.out.println("Player " + x + " busted at " + score[x]);
+            } else {
+                System.out.println("Player " + x + " scored " + score[x]);
+            }
+        }
 
     }
     
@@ -61,14 +74,14 @@ public class Blackjack
                             int[] score, boolean[] bust){                                                      
         Scanner reader = new Scanner(System.in);
         Boolean[] stay = new Boolean[bust.length];
-       for (int i = 0; i < stay.length; i++){
+        for (int i = 0; i < stay.length; i++){
            if ((score[i] == 21) && (i != 0)){ //Checks for Naturals
                System.out.println("! Player " + i + " has a Natural 21 !\n");
                stay[i] = true;
            } else {
                stay[i] = false;
            }
-       }
+        }
         Boolean playing = true;
         // Players
         while (playing){
@@ -124,6 +137,33 @@ public class Blackjack
          if (a == 0){
             playing = false;
          }
+       }
+       
+       // Dealer's Turn
+       System.out.println("~~The Dealer's Turn~~");
+       while (!bust[0] && !stay[0]){
+           score[0] = score(p.get(0));
+           System.out.println("The Dealer's current hand: ");
+           for (int i = 0; i < p.get(0).size(); i++){
+              System.out.println("- " + p.get(0).get(i));
+           }
+           System.out.println("Score: " + score(p.get(0)));
+           
+           if (score[0] >= 17){
+               System.out.println("The Dealer has to stay.");
+               stay[0] = true;
+           } else if (score[0] < 17){
+               p.get(0).add(deck.deal());
+               score[0] = score(p.get(0));
+               System.out.println("The Dealer was dealt a " + 
+                                   p.get(0).get(p.get(0).size()-1) +
+                                  "\nNew Score: " + score[0]);
+               if (score[0] > 21){
+                   System.out.println("The Dealer has B U S T E D");
+                   bust[0] = true;
+               }
+           }
+           System.out.println();
        }
     }
     
