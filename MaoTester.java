@@ -15,12 +15,13 @@ public class MaoTester
         System.out.println("4 - Check out whatNext.");
         System.out.println("5 - Make a rule using nothing but the English language.");
         System.out.println("6 - Play Computer Mao.");
+        System.out.println("7 - Check out wasThePenaltyRight.");
         System.out.println("Anything else - Leave immediately.");
         str = thunter.nextLine();
         System.out.println();
         System.out.println();
         System.out.println();
-        while(str.equals("1")||str.equals("2")||str.equals("3")||str.equals("4")||str.equals("5")||str.equals("6")){
+        while(str.equals("1")||str.equals("2")||str.equals("3")||str.equals("4")||str.equals("5")||str.equals("6")||str.equals("7")){
             switch(str){
                 case "1":   int human = Mao.randyRules(1);
                             int alice = Mao.randyRules(2);
@@ -125,6 +126,42 @@ public class MaoTester
                 case "6":   Mao.playMao();
                             System.out.println();
                             System.out.println("That's all I have so far.");
+                            break;
+                case "7":   ArrayList<Integer> law = new ArrayList<Integer>();
+                            System.out.println("What happened?");
+                            int fourth = looker.nextInt();
+                            System.out.println("Then what?");
+                            int third = looker.nextInt();
+                            System.out.println("Then what?");
+                            int second = looker.nextInt();
+                            System.out.println("Then what?");
+                            int last = looker.nextInt();
+                            System.out.println("You wanna make up some rules or should I? Type 1 or 2.");
+                            if(looker.nextInt()==1){
+                                System.out.println("Type the nine- or ten-digit integer representing a rule.");
+                                System.out.println("Keep doing this until you want to stop. Then, press -1.");
+                                int ruley = looker.nextInt();
+                                while(ruley!=-1){
+                                    law.add(ruley);
+                                    ruley = looker.nextInt();
+                                }
+                            }else{
+                                System.out.println("No problem! How many would you like?");
+                                int amount = looker.nextInt();
+                                for(int i=0; i<amount; i++){
+                                    law.add(Mao.randyRules(blaine.nextInt(4)+1));
+                                }
+                            }
+                            System.out.println("Okay, so here are the rules.");
+                            for(int i=0; i<law.size(); i++)
+                                System.out.println(law.get(i)+": "+Mao.stringRule(law.get(i)));
+                            System.out.println();
+                            System.out.println("1. "+Mao.stringMove(fourth));
+                            System.out.println("2. "+Mao.stringMove(third));
+                            System.out.println("3. "+Mao.stringMove(second));
+                            System.out.println("4. "+Mao.stringMove(last));
+                            System.out.println();
+                            System.out.println(Mao.wasThePenaltyRight(last, second, third, fourth, law));
                             break;
                 default:    break;
             }

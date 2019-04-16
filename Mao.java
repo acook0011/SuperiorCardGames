@@ -11,7 +11,6 @@ public class Mao{
         ArrayList<Card> pile = new ArrayList<Card>();
         ArrayList<Integer> game = new ArrayList<Integer>();
         pile.add(deck.deal());
-        Boolean gameOn = true;
         
         //Everybody's hands
         ArrayList<Card> ahand = new ArrayList<Card>();
@@ -25,20 +24,26 @@ public class Mao{
         ArrayList<Integer> crules = new ArrayList<Integer>();
         ArrayList<Integer> hrules = new ArrayList<Integer>();
         
-        //Alice's hypotheses
-        ArrayList<Integer> abhypos = new ArrayList<Integer>();
-        ArrayList<Integer> achypos = new ArrayList<Integer>();
-        ArrayList<Integer> ahhypos = new ArrayList<Integer>();
+        //Alice's hypotheses for the most recent rule created by each player.
+        int abhypo;
+        int achypo;
+        int ahhypo;
+        //All of Alice's hypotheses.
+        ArrayList<Integer> ahypo = new ArrayList<Integer>();
         
-        //Bob's hypotheses
-        ArrayList<Integer> bahypos = new ArrayList<Integer>();
-        ArrayList<Integer> bchypos = new ArrayList<Integer>();
-        ArrayList<Integer> bhhypos = new ArrayList<Integer>();
+        //Bob's hypotheses for the most recent rule created by each player.
+        int bahypo;
+        int bchypo;
+        int bhhypo;
+        //All of Bob's hypotheses.
+        ArrayList<Integer> bhypo = new ArrayList<Integer>();
         
-        //Charlie's hypotheses
-        ArrayList<Integer> cahypos = new ArrayList<Integer>();
-        ArrayList<Integer> cbhypos = new ArrayList<Integer>();
-        ArrayList<Integer> chhypos = new ArrayList<Integer>();
+        //Charlie's hypotheses for the most recetn rule created by each player.
+        int cahypo;
+        int cbhypo;
+        int chhypo;
+        //All of Charlie's hypotheses.
+        ArrayList<Integer> chypo = new ArrayList<Integer>();
         
         //Dealing the cards...
         for(int i = 0; i<7; i++){
@@ -408,6 +413,15 @@ public class Mao{
                     System.out.println("TIP: This must be 2, 3, 4, or 5");
                     return 400+retriever.nextInt();
             default: return 0;
+        }
+    }
+    public static Boolean wasThePenaltyRight(int lastMove, int secondLast, int thirdLast, int fourthLast, ArrayList<Integer> rules){
+        switch(lastMove%10){
+            case 1: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
+            case 2: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
+            case 3: return !(itsAMatch(secondLast%1000,whatNext(thirdLast,rules).get(0)))||itsAMatch(secondLast%1000,whatNext(thirdLast,rules).get(1));
+            case 4: return true;
+            default: return true;
         }
     }
 }
