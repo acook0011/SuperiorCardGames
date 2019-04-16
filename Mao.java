@@ -45,6 +45,38 @@ public class Mao{
         //All of Charlie's hypotheses.
         ArrayList<Integer> chypo = new ArrayList<Integer>();
         
+        //Parallel ArrayLists containing the situations of every time Alice accused someone since the last time she created a rule.
+        ArrayList<Integer> a4 = new ArrayList<Integer>();
+        ArrayList<Integer> a3 = new ArrayList<Integer>();
+        ArrayList<Integer> a2 = new ArrayList<Integer>();
+        ArrayList<Integer> a1 = new ArrayList<Integer>();
+        ArrayList<Integer> atopCards = new ArrayList<Integer>();
+        ArrayList<Integer> aaccusations = new ArrayList<Integer>();
+        
+        //Parallel ArrayLists containing the situations of every time Bob accused someone since the last time he created a rule.
+        ArrayList<Integer> b4 = new ArrayList<Integer>();
+        ArrayList<Integer> b3 = new ArrayList<Integer>();
+        ArrayList<Integer> b2 = new ArrayList<Integer>();
+        ArrayList<Integer> b1 = new ArrayList<Integer>();
+        ArrayList<Integer> btopCards = new ArrayList<Integer>();
+        ArrayList<Integer> baccusations = new ArrayList<Integer>();
+        
+        //Parallel ArrayLists containing the situations of every time Charlie accused someone since the last time he created a rule.
+        ArrayList<Integer> c4 = new ArrayList<Integer>();
+        ArrayList<Integer> c3 = new ArrayList<Integer>();
+        ArrayList<Integer> c2 = new ArrayList<Integer>();
+        ArrayList<Integer> c1 = new ArrayList<Integer>();
+        ArrayList<Integer> ctopCards = new ArrayList<Integer>();
+        ArrayList<Integer> caccusations = new ArrayList<Integer>();
+        
+        //Parallel ArrayLists containing the situations of every time the human accused someone since the last time he created a rule.
+        ArrayList<Integer> h4 = new ArrayList<Integer>();
+        ArrayList<Integer> h3 = new ArrayList<Integer>();
+        ArrayList<Integer> h2 = new ArrayList<Integer>();
+        ArrayList<Integer> h1 = new ArrayList<Integer>();
+        ArrayList<Integer> htopCards = new ArrayList<Integer>();
+        ArrayList<Integer> haccusations = new ArrayList<Integer>();
+        
         //Dealing the cards...
         for(int i = 0; i<7; i++){
             ahand.add(deck.deal());
@@ -110,6 +142,9 @@ public class Mao{
             case "clubs": return 1;
             default: return 0;
         }
+    }
+    public static int numberCard(Card card){
+        return 100*numberSuit(card)+card.getRank();
     }
     //Translating a 5-digit integer representing a move to a string.
     public static String stringMove(int move){
@@ -448,5 +483,17 @@ public class Mao{
             case 4: return true;
             default: return true;
         }
+    }
+    //Returns an int indicating what position in the players hand should be played from. -1 if no card is playable.
+    public static int whatToPlay(int topCard, ArrayList<Card> hand, ArrayList<Integer> rules){
+        for(int i=0; i<hand.size(); i++){
+            if(whatNext(rules,topCard).size()==1){
+                if(itsAMatch(hand.get(i),whatNext(rules,topCard).get(0)))
+                    return i;
+            }
+            if(itsAMatch(hand.get(i), whatNext(rules,topCard).get(0))||itsAMatch(hand.get(i), whatNext(rules,topCard).get(1)))
+                return i;
+        }
+        return -1;
     }
 }
