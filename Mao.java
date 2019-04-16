@@ -441,8 +441,10 @@ public class Mao{
     public static Boolean wasThePenaltyRight(int lastMove, int secondLast, int thirdLast, int fourthLast, int topCard, ArrayList<Integer> rules){
         switch(lastMove%10){
             case 1: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
-            case 2: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
-            case 3: return !(itsAMatch(secondLast%1000,whatNext(rules, topCard).get(0)))||itsAMatch(secondLast%1000,whatNext(rules, topCard).get(1));
+            case 2: if(rules.size()==1)
+                        return !itsAMatch(secondLast%1000, whatNext(rules,topCard).get(0));
+                    return !(itsAMatch(secondLast%1000, whatNext(rules, topCard).get(0)))||itsAMatch(secondLast%1000,whatNext(rules, topCard).get(1));
+            case 3: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
             case 4: return true;
             default: return true;
         }
