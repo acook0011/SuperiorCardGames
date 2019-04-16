@@ -128,6 +128,8 @@ public class MaoTester
                             System.out.println("That's all I have so far.");
                             break;
                 case "7":   ArrayList<Integer> law = new ArrayList<Integer>();
+                            System.out.println("What card is on top?");
+                            int topCard = looker.nextInt();
                             System.out.println("What happened?");
                             int fourth = looker.nextInt();
                             System.out.println("Then what?");
@@ -161,7 +163,7 @@ public class MaoTester
                             System.out.println("3. "+Mao.stringMove(second));
                             System.out.println("4. "+Mao.stringMove(last));
                             System.out.println();
-                            System.out.println(Mao.wasThePenaltyRight(last, second, third, fourth, law));
+                            System.out.println(Mao.wasThePenaltyRight(last, second, third, fourth, topCard, law));
                             break;
                 default:    break;
             }

@@ -277,6 +277,29 @@ public class Mao{
         veryGoodCards.add(rank);
         return veryGoodCards;
     }
+    //Better than that.
+    public static ArrayList<Integer> whatNext(ArrayList<Integer> rules, int card){
+        ArrayList<Integer> veryGoodCards = new ArrayList<Integer>();
+        for(int i = rules.size()-1; i>=0; i--){
+            if(rules.get(i)/1000000000==1){
+                if(itsAMatch(card,(rules.get(i)/1000)%1000)){
+                    veryGoodCards.add(rules.get(i)%1000);
+                    return veryGoodCards;
+                }
+            }
+        }
+        veryGoodCards.add(200+card/100);
+        int rank = 0;
+        switch(card%100){
+            case 1: rank = 600; break;
+            case 13: rank = 700; break;
+            case 12: rank = 800; break;
+            case 11: rank = 900; break;
+            default: rank = card%100; break;
+        }
+        veryGoodCards.add(rank);
+        return veryGoodCards;
+    }
     //Checking whether a certain card is of a certain type.
     public static Boolean itsAMatch(Card card, int type){
         switch(type/100){
@@ -415,11 +438,11 @@ public class Mao{
             default: return 0;
         }
     }
-    public static Boolean wasThePenaltyRight(int lastMove, int secondLast, int thirdLast, int fourthLast, ArrayList<Integer> rules){
+    public static Boolean wasThePenaltyRight(int lastMove, int secondLast, int thirdLast, int fourthLast, int topCard, ArrayList<Integer> rules){
         switch(lastMove%10){
             case 1: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
             case 2: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
-            case 3: return !(itsAMatch(secondLast%1000,whatNext(thirdLast,rules).get(0)))||itsAMatch(secondLast%1000,whatNext(thirdLast,rules).get(1));
+            case 3: return !(itsAMatch(secondLast%1000,whatNext(rules, topCard).get(0)))||itsAMatch(secondLast%1000,whatNext(rules, topCard).get(1));
             case 4: return true;
             default: return true;
         }
