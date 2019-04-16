@@ -51,7 +51,6 @@ public class Mao{
         ArrayList<Integer> a2 = new ArrayList<Integer>();
         ArrayList<Integer> a1 = new ArrayList<Integer>();
         ArrayList<Integer> atopCards = new ArrayList<Integer>();
-        ArrayList<Integer> aaccusations = new ArrayList<Integer>();
         
         //Parallel ArrayLists containing the situations of every time Bob accused someone since the last time he created a rule.
         ArrayList<Integer> b4 = new ArrayList<Integer>();
@@ -59,7 +58,6 @@ public class Mao{
         ArrayList<Integer> b2 = new ArrayList<Integer>();
         ArrayList<Integer> b1 = new ArrayList<Integer>();
         ArrayList<Integer> btopCards = new ArrayList<Integer>();
-        ArrayList<Integer> baccusations = new ArrayList<Integer>();
         
         //Parallel ArrayLists containing the situations of every time Charlie accused someone since the last time he created a rule.
         ArrayList<Integer> c4 = new ArrayList<Integer>();
@@ -67,7 +65,6 @@ public class Mao{
         ArrayList<Integer> c2 = new ArrayList<Integer>();
         ArrayList<Integer> c1 = new ArrayList<Integer>();
         ArrayList<Integer> ctopCards = new ArrayList<Integer>();
-        ArrayList<Integer> caccusations = new ArrayList<Integer>();
         
         //Parallel ArrayLists containing the situations of every time the human accused someone since the last time he created a rule.
         ArrayList<Integer> h4 = new ArrayList<Integer>();
@@ -75,7 +72,6 @@ public class Mao{
         ArrayList<Integer> h2 = new ArrayList<Integer>();
         ArrayList<Integer> h1 = new ArrayList<Integer>();
         ArrayList<Integer> htopCards = new ArrayList<Integer>();
-        ArrayList<Integer> haccusations = new ArrayList<Integer>();
         
         //Dealing the cards...
         for(int i = 0; i<7; i++){
@@ -495,5 +491,21 @@ public class Mao{
                 return i;
         }
         return -1;
+    }
+    //Returns a rule that makes sense for every situation.
+    public static int science(ArrayList<Integer> p1, ArrayList<Integer> p2, ArrayList<Integer> p3, ArrayList<Integer> p4,ArrayList<Integer> ptopCard, int who){
+        Boolean done = false;
+        while(!done){
+            int hypo = randyRules(who);
+            ArrayList<Integer> it = new ArrayList<Integer>();
+            Boolean itsGood = true;
+            for(int i=0; i<p1.size(); i++){
+                if(!wasThePenaltyRight(p1.get(i), p2.get(i), p3.get(i), p4.get(i), ptopCard.get(i), it))
+                    itsGood = false;
+            }
+            if(itsGood)
+                return hypo;
+        }
+        return 0;
     }
 }
