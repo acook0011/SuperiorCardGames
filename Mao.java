@@ -28,8 +28,7 @@ public class Mao{
     ArrayList<ArrayList<Integer>> m1 = new ArrayList<ArrayList<Integer>>();
     ArrayList<ArrayList<Integer>> topCards = new ArrayList<ArrayList<Integer>>();
     
-    public static void playMao(){
-        
+    public static void intro(){
         Scanner searcher = new Scanner(System.in);
         
         System.out.println("Welcome, friend. Do you know how to play Computer Mao?");
@@ -51,6 +50,10 @@ public class Mao{
         }
     }
     public Mao(){
+        
+    }
+    public static void playMao(){
+        intro();
         
     }
     public static void letsLearn(){
