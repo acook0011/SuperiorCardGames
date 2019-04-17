@@ -5,11 +5,40 @@ import java.util.*;
  */
 public class Mao{
     public static void playMao(){
-        //Let's get ready!
+        
         Scanner searcher = new Scanner(System.in);
+        
+        
+        
+        
+        
+        System.out.println("Welcome, friend. Do you know how to play Computer Mao?");
+        System.out.println("1 - Yes, and I want to play now.");
+        System.out.println("2 - Yes, but I don't want to play now.");
+        System.out.println("3 - No, but I want to play now.");
+        System.out.println("4 - No, and I don't want to play now.");
+        int gamer = searcher.nextInt();
+        switch(gamer){
+            case 1: mao();
+                    break;
+            case 2: System.out.println("I get it. No worries. Just come on back anytime if you change your mind.");
+                    break;
+            case 3: System.out.println("Pull up chair, fella. I can teach you.");
+                    letsLearn();
+                    break;
+            case 4: System.out.println("That's fine. There are plenty of other card games out there.");
+                    break;
+        }
+    }
+    public static void mao(){
+        //Let's get ready!
         Deck deck =  new Deck();
         ArrayList<Card> pile = new ArrayList<Card>();
+        //Every move in the game
         ArrayList<Integer> game = new ArrayList<Integer>();
+        //Every draw or play in the game
+        ArrayList<Integer> drawPlay = new ArrayList<Integer>();
+        
         pile.add(deck.deal());
         
         //The last two plays or draws
@@ -84,27 +113,6 @@ public class Mao{
             chand.add(deck.deal());
             hhand.add(deck.deal());
         }
-        
-        System.out.println("Welcome, friend. Do you know how to play Computer Mao?");
-        System.out.println("1 - Yes, and I want to play now.");
-        System.out.println("2 - Yes, but I don't want to play now.");
-        System.out.println("3 - No, but I want to play now.");
-        System.out.println("4 - No, and I don't want to play now.");
-        int gamer = searcher.nextInt();
-        switch(gamer){
-            case 1: mao();
-                    break;
-            case 2: System.out.println("I get it. No worries. Just come on back anytime if you change your mind.");
-                    break;
-            case 3: System.out.println("Pull up chair, fella. I can teach you.");
-                    letsLearn();
-                    break;
-            case 4: System.out.println("That's fine. There are plenty of other card games out there.");
-                    break;
-        }
-    }
-    public static void mao(){
-        
     }
     public static void letsLearn(){
         Scanner spot = new Scanner(System.in);
@@ -476,9 +484,9 @@ public class Mao{
     public static Boolean wasThePenaltyRight(int lastMove, int secondLast, int thirdLast, int fourthLast, int topCard, ArrayList<Integer> rules){
         switch(lastMove%10){
             case 1: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
-            case 2: if(rules.size()==1)
+            case 2: if(whatNext(rules,topCard).size()==1)
                         return !itsAMatch(secondLast%1000, whatNext(rules,topCard).get(0));
-                    return !(itsAMatch(secondLast%1000, whatNext(rules, topCard).get(0)))||itsAMatch(secondLast%1000,whatNext(rules, topCard).get(1));
+                    return !((itsAMatch(secondLast%1000, whatNext(rules, topCard).get(0)))||itsAMatch(secondLast%1000,whatNext(rules, topCard).get(1)));
             case 3: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
             case 4: return true;
             default: return true;
