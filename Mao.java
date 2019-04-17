@@ -472,20 +472,24 @@ public class Mao{
                     drawPlay.remove(drawPlay.size());
                     break;
             case 3: drawPile.add(hands.get((accusation/100)%10).remove(hands.get((accusation/100)%10).size()-1));
+                    break;
             case 4: makeItEvenBetter(game.get(game.size()-1));
                     break;
         }
     }
     //Redoing a crime.
-    public void makeItEvenBetter(int accusation){
-        switch(accusation%10){
-            case 1: pile.add(hands.get((accusation/100)%10).remove(hands.get((accusation/100)%10).size()-1));
-                    drawPlay.add(((accusation/100)%10)*10000+1000+numberCard(pile.get(pile.size()-1)));
+    public void makeItEvenBetter(int positionOfFaultyAccusation){
+        switch(game.get(positionOfFaultyAccusation)%10){
+            case 1: pile.add(hands.get((game.get(positionOfFaultyAccusation)/100)%10).remove(hands.get((game.get(positionOfFaultyAccusation)/100)%10).size()-1));
+                    drawPlay.add(((game.get(positionOfFaultyAccusation)/100)%10)*10000+1000+numberCard(pile.get(pile.size()-1)));
                     break;
-            case 2: pile.add(hands.get((accusation/100)%10).remove(hands.get((accusation/100)%10).size()-1));
-                    drawPlay.add(((accusation/100)%10)*10000+1000+numberCard(pile.get(pile.size()-1)));
+            case 2: pile.add(hands.get((game.get(positionOfFaultyAccusation)/100)%10).remove(hands.get((game.get(positionOfFaultyAccusation)/100)%10).size()-1));
+                    drawPlay.add(((game.get(positionOfFaultyAccusation)/100)%10)*10000+1000+numberCard(pile.get(pile.size()-1)));
                     break;
-            case 3: hands.get((accusation/100)%10).add(drawPile.remove(drawPile.size()-1));
+            case 3: hands.get((game.get(positionOfFaultyAccusation)/100)%10).add(drawPile.remove(drawPile.size()-1));
+                    break;
+            case 4: makeItEvenBetter(positionOfFaultyAccusation-1);
+                    break;
         }
     }
 }
