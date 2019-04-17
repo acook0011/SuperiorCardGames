@@ -4,6 +4,30 @@ import java.util.*;
  * Gavin's playhouse
  */
 public class Mao{
+    Deck deck = new Deck();
+    //Where you get.
+    ArrayList<Card> drawPile = new ArrayList<Card>();
+    //Where you play.
+    ArrayList<Card> pile = new ArrayList<Card>();
+    //Every move in the game.
+    ArrayList<Integer> game = new ArrayList<Integer>();
+    //Every draw or play in the game that passed judgement. These are moves that count as turns.
+    ArrayList<Integer> drawPlay = new ArrayList<Integer>();
+    //Everybody's hands.
+    ArrayList<ArrayList<Card>> hands = new ArrayList<ArrayList<Card>>();
+    //The real rules, sorted by creator.
+    ArrayList<ArrayList<Integer>> rules = new ArrayList<ArrayList<Integer>>();  
+    //Each players's hypotheses for the most recent rule created by each player.
+    ArrayList<ArrayList<Integer>> hypoSpecif = new ArrayList<ArrayList<Integer>>();
+    //All of each player's hypotheses.
+    ArrayList<ArrayList<Integer>> hypos = new ArrayList<ArrayList<Integer>>();
+    //Parallel ArrayLists containing the situations of every time someone accused someone since the last time that someone created a rule.
+    ArrayList<ArrayList<Integer>> m4 = new ArrayList<ArrayList<Integer>>();
+    ArrayList<ArrayList<Integer>> m3 = new ArrayList<ArrayList<Integer>>();
+    ArrayList<ArrayList<Integer>> m2 = new ArrayList<ArrayList<Integer>>();
+    ArrayList<ArrayList<Integer>> m1 = new ArrayList<ArrayList<Integer>>();
+    ArrayList<ArrayList<Integer>> topCards = new ArrayList<ArrayList<Integer>>();
+    
     public static void playMao(){
         
         Scanner searcher = new Scanner(System.in);
@@ -15,7 +39,7 @@ public class Mao{
         System.out.println("4 - No, and I don't want to play now.");
         int gamer = searcher.nextInt();
         switch(gamer){
-            case 1: mao();
+            case 1: 
                     break;
             case 2: System.out.println("I get it. No worries. Just come on back anytime if you change your mind.");
                     break;
@@ -26,89 +50,8 @@ public class Mao{
                     break;
         }
     }
-    public static void mao(){
-        //Let's get ready!
-        Deck deck =  new Deck();
-        ArrayList<Card> pile = new ArrayList<Card>();
-        //Every move in the game
-        ArrayList<Integer> game = new ArrayList<Integer>();
-        //Every draw or play in the game
-        ArrayList<Integer> drawPlay = new ArrayList<Integer>();
+    public Mao(){
         
-        pile.add(deck.deal());
-        
-        //The last two plays or draws
-        int lastMove1;
-        int lastMove2;
-        
-        //Everybody's hands
-        ArrayList<Card> ahand = new ArrayList<Card>();
-        ArrayList<Card> bhand = new ArrayList<Card>();
-        ArrayList<Card> chand = new ArrayList<Card>();
-        ArrayList<Card> hhand = new ArrayList<Card>();
-        
-        //The real rules
-        ArrayList<Integer> arules = new ArrayList<Integer>();
-        ArrayList<Integer> brules = new ArrayList<Integer>();
-        ArrayList<Integer> crules = new ArrayList<Integer>();
-        ArrayList<Integer> hrules = new ArrayList<Integer>();
-        
-        //Alice's hypotheses for the most recent rule created by each player.
-        int abhypo;
-        int achypo;
-        int ahhypo;
-        //All of Alice's hypotheses.
-        ArrayList<Integer> ahypo = new ArrayList<Integer>();
-        
-        //Bob's hypotheses for the most recent rule created by each player.
-        int bahypo;
-        int bchypo;
-        int bhhypo;
-        //All of Bob's hypotheses.
-        ArrayList<Integer> bhypo = new ArrayList<Integer>();
-        
-        //Charlie's hypotheses for the most recetn rule created by each player.
-        int cahypo;
-        int cbhypo;
-        int chhypo;
-        //All of Charlie's hypotheses.
-        ArrayList<Integer> chypo = new ArrayList<Integer>();
-        
-        //Parallel ArrayLists containing the situations of every time Alice accused someone since the last time she created a rule.
-        ArrayList<Integer> a4 = new ArrayList<Integer>();
-        ArrayList<Integer> a3 = new ArrayList<Integer>();
-        ArrayList<Integer> a2 = new ArrayList<Integer>();
-        ArrayList<Integer> a1 = new ArrayList<Integer>();
-        ArrayList<Integer> atopCards = new ArrayList<Integer>();
-        
-        //Parallel ArrayLists containing the situations of every time Bob accused someone since the last time he created a rule.
-        ArrayList<Integer> b4 = new ArrayList<Integer>();
-        ArrayList<Integer> b3 = new ArrayList<Integer>();
-        ArrayList<Integer> b2 = new ArrayList<Integer>();
-        ArrayList<Integer> b1 = new ArrayList<Integer>();
-        ArrayList<Integer> btopCards = new ArrayList<Integer>();
-        
-        //Parallel ArrayLists containing the situations of every time Charlie accused someone since the last time he created a rule.
-        ArrayList<Integer> c4 = new ArrayList<Integer>();
-        ArrayList<Integer> c3 = new ArrayList<Integer>();
-        ArrayList<Integer> c2 = new ArrayList<Integer>();
-        ArrayList<Integer> c1 = new ArrayList<Integer>();
-        ArrayList<Integer> ctopCards = new ArrayList<Integer>();
-        
-        //Parallel ArrayLists containing the situations of every time the human accused someone since the last time he created a rule.
-        ArrayList<Integer> h4 = new ArrayList<Integer>();
-        ArrayList<Integer> h3 = new ArrayList<Integer>();
-        ArrayList<Integer> h2 = new ArrayList<Integer>();
-        ArrayList<Integer> h1 = new ArrayList<Integer>();
-        ArrayList<Integer> htopCards = new ArrayList<Integer>();
-        
-        //Dealing the cards...
-        for(int i = 0; i<7; i++){
-            ahand.add(deck.deal());
-            bhand.add(deck.deal());
-            chand.add(deck.deal());
-            hhand.add(deck.deal());
-        }
     }
     public static void letsLearn(){
         Scanner spot = new Scanner(System.in);
@@ -520,6 +463,29 @@ public class Mao{
         return 0;
     }
     //Undoing a crime.
-    public static void makeItBetter(){
+    public void makeItBetter(int accusation){
+        switch(accusation%10){
+            case 1: hands.get((accusation/100)%10).add(pile.remove(pile.size()-1));
+                    drawPlay.remove(drawPlay.size());
+                    break;
+            case 2: hands.get((accusation/100)%10).add(pile.remove(pile.size()-1));
+                    drawPlay.remove(drawPlay.size());
+                    break;
+            case 3: drawPile.add(hands.get((accusation/100)%10).remove(hands.get((accusation/100)%10).size()-1));
+            case 4: makeItEvenBetter(game.get(game.size()-1));
+                    break;
+        }
+    }
+    //Redoing a crime.
+    public void makeItEvenBetter(int accusation){
+        switch(accusation%10){
+            case 1: pile.add(hands.get((accusation/100)%10).remove(hands.get((accusation/100)%10).size()-1));
+                    drawPlay.add(((accusation/100)%10)*10000+1000+numberCard(pile.get(pile.size()-1)));
+                    break;
+            case 2: pile.add(hands.get((accusation/100)%10).remove(hands.get((accusation/100)%10).size()-1));
+                    drawPlay.add(((accusation/100)%10)*10000+1000+numberCard(pile.get(pile.size()-1)));
+                    break;
+            case 3: hands.get((accusation/100)%10).add(drawPile.remove(drawPile.size()-1));
+        }
     }
 }
