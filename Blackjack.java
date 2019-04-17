@@ -19,7 +19,7 @@ public class Blackjack
         deck = new Deck();
         p = new ArrayList<ArrayList<Card>>(); // p.get(0) = Dealer
         Scanner reader = new Scanner(System.in);
-        
+
         deck.shuffle();
         System.out.println("How many will be gambling against The Dealer? ");
         int players = reader.nextInt();
