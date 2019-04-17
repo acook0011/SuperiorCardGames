@@ -28,7 +28,7 @@ public class Mao{
     ArrayList<ArrayList<Integer>> m1 = new ArrayList<ArrayList<Integer>>();
     ArrayList<ArrayList<Integer>> topCards = new ArrayList<ArrayList<Integer>>();
     
-    public static void intro(){
+    public static void playMao(){
         Scanner searcher = new Scanner(System.in);
         
         System.out.println("Welcome, friend. Do you know how to play Computer Mao?");
@@ -38,22 +38,31 @@ public class Mao{
         System.out.println("4 - No, and I don't want to play now.");
         int gamer = searcher.nextInt();
         switch(gamer){
-            case 1: 
+            case 1: gamer();
                     break;
             case 2: System.out.println("I get it. No worries. Just come on back anytime if you change your mind.");
                     break;
             case 3: System.out.println("Pull up chair, fella. I can teach you.");
                     letsLearn();
+                    gamer();
                     break;
             case 4: System.out.println("That's fine. There are plenty of other card games out there.");
                     break;
         }
     }
     public Mao(){
-        
+        //Dealing.
+        ArrayList<Card> hhand = new ArrayList<Card>();
+        ArrayList<Card> ahand = new ArrayList<Card>();
+        ArrayList<Card> bhand = new ArrayList<Card>();
+        ArrayList<Card> chand = new ArrayList<Card>();
+        for(int i=0; i<7; i++)
+            hhand.add(deck.deal());
+        for(int i=0; i<24; i++)
+            drawPile.add(deck.deal());
+        pile.add(drawPile.remove(drawPile.size()));
     }
-    public static void playMao(){
-        intro();
+    public static void gamer(){
         
     }
     public static void letsLearn(){
@@ -64,17 +73,22 @@ public class Mao{
             System.out.println("Mao is a shedding card game. That means that the object of the game is to get rid of all the cards in your hand.");
             System.out.println("Every player starts with a hand of seven cards. There is one card face-up in the center of the table.");
             System.out.println("We take turns. It goes you, Alice, Bob, Charlie, you, Alice, Bob, Charlie, you, Alice, Bob, Charlie, and so on.");
+            System.out.println();
             System.out.println("When it's your turn, you can place a card from your hand on top of the card in the center.");
             System.out.println("The card you play must be either the same suit or the same rank as the card in the center.");
             System.out.println("If you are unable to or don't want to play, take a card from the draw pile and add it to your hand instead of playing.");
+            System.out.println();
             System.out.println("When someone empties their hand, they win, and the round is over.");
             System.out.println("The player who won creates a new secret rule, and the next round begins with the new rule in effect.");
             System.out.println("It is up to the other players to try to figure out the rule and play accordingly.");
             System.out.println("You may play as many rounds as you want, and all rules stay in effect as long as no other rule contradicts them.");
+            System.out.println();
             System.out.println("Sometimes, a player may do something that you believe to be against the rules.");
             System.out.println("If this happens, punish them! Their action will be undone, and they will recieve a one-card penalty.");
+            System.out.println("Remember-you can only punish the person who did something most recently.");
+            System.out.println();
             System.out.println("During the game, I (the computer) will ask you what you want to do.");
-            System.out.println("If it's your turn, play or draw. If not, you can penalize another player or just sit tight and do nothing.");
+            System.out.println("If you think it's your turn, play or draw. If not, you can penalize another player or just sit tight and do nothing.");
             System.out.println("I think that just about covers everything. Get it?");
             System.out.println();
             System.out.println();
@@ -494,5 +508,38 @@ public class Mao{
             case 4: makeItEvenBetter(positionOfFaultyAccusation-1);
                     break;
         }
+    }
+    public int humanThink(){
+        Scanner poker = new Scanner(System.in);
+        System.out.println("What would you like to do?");
+        System.out.println("0 - Do nothing.");
+        System.out.println("1 - Play a card.");
+        System.out.println("2 - Draw a card.");
+        if(game.size()>0&&game.get(game.size()-1)/10000!=1){
+            String name="";
+            switch(game.get(game.size()-1)/10000){
+                case 2: name = "Alice";
+                        break;
+                case 3: name = "Bob";
+                        break;
+                case 4: name = "Charlie";
+                        break;
+            }
+            switch(game.get((game.size()-1)/1000)%10){
+                case 1: System.out.println("3 - Penalize "+name+" for playing out of turn.");
+                        System.out.println("4 - Penalize "+name+" for playing an incorrect card.");
+                        break;
+                case 2: System.out.println("3 - Penalize "+name+" for drawing out of turn.");
+                        break;
+                case 3: System.out.println("3 - Penalize "+name+" for false judgement.");
+                        break;
+            }
+        }
+        int choix = poker.nextInt();
+        if(choix==1){
+            System.out.println("What card would you like to play?");
+            System.out.println("Type a number indicating a position in your hand.");
+        }
+        return 0;
     }
 }
