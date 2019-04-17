@@ -12,6 +12,10 @@ public class Mao{
         ArrayList<Integer> game = new ArrayList<Integer>();
         pile.add(deck.deal());
         
+        //The last two plays or draws
+        int lastMove1;
+        int lastMove2;
+        
         //Everybody's hands
         ArrayList<Card> ahand = new ArrayList<Card>();
         ArrayList<Card> bhand = new ArrayList<Card>();
@@ -495,15 +499,17 @@ public class Mao{
     //Returns a rule that makes sense for every situation.
     public static int science(ArrayList<Integer> p1, ArrayList<Integer> p2, ArrayList<Integer> p3, ArrayList<Integer> p4,ArrayList<Integer> ptopCard, ArrayList<Integer> knownRules, int who){
         Boolean done = false;
+        int counter = 0;
         while(!done){
             int hypo = randyRules(who);
             knownRules.add(hypo);
+            counter++;
             Boolean itsGood = true;
             for(int i=0; i<p1.size(); i++){
                 if(!wasThePenaltyRight(p1.get(i), p2.get(i), p3.get(i), p4.get(i), ptopCard.get(i), knownRules))
                     itsGood = false;
             }
-            if(itsGood)
+            if(itsGood||counter==1000)
                 return hypo;
             knownRules.remove(knownRules.size()-1);
         }
