@@ -8,10 +8,6 @@ public class Mao{
         
         Scanner searcher = new Scanner(System.in);
         
-        
-        
-        
-        
         System.out.println("Welcome, friend. Do you know how to play Computer Mao?");
         System.out.println("1 - Yes, and I want to play now.");
         System.out.println("2 - Yes, but I don't want to play now.");
@@ -522,5 +518,8 @@ public class Mao{
             knownRules.remove(knownRules.size()-1);
         }
         return 0;
+    }
+    //Undoing a crime.
+    public static void makeItBetter(){
     }
 }
