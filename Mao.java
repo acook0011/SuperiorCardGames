@@ -1,7 +1,7 @@
 import java.util.*;
 /**
- * Mao
- * Gavin's playhouse
+ * Mao.
+ * Gavin's playhouse.
  */
 public class Mao{
     Deck deck = new Deck();
@@ -52,18 +52,104 @@ public class Mao{
     }
     public Mao(){
         //Dealing.
+        deck.shuffle();
         ArrayList<Card> hhand = new ArrayList<Card>();
         ArrayList<Card> ahand = new ArrayList<Card>();
         ArrayList<Card> bhand = new ArrayList<Card>();
         ArrayList<Card> chand = new ArrayList<Card>();
         for(int i=0; i<7; i++)
             hhand.add(deck.deal());
+        hands.add(hhand);
+        hands.add(ahand);
+        hands.add(bhand);
+        hands.add(chand);
         for(int i=0; i<24; i++)
             drawPile.add(deck.deal());
-        pile.add(drawPile.remove(drawPile.size()));
+        pile.add(drawPile.remove(drawPile.size()-1));
+        //Getting the ArrayLists ready.
+        ArrayList<Integer> hrules = new ArrayList<Integer>();
+        ArrayList<Integer> arules = new ArrayList<Integer>();
+        ArrayList<Integer> brules = new ArrayList<Integer>();
+        ArrayList<Integer> crules = new ArrayList<Integer>();
+        rules.add(hrules);
+        rules.add(arules);
+        rules.add(brules);
+        rules.add(crules);
+        ArrayList<Integer> hhypoSpecif = new ArrayList<Integer>();
+        ArrayList<Integer> ahypoSpecif = new ArrayList<Integer>();
+        ArrayList<Integer> bhypoSpecif = new ArrayList<Integer>();
+        ArrayList<Integer> chypoSpecif = new ArrayList<Integer>();
+        hypoSpecif.add(hhypoSpecif);
+        hypoSpecif.add(ahypoSpecif);
+        hypoSpecif.add(bhypoSpecif);
+        hypoSpecif.add(chypoSpecif);
+        ArrayList<Integer> hhypos = new ArrayList<Integer>();
+        ArrayList<Integer> ahypos = new ArrayList<Integer>();
+        ArrayList<Integer> bhypos = new ArrayList<Integer>();
+        ArrayList<Integer> chypos = new ArrayList<Integer>();
+        hypos.add(hhypos);
+        hypos.add(ahypos);
+        hypos.add(bhypos);
+        hypos.add(chypos);
+        ArrayList<Integer> hm4 = new ArrayList<Integer>();
+        ArrayList<Integer> am4 = new ArrayList<Integer>();
+        ArrayList<Integer> bm4 = new ArrayList<Integer>();
+        ArrayList<Integer> cm4 = new ArrayList<Integer>();
+        m4.add(hm4);
+        m4.add(am4);
+        m4.add(bm4);
+        m4.add(cm4);
+        ArrayList<Integer> hm3 = new ArrayList<Integer>();
+        ArrayList<Integer> am3 = new ArrayList<Integer>();
+        ArrayList<Integer> bm3 = new ArrayList<Integer>();
+        ArrayList<Integer> cm3 = new ArrayList<Integer>();
+        m3.add(hm3);
+        m3.add(am3);
+        m3.add(bm3);
+        m3.add(cm3);
+        ArrayList<Integer> hm2 = new ArrayList<Integer>();
+        ArrayList<Integer> am2 = new ArrayList<Integer>();
+        ArrayList<Integer> bm2 = new ArrayList<Integer>();
+        ArrayList<Integer> cm2 = new ArrayList<Integer>();
+        m2.add(hm2);
+        m2.add(am2);
+        m2.add(bm2);
+        m2.add(cm2);
+        ArrayList<Integer> hm1 = new ArrayList<Integer>();
+        ArrayList<Integer> am1 = new ArrayList<Integer>();
+        ArrayList<Integer> bm1 = new ArrayList<Integer>();
+        ArrayList<Integer> cm1 = new ArrayList<Integer>();
+        m1.add(hm1);
+        m1.add(am1);
+        m1.add(bm1);
+        m1.add(cm1);
+        ArrayList<Integer> htopCards = new ArrayList<Integer>();
+        ArrayList<Integer> atopCards = new ArrayList<Integer>();
+        ArrayList<Integer> btopCards = new ArrayList<Integer>();
+        ArrayList<Integer> ctopCards = new ArrayList<Integer>();
+        topCards.add(htopCards);
+        topCards.add(atopCards);
+        topCards.add(btopCards);
+        topCards.add(ctopCards);
+    }
+    //Accessor.
+    public ArrayList<ArrayList<Card>> hands(){
+        return hands;
     }
     public static void gamer(){
-        
+        Scanner stalker = new Scanner(System.in);
+        System.out.println("How many rounds would you like to play?");
+        int numRounds = stalker.nextInt();
+        Mao chairman = new Mao();
+        boolean gameOn = true;
+        System.out.println("The "+chairman.pile.get(0)+" is in the middle.");
+        while(gameOn){
+            int currentMove = humanMove(chairman.hands.get(0));
+            chairman.game.add(currentMove);
+            if((currentMove/1000)%10==1||(currentMove/1000)%10==2)
+                chairman.drawPlay.add(currentMove);
+            
+        }
     }
     public static void letsLearn(){
         Scanner spot = new Scanner(System.in);
@@ -536,5 +622,62 @@ public class Mao{
         return 0;
     }
     //The computer can accuse.
-    
+    public static int compAccuse(int whoAmI, int fourthLast, int thirdLast, int secondLast, int last, int thirdLastPD, int secondLastPD, int lastPD, int topCard, ArrayList<Integer> rules){
+        switch((last/1000)%10){
+            case 1: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
+                        return whoAmI*10000+3000+(last/10000)*100+1;
+                    if(whatNext(secondLastPD%1000,rules).size()==1){
+                        if(!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(0)))
+                            return whoAmI*10000+3000+(last/10000)*100+2;
+                    }
+                    if(!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(0))&&!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(1)))
+                            return whoAmI*10000+3000+(last/10000)*100+2;
+                    break;
+            case 2: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
+                        return whoAmI*10000+3000+(last/10000)*100+3;
+                    break;
+            case 3: if(!wasThePenaltyRight(last, secondLast, thirdLast, fourthLast, topCard, rules))
+                        return whoAmI*10000+3000+(last/10000)*100+4;
+                    break;
+        }
+        return 0;
+    }
+    //Human move.
+    public static int humanMove(ArrayList<Card> phand){
+        Scanner hawk = new Scanner(System.in);
+        System.out.println("Here is your hand:");
+        for(int i=0; i<phand.size(); i++){
+            System.out.println((i+1)+": "+phand.get(i));
+        }
+        System.out.println();
+        System.out.println("What do you want to do?");
+        System.out.println("0 - Do nothing.");
+        System.out.println("1 - Play a card.");
+        System.out.println("2 - Draw a card.");
+        int desire = hawk.nextInt();
+        if(desire==1){
+            System.out.println("Type a number indicating what position in your hand you would like to play from.");
+            int cardy = hawk.nextInt();
+            return 11000+numberCard(phand.get(cardy-1));
+        }
+        if(desire==2){
+            return 12000;
+        }
+        return 0;
+    }
+    //Computer move. Returns a six-digit integer where the last five are what happened and the first what position in hand the computer is playing from.
+    public static int compMove(int lastPD, int secondLastPD, int topCard, ArrayList<Integer> rulies, ArrayList<Card> hand, int whoAmI){
+        if(whoTurn(secondLastPD, lastPD, rulies)!=whoAmI)
+            return 0;
+        for(int i=0; i<hand.size(); i++){
+            if(whatNext(secondLastPD%1000,rulies).size()==1){
+                if(itsAMatch(hand.get(i),whatNext(topCard, rulies).get(0)))
+                    return i*100000+whoAmI*10000+1000+numberCard(hand.get(i));
+            }else{
+                if(itsAMatch(hand.get(i),whatNext(topCard, rulies).get(0))||itsAMatch(hand.get(i),whatNext(topCard, rulies).get(1)))
+                    return i*100000+whoAmI*10000+1000+numberCard(hand.get(i));
+            }    
+        }
+        return whoAmI*10000+2000;
+    }
 }

@@ -16,12 +16,13 @@ public class MaoTester
         System.out.println("5 - Make a rule using nothing but the English language.");
         System.out.println("6 - Play Computer Mao.");
         System.out.println("7 - Check out wasThePenaltyRight.");
+        System.out.println("8 - Move.");
         System.out.println("Anything else - Leave immediately.");
         str = thunter.nextLine();
         System.out.println();
         System.out.println();
         System.out.println();
-        while(str.equals("1")||str.equals("2")||str.equals("3")||str.equals("4")||str.equals("5")||str.equals("6")||str.equals("7")){
+        while(str.equals("1")||str.equals("2")||str.equals("3")||str.equals("4")||str.equals("5")||str.equals("6")||str.equals("7")||str.equals("8")){
             switch(str){
                 case "1":   int human = Mao.randyRules(1);
                             int alice = Mao.randyRules(2);
@@ -164,6 +165,17 @@ public class MaoTester
                             System.out.println("4. "+Mao.stringMove(last));
                             System.out.println();
                             System.out.println(Mao.wasThePenaltyRight(last, second, third, fourth, topCard, law));
+                            break;
+                case "8":   ArrayList<Card> hand = new ArrayList<Card>();
+                            Deck hallmark  = new Deck();
+                            hallmark.shuffle();
+                            System.out.println("How many cards you want, kid?");
+                            int num = looker.nextInt();
+                            for(int i=0; i<num; i++)
+                                hand.add(hallmark.deal());
+                            int movie = Mao.humanMove(hand);
+                            System.out.println();
+                            System.out.println(movie+": "+Mao.stringMove(movie));
                             break;
                 default:    break;
             }
