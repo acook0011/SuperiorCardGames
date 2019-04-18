@@ -579,4 +579,19 @@ public class Mao{
         }
         return 0;
     }
+    //Computer move. Returns a six-digit integer where the last five are what happened and the first what position in hand the computer is playing from.
+    public static int compMove(int lastPD, int secondLastPD, int topCard, ArrayList<Integer> rulies, ArrayList<Card> hand, int whoAmI){
+        if(whoTurn(secondLastPD, lastPD, rulies)!=whoAmI)
+            return 0;
+        for(int i=0; i<hand.size(); i++){
+            if(whatNext(secondLastPD%1000,rulies).size()==1){
+                if(itsAMatch(hand.get(i),whatNext(topCard, rulies).get(0)))
+                    return i*100000+whoAmI*10000+1000+numberCard(hand.get(i));
+            }else{
+                if(itsAMatch(hand.get(i),whatNext(topCard, rulies).get(0))||itsAMatch(hand.get(i),whatNext(topCard, rulies).get(1)))
+                    return i*100000+whoAmI*10000+1000+numberCard(hand.get(i));
+            }    
+        }
+        return whoAmI*10000+2000;
+    }
 }
