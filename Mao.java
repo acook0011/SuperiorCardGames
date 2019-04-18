@@ -437,6 +437,7 @@ public class Mao{
             default: return 0;
         }
     }
+    //Was the penalty right?
     public static Boolean wasThePenaltyRight(int lastMove, int secondLast, int thirdLast, int fourthLast, int topCard, ArrayList<Integer> rules){
         switch(lastMove%10){
             case 1: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
@@ -534,4 +535,6 @@ public class Mao{
         }
         return 0;
     }
+    //The computer can accuse.
+    
 }
