@@ -536,7 +536,7 @@ public class Mao{
         return 0;
     }
     //The computer can accuse.
-    public int compAccuse(int whoAmI, int fourthLast, int thirdLast, int secondLast, int last, int thirdLastPD, int secondLastPD, int lastPD, int topCard, ArrayList<Integer> rules){
+    public static int compAccuse(int whoAmI, int fourthLast, int thirdLast, int secondLast, int last, int thirdLastPD, int secondLastPD, int lastPD, int topCard, ArrayList<Integer> rules){
         switch((last/1000)%10){
             case 1: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
                         return whoAmI*10000+3000+(last/10000)*100+1;
@@ -553,6 +553,29 @@ public class Mao{
             case 3: if(!wasThePenaltyRight(last, secondLast, thirdLast, fourthLast, topCard, rules))
                         return whoAmI*10000+3000+(last/10000)*100+4;
                     break;
+        }
+        return 0;
+    }
+    //Human move.
+    public static int humanMove(ArrayList<Card> phand){
+        Scanner hawk = new Scanner(System.in);
+        System.out.println("Here is your hand:");
+        for(int i=0; i<phand.size(); i++){
+            System.out.println((i+1)+": "+phand.get(i));
+        }
+        System.out.println();
+        System.out.println("What do you want to do?");
+        System.out.println("0 - Do nothing.");
+        System.out.println("1 - Play a card.");
+        System.out.println("2 - Draw a card.");
+        int desire = hawk.nextInt();
+        if(desire==1){
+            System.out.println("Type a number indicating what position in your hand you would like to play from.");
+            int cardy = hawk.nextInt();
+            return 11000+numberCard(phand.get(cardy-1));
+        }
+        if(desire==2){
+            return 12000;
         }
         return 0;
     }
