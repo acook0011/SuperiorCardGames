@@ -22,7 +22,10 @@ public class Casino
             money[i] = 10000;
         }
         names = new String[players];
-        System.out.println("Do you want to give your names? [Y/N]"); reader.nextLine();
+        System.out.println("Do you want to give your names? [Y/N]"); 
+        
+        Boolean valid = false;
+        while (!valid){ 
         String reply = reader.nextLine();
         if (reply.toUpperCase().equals("Y") || reply.toUpperCase().equals("YES")){
             int count = 0;
@@ -31,10 +34,17 @@ public class Casino
                 System.out.println("What is Player " + count + "'s name?");
                 names[i] = reader.nextLine();
             }
+            valid = true;
         } else if (reply.toUpperCase().equals("N") || reply.toUpperCase().equals("NO")){
-            
+            int count = 0;
+            for (int i = 0; i < players; i++){
+                count++;
+                names[i] = ("Player " + count); 
+            }
+            valid = true;
         } else {
             System.out.println("Respond with Y or N.");
+        }
         }
         ingame = new boolean[players];
         for (int i = 0; i < ingame.length; i++){
