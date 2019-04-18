@@ -101,7 +101,8 @@ public class Blackjack
            Boolean valid = false;
            while (!valid){
                String reply = reader.nextLine();
-               if (reply.toUpperCase().equals("Y")){
+               if (reply.toUpperCase().equals("Y") || reply.toUpperCase().equals("YES")
+                   || reply.toUpperCase().equals("HIT")){
                    p.get(x).add(deck.deal());
                    score[x] = score(p.get(x));
                    System.out.println("Player " + x + " was dealt a " + 
@@ -118,7 +119,8 @@ public class Blackjack
                        bust[x] = true;
                    } 
                    valid = true;
-                } else if (reply.toUpperCase().equals("N")){
+                } else if (reply.toUpperCase().equals("N") || reply.toUpperCase().equals("NO")
+                           || reply.toUpperCase().equals("STAY")){
                    stay[x] = true;
                    valid = true;
                 } else {
