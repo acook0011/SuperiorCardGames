@@ -437,6 +437,7 @@ public class Mao{
             default: return 0;
         }
     }
+    //Was the penalty right?
     public static Boolean wasThePenaltyRight(int lastMove, int secondLast, int thirdLast, int fourthLast, int topCard, ArrayList<Integer> rules){
         switch(lastMove%10){
             case 1: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
@@ -509,37 +510,31 @@ public class Mao{
                     break;
         }
     }
-    public int humanThink(){
-        Scanner poker = new Scanner(System.in);
-        System.out.println("What would you like to do?");
+    //The human can accuse.
+    public int huamnAccuse(int lastMove){
+        Scanner sniffer = new Scanner(System.in);
+        System.out.println("What do you want to do?");
         System.out.println("0 - Do nothing.");
-        System.out.println("1 - Play a card.");
-        System.out.println("2 - Draw a card.");
-        if(game.size()>0&&game.get(game.size()-1)/10000!=1){
-            String name="";
-            switch(game.get(game.size()-1)/10000){
-                case 2: name = "Alice";
-                        break;
-                case 3: name = "Bob";
-                        break;
-                case 4: name = "Charlie";
-                        break;
-            }
-            switch(game.get((game.size()-1)/1000)%10){
-                case 1: System.out.println("3 - Penalize "+name+" for playing out of turn.");
-                        System.out.println("4 - Penalize "+name+" for playing an incorrect card.");
-                        break;
-                case 2: System.out.println("3 - Penalize "+name+" for drawing out of turn.");
-                        break;
-                case 3: System.out.println("3 - Penalize "+name+" for false judgement.");
-                        break;
-            }
-        }
-        int choix = poker.nextInt();
-        if(choix==1){
-            System.out.println("What card would you like to play?");
-            System.out.println("Type a number indicating a position in your hand.");
+        switch((lastMove/1000)%10){
+            case 1: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for playing out of turn.");
+                    System.out.println("2 - Penalize "+numToPlaya(lastMove/10000)+" for playing an incorrect card.");
+                    int choix = sniffer.nextInt();
+                    if(choix==1||choix==2)
+                        return 11000+(lastMove/10000)*100+choix;
+                    break;
+            case 2: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for drawing out of turn.");
+                    int choiy = sniffer.nextInt();
+                    if(choiy==1)
+                        return 11003+(lastMove/10000)*100;
+                    break;
+            case 3: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for false judgement.");
+                    int choiz = sniffer.nextInt();
+                    if(choiz==1)
+                        return 11004+(lastMove/10000)*100;
+                    break;
         }
         return 0;
     }
+    //The computer can accuse.
+    
 }
