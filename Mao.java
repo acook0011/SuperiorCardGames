@@ -132,9 +132,39 @@ public class Mao{
         topCards.add(btopCards);
         topCards.add(ctopCards);
     }
-    //Accessor.
+    //Accessors
+    public ArrayList<Integer> game(){
+        return game;
+    }
     public ArrayList<ArrayList<Card>> hands(){
         return hands;
+    }
+    public ArrayList<Integer> drawPlay(){
+        return drawPlay;
+    }
+    public ArrayList<ArrayList<Integer>> rules(){
+        return rules;
+    }
+    public ArrayList<ArrayList<Integer>> hypoSpecif(){
+        return hypoSpecif;
+    }
+    public ArrayList<ArrayList<Integer>> hypos(){
+        return hypos;
+    }
+    public ArrayList<ArrayList<Integer>> m4(){
+        return m4;
+    }
+    public ArrayList<ArrayList<Integer>> m3(){
+        return m3;
+    }
+    public ArrayList<ArrayList<Integer>> m2(){
+        return m2;
+    }
+    public ArrayList<ArrayList<Integer>> m1(){
+        return m1;
+    }
+    public ArrayList<ArrayList<Integer>> topCards(){
+        return topCards;
     }
     public static void gamer(){
         Scanner stalker = new Scanner(System.in);
@@ -144,6 +174,7 @@ public class Mao{
         boolean gameOn = true;
         System.out.println("The "+chairman.pile.get(0)+" is in the middle.");
         while(gameOn){
+            //Human moves
             int currentMove = humanMove(chairman.hands.get(0));
             chairman.game.add(currentMove);
             if((currentMove/1000)%10==1||(currentMove/1000)%10==2)
@@ -679,5 +710,28 @@ public class Mao{
             }    
         }
         return whoAmI*10000+2000;
+    }
+    //Everyone can penalize human.
+    public void humanGetsRect(){
+        //Alice gets the chance to penalize.
+            switch(game.size()){
+                case 1: break;
+                case 2: break;
+                case 3: break;
+                case 4: break;
+                default: int aliceMove = compAccuse(2,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(2));
+                        if(aliceMove!=0){
+                            game.add(aliceMove);
+                        }
+            }
+    }
+    public void aliceGetsRect(){
+        
+    }
+    public void bobGetsRect(){
+        
+    }
+    public void charlieGetsRect(){
+        
     }
 }
