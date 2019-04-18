@@ -1,7 +1,7 @@
 import java.util.*;
 /**
- * Mao
- * Gavin's playhouse
+ * Mao.
+ * Gavin's playhouse.
  */
 public class Mao{
     Deck deck = new Deck();
@@ -52,18 +52,104 @@ public class Mao{
     }
     public Mao(){
         //Dealing.
+        deck.shuffle();
         ArrayList<Card> hhand = new ArrayList<Card>();
         ArrayList<Card> ahand = new ArrayList<Card>();
         ArrayList<Card> bhand = new ArrayList<Card>();
         ArrayList<Card> chand = new ArrayList<Card>();
         for(int i=0; i<7; i++)
             hhand.add(deck.deal());
+        hands.add(hhand);
+        hands.add(ahand);
+        hands.add(bhand);
+        hands.add(chand);
         for(int i=0; i<24; i++)
             drawPile.add(deck.deal());
-        pile.add(drawPile.remove(drawPile.size()));
+        pile.add(drawPile.remove(drawPile.size()-1));
+        //Getting the ArrayLists ready.
+        ArrayList<Integer> hrules = new ArrayList<Integer>();
+        ArrayList<Integer> arules = new ArrayList<Integer>();
+        ArrayList<Integer> brules = new ArrayList<Integer>();
+        ArrayList<Integer> crules = new ArrayList<Integer>();
+        rules.add(hrules);
+        rules.add(arules);
+        rules.add(brules);
+        rules.add(crules);
+        ArrayList<Integer> hhypoSpecif = new ArrayList<Integer>();
+        ArrayList<Integer> ahypoSpecif = new ArrayList<Integer>();
+        ArrayList<Integer> bhypoSpecif = new ArrayList<Integer>();
+        ArrayList<Integer> chypoSpecif = new ArrayList<Integer>();
+        hypoSpecif.add(hhypoSpecif);
+        hypoSpecif.add(ahypoSpecif);
+        hypoSpecif.add(bhypoSpecif);
+        hypoSpecif.add(chypoSpecif);
+        ArrayList<Integer> hhypos = new ArrayList<Integer>();
+        ArrayList<Integer> ahypos = new ArrayList<Integer>();
+        ArrayList<Integer> bhypos = new ArrayList<Integer>();
+        ArrayList<Integer> chypos = new ArrayList<Integer>();
+        hypos.add(hhypos);
+        hypos.add(ahypos);
+        hypos.add(bhypos);
+        hypos.add(chypos);
+        ArrayList<Integer> hm4 = new ArrayList<Integer>();
+        ArrayList<Integer> am4 = new ArrayList<Integer>();
+        ArrayList<Integer> bm4 = new ArrayList<Integer>();
+        ArrayList<Integer> cm4 = new ArrayList<Integer>();
+        m4.add(hm4);
+        m4.add(am4);
+        m4.add(bm4);
+        m4.add(cm4);
+        ArrayList<Integer> hm3 = new ArrayList<Integer>();
+        ArrayList<Integer> am3 = new ArrayList<Integer>();
+        ArrayList<Integer> bm3 = new ArrayList<Integer>();
+        ArrayList<Integer> cm3 = new ArrayList<Integer>();
+        m3.add(hm3);
+        m3.add(am3);
+        m3.add(bm3);
+        m3.add(cm3);
+        ArrayList<Integer> hm2 = new ArrayList<Integer>();
+        ArrayList<Integer> am2 = new ArrayList<Integer>();
+        ArrayList<Integer> bm2 = new ArrayList<Integer>();
+        ArrayList<Integer> cm2 = new ArrayList<Integer>();
+        m2.add(hm2);
+        m2.add(am2);
+        m2.add(bm2);
+        m2.add(cm2);
+        ArrayList<Integer> hm1 = new ArrayList<Integer>();
+        ArrayList<Integer> am1 = new ArrayList<Integer>();
+        ArrayList<Integer> bm1 = new ArrayList<Integer>();
+        ArrayList<Integer> cm1 = new ArrayList<Integer>();
+        m1.add(hm1);
+        m1.add(am1);
+        m1.add(bm1);
+        m1.add(cm1);
+        ArrayList<Integer> htopCards = new ArrayList<Integer>();
+        ArrayList<Integer> atopCards = new ArrayList<Integer>();
+        ArrayList<Integer> btopCards = new ArrayList<Integer>();
+        ArrayList<Integer> ctopCards = new ArrayList<Integer>();
+        topCards.add(htopCards);
+        topCards.add(atopCards);
+        topCards.add(btopCards);
+        topCards.add(ctopCards);
+    }
+    //Accessor.
+    public ArrayList<ArrayList<Card>> hands(){
+        return hands;
     }
     public static void gamer(){
-        
+        Scanner stalker = new Scanner(System.in);
+        System.out.println("How many rounds would you like to play?");
+        int numRounds = stalker.nextInt();
+        Mao chairman = new Mao();
+        boolean gameOn = true;
+        System.out.println("The "+chairman.pile.get(0)+" is in the middle.");
+        while(gameOn){
+            int currentMove = humanMove(chairman.hands.get(0));
+            chairman.game.add(currentMove);
+            if((currentMove/1000)%10==1||(currentMove/1000)%10==2)
+                chairman.drawPlay.add(currentMove);
+            
+        }
     }
     public static void letsLearn(){
         Scanner spot = new Scanner(System.in);
