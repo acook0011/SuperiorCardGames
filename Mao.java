@@ -536,5 +536,24 @@ public class Mao{
         return 0;
     }
     //The computer can accuse.
-    
+    public int compAccuse(int whoAmI, int fourthLast, int thirdLast, int secondLast, int last, int thirdLastPD, int secondLastPD, int lastPD, int topCard, ArrayList<Integer> rules){
+        switch((last/1000)%10){
+            case 1: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
+                        return whoAmI*10000+3000+(last/10000)*100+1;
+                    if(whatNext(secondLastPD%1000,rules).size()==1){
+                        if(!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(0)))
+                            return whoAmI*10000+3000+(last/10000)*100+2;
+                    }
+                    if(!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(0))&&!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(1)))
+                            return whoAmI*10000+3000+(last/10000)*100+2;
+                    break;
+            case 2: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
+                        return whoAmI*10000+3000+(last/10000)*100+3;
+                    break;
+            case 3: if(!wasThePenaltyRight(last, secondLast, thirdLast, fourthLast, topCard, rules))
+                        return whoAmI*10000+3000+(last/10000)*100+4;
+                    break;
+        }
+        return 0;
+    }
 }
