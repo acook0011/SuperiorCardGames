@@ -53,12 +53,17 @@ public class Mao{
     public Mao(){
         //Dealing.
         deck.shuffle();
+        ArrayList<Card> fhand = new ArrayList<Card>();
         ArrayList<Card> hhand = new ArrayList<Card>();
         ArrayList<Card> ahand = new ArrayList<Card>();
         ArrayList<Card> bhand = new ArrayList<Card>();
         ArrayList<Card> chand = new ArrayList<Card>();
-        for(int i=0; i<7; i++)
+        for(int i=0; i<7; i++){
             hhand.add(deck.deal());
+            ahand.add(deck.deal());
+            bhand.add(deck.deal());
+            chand.add(deck.deal());
+        }
         hands.add(hhand);
         hands.add(ahand);
         hands.add(bhand);
@@ -67,66 +72,82 @@ public class Mao{
             drawPile.add(deck.deal());
         pile.add(drawPile.remove(drawPile.size()-1));
         //Getting the ArrayLists ready.
+        ArrayList<Integer> frules = new ArrayList<Integer>();
         ArrayList<Integer> hrules = new ArrayList<Integer>();
         ArrayList<Integer> arules = new ArrayList<Integer>();
         ArrayList<Integer> brules = new ArrayList<Integer>();
         ArrayList<Integer> crules = new ArrayList<Integer>();
+        rules.add(frules);
         rules.add(hrules);
         rules.add(arules);
         rules.add(brules);
         rules.add(crules);
+        ArrayList<Integer> fhypoSpecif = new ArrayList<Integer>();
         ArrayList<Integer> hhypoSpecif = new ArrayList<Integer>();
         ArrayList<Integer> ahypoSpecif = new ArrayList<Integer>();
         ArrayList<Integer> bhypoSpecif = new ArrayList<Integer>();
         ArrayList<Integer> chypoSpecif = new ArrayList<Integer>();
+        hypoSpecif.add(fhypoSpecif);
         hypoSpecif.add(hhypoSpecif);
         hypoSpecif.add(ahypoSpecif);
         hypoSpecif.add(bhypoSpecif);
         hypoSpecif.add(chypoSpecif);
+        ArrayList<Integer> fhypos = new ArrayList<Integer>();
         ArrayList<Integer> hhypos = new ArrayList<Integer>();
         ArrayList<Integer> ahypos = new ArrayList<Integer>();
         ArrayList<Integer> bhypos = new ArrayList<Integer>();
         ArrayList<Integer> chypos = new ArrayList<Integer>();
+        hypos.add(fhypos);
         hypos.add(hhypos);
         hypos.add(ahypos);
         hypos.add(bhypos);
         hypos.add(chypos);
+        ArrayList<Integer> fm4 = new ArrayList<Integer>();
         ArrayList<Integer> hm4 = new ArrayList<Integer>();
         ArrayList<Integer> am4 = new ArrayList<Integer>();
         ArrayList<Integer> bm4 = new ArrayList<Integer>();
         ArrayList<Integer> cm4 = new ArrayList<Integer>();
+        m4.add(fm4);
         m4.add(hm4);
         m4.add(am4);
         m4.add(bm4);
         m4.add(cm4);
+        ArrayList<Integer> fm3 = new ArrayList<Integer>();
         ArrayList<Integer> hm3 = new ArrayList<Integer>();
         ArrayList<Integer> am3 = new ArrayList<Integer>();
         ArrayList<Integer> bm3 = new ArrayList<Integer>();
         ArrayList<Integer> cm3 = new ArrayList<Integer>();
+        m3.add(fm3);
         m3.add(hm3);
         m3.add(am3);
         m3.add(bm3);
         m3.add(cm3);
+        ArrayList<Integer> fm2 = new ArrayList<Integer>();
         ArrayList<Integer> hm2 = new ArrayList<Integer>();
         ArrayList<Integer> am2 = new ArrayList<Integer>();
         ArrayList<Integer> bm2 = new ArrayList<Integer>();
         ArrayList<Integer> cm2 = new ArrayList<Integer>();
+        m2.add(fm2);
         m2.add(hm2);
         m2.add(am2);
         m2.add(bm2);
         m2.add(cm2);
+        ArrayList<Integer> fm1 = new ArrayList<Integer>();
         ArrayList<Integer> hm1 = new ArrayList<Integer>();
         ArrayList<Integer> am1 = new ArrayList<Integer>();
         ArrayList<Integer> bm1 = new ArrayList<Integer>();
         ArrayList<Integer> cm1 = new ArrayList<Integer>();
+        m1.add(fm1);
         m1.add(hm1);
         m1.add(am1);
         m1.add(bm1);
         m1.add(cm1);
+        ArrayList<Integer> ftopCards = new ArrayList<Integer>();
         ArrayList<Integer> htopCards = new ArrayList<Integer>();
         ArrayList<Integer> atopCards = new ArrayList<Integer>();
         ArrayList<Integer> btopCards = new ArrayList<Integer>();
         ArrayList<Integer> ctopCards = new ArrayList<Integer>();
+        topCards.add(ftopCards);
         topCards.add(htopCards);
         topCards.add(atopCards);
         topCards.add(btopCards);
@@ -174,12 +195,72 @@ public class Mao{
         boolean gameOn = true;
         System.out.println("The "+chairman.pile.get(0)+" is in the middle.");
         while(gameOn){
-            //Human moves
-            int currentMove = humanMove(chairman.hands.get(0));
-            chairman.game.add(currentMove);
-            if((currentMove/1000)%10==1||(currentMove/1000)%10==2)
-                chairman.drawPlay.add(currentMove);
-            
+            //Human moves.
+            int currentMove = humanMove(chairman.hands.get(1));
+            if((currentMove/1000)%10==1||(currentMove/1000)%10==2){
+                chairman.game.add(currentMove%100000);
+                chairman.drawPlay.add(currentMove%100000);
+                System.out.println(stringMove(currentMove%100000));
+                chairman.pile.add(chairman.hands.get(1).remove((currentMove/100000)));
+                chairman.humanGetsRect();
+            }
+            //Alice moves.
+            int aone=0;
+            int atwo=0;
+            if(chairman.drawPlay.size()>1){
+               aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+               atwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+            }
+            if(chairman.drawPlay.size()==1){
+                aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+            }
+            int aliceMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(2),chairman.hands.get(2),2);
+            if((aliceMove/1000)%10==1||(aliceMove/1000)%10==2){
+                chairman.game.add(aliceMove%100000);
+                chairman.drawPlay.add(aliceMove%100000);
+                System.out.println(stringMove(aliceMove%100000));
+                if((aliceMove/1000)%10==1)
+                    chairman.pile.add(chairman.hands.get(2).remove((aliceMove/100000)));
+                chairman.aliceGetsRect();
+            }
+            //Bob moves.
+            int bone=0;
+            int btwo=0;
+            if(chairman.drawPlay.size()>1){
+               bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+               btwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+            }
+            if(chairman.drawPlay.size()==1){
+                bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+            }
+            int bobMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(3),chairman.hands.get(3),3);
+            if((bobMove/1000)%10==1||(bobMove/1000)%10==2){
+                chairman.game.add(bobMove%100000);
+                chairman.drawPlay.add(bobMove%100000);
+                System.out.println(stringMove(bobMove%100000));
+                if((bobMove/1000)%10==1)
+                    chairman.pile.add(chairman.hands.get(2).remove((bobMove/100000)));
+                chairman.bobGetsRect();
+            }
+            //Charlie moves.
+            int cone=0;
+            int ctwo=0;
+            if(chairman.drawPlay.size()>1){
+               cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+               ctwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+            }
+            if(chairman.drawPlay.size()==1){
+                cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+            }
+            int charlieMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(3),chairman.hands.get(3),3);
+            if((charlieMove/1000)%10==1||(charlieMove/1000)%10==2){
+                chairman.game.add(charlieMove%100000);
+                chairman.drawPlay.add(charlieMove%100000);
+                System.out.println(stringMove(charlieMove%100000));
+                if((charlieMove/1000)%10==1)
+                    chairman.pile.add(chairman.hands.get(2).remove((charlieMove/100000)));
+                chairman.charlieGetsRect();
+            }
         }
     }
     public static void letsLearn(){
@@ -599,29 +680,62 @@ public class Mao{
     }
     //Undoing a crime.
     public void makeItBetter(int accusation){
+        System.out.println(stringMove(accusation));
         switch(accusation%10){
             case 1: hands.get((accusation/100)%10).add(pile.remove(pile.size()-1));
+                    hands.get((accusation/100)%10).add(drawPile.remove(drawPile.size()-1));
                     drawPlay.remove(drawPlay.size());
+                    switch((accusation/100)%10){
+                        case 1: System.out.println("The card was returned to your hand and you were dealt a penalty card.");
+                                break;
+                        case 2: System.out.println("The card was returnted to her hand and she was dealt a penalty card.");
+                                break;
+                        default:System.out.println("The card was returned to his hand and he was dealt a penalty card.");
+                                break;
+                    }
                     break;
             case 2: hands.get((accusation/100)%10).add(pile.remove(pile.size()-1));
+                    hands.get((accusation/100)%10).add(drawPile.remove(drawPile.size()-1));
                     drawPlay.remove(drawPlay.size());
+                    switch((accusation/100)%10){
+                        case 1: System.out.println("The card was returned to your hand and you were dealt a penalty card.");
+                                break;
+                        case 2: System.out.println("The card was returnted to her hand and she was dealt a penalty card.");
+                                break;
+                        default:System.out.println("The card was returned to his hand and he was dealt a penalty card.");
+                                break;
+                    }
                     break;
             case 3: drawPile.add(hands.get((accusation/100)%10).remove(hands.get((accusation/100)%10).size()-1));
+                    System.out.println("The card was returned to the draw pile.");
                     break;
-            case 4: makeItEvenBetter(game.get(game.size()-1));
+            case 4: makeItEvenBetter(game.get(game.size()-2));
                     break;
         }
     }
     //Redoing a crime.
     public void makeItEvenBetter(int positionOfFaultyAccusation){
+        int personWhoWronglyAccused = (game.get(positionOfFaultyAccusation)/100)%10;
+        int personWhoWasWronglyAccused = (game.get(positionOfFaultyAccusation-1)/100)%10;
         switch(game.get(positionOfFaultyAccusation)%10){
-            case 1: pile.add(hands.get((game.get(positionOfFaultyAccusation)/100)%10).remove(hands.get((game.get(positionOfFaultyAccusation)/100)%10).size()-1));
-                    drawPlay.add(((game.get(positionOfFaultyAccusation)/100)%10)*10000+1000+numberCard(pile.get(pile.size()-1)));
+            case 1: pile.add(hands.get(personWhoWasWronglyAccused).remove(hands.get(personWhoWasWronglyAccused).size()-2));
+                    drawPlay.add(personWhoWasWronglyAccused*10000+1000+numberCard(pile.get(pile.size()-1)));
+                    hands.get(personWhoWronglyAccused).add(hands.get(personWhoWasWronglyAccused).remove(hands.get(personWhoWasWronglyAccused).size()-1));
+                    hands.get(personWhoWronglyAccused).add(drawPile.remove(drawPile.size()-1));
+                    System.out.println("The card played by "+numToPlaya(personWhoWasWronglyAccused)+" was returned to the center of the table.");
+                    System.out.println("The penalty card given by "+numToPlaya(personWhoWronglyAccused)+" and an additional penalty card were given to "+numToPlaya(personWhoWronglyAccused)+".");
                     break;
-            case 2: pile.add(hands.get((game.get(positionOfFaultyAccusation)/100)%10).remove(hands.get((game.get(positionOfFaultyAccusation)/100)%10).size()-1));
-                    drawPlay.add(((game.get(positionOfFaultyAccusation)/100)%10)*10000+1000+numberCard(pile.get(pile.size()-1)));
+            case 2: pile.add(hands.get(personWhoWasWronglyAccused).remove(hands.get(personWhoWasWronglyAccused).size()-2));
+                    drawPlay.add(personWhoWasWronglyAccused*10000+1000+numberCard(pile.get(pile.size()-1)));
+                    hands.get(personWhoWronglyAccused).add(hands.get(personWhoWasWronglyAccused).remove(hands.get(personWhoWasWronglyAccused).size()-1));
+                    hands.get(personWhoWronglyAccused).add(drawPile.remove(drawPile.size()-1));
+                    System.out.println("The card played by "+numToPlaya(personWhoWasWronglyAccused)+" was returned to the center of the table.");
+                    System.out.println("The penalty card given by "+numToPlaya(personWhoWronglyAccused)+" and an additional penalty card were given to "+numToPlaya(personWhoWronglyAccused)+".");
                     break;
-            case 3: hands.get((game.get(positionOfFaultyAccusation)/100)%10).add(drawPile.remove(drawPile.size()-1));
+            case 3: hands.get(personWhoWasWronglyAccused).add(drawPile.remove(drawPile.size()-1));
+                    hands.get(personWhoWronglyAccused).add(drawPile.remove(drawPile.size()));
+                    System.out.println(numToPlaya(personWhoWasWronglyAccused)+" got the card back.");
+                    System.out.println(numToPlaya(personWhoWronglyAccused)+" got a penalty card.");
                     break;
             case 4: makeItEvenBetter(positionOfFaultyAccusation-1);
                     break;
@@ -673,7 +787,7 @@ public class Mao{
         }
         return 0;
     }
-    //Human move.
+    //Human move. Returns a six-digit integer where the last five are what happened and the first is what position in hand the player is plaing from.
     public static int humanMove(ArrayList<Card> phand){
         Scanner hawk = new Scanner(System.in);
         System.out.println("Here is your hand:");
@@ -689,14 +803,14 @@ public class Mao{
         if(desire==1){
             System.out.println("Type a number indicating what position in your hand you would like to play from.");
             int cardy = hawk.nextInt();
-            return 11000+numberCard(phand.get(cardy-1));
+            return (cardy-1)*100000+11000+numberCard(phand.get(cardy-1));
         }
         if(desire==2){
             return 12000;
         }
         return 0;
     }
-    //Computer move. Returns a six-digit integer where the last five are what happened and the first what position in hand the computer is playing from.
+    //Computer move. Returns a six-digit integer where the last five are what happened and the first is what position in hand the player is playing from.
     public static int compMove(int lastPD, int secondLastPD, int topCard, ArrayList<Integer> rulies, ArrayList<Card> hand, int whoAmI){
         if(whoTurn(secondLastPD, lastPD, rulies)!=whoAmI)
             return 0;
