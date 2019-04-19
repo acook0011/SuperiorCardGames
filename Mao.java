@@ -64,6 +64,7 @@ public class Mao{
             bhand.add(deck.deal());
             chand.add(deck.deal());
         }
+        hands.add(fhand);
         hands.add(hhand);
         hands.add(ahand);
         hands.add(bhand);
@@ -239,7 +240,7 @@ public class Mao{
                 chairman.drawPlay.add(bobMove%100000);
                 System.out.println(stringMove(bobMove%100000));
                 if((bobMove/1000)%10==1)
-                    chairman.pile.add(chairman.hands.get(2).remove((bobMove/100000)));
+                    chairman.pile.add(chairman.hands.get(3).remove((bobMove/100000)));
                 chairman.bobGetsRect();
             }
             //Charlie moves.
@@ -252,13 +253,13 @@ public class Mao{
             if(chairman.drawPlay.size()==1){
                 cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
             }
-            int charlieMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(3),chairman.hands.get(3),3);
+            int charlieMove  = compMove(cone,ctwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(4),chairman.hands.get(4),4);
             if((charlieMove/1000)%10==1||(charlieMove/1000)%10==2){
                 chairman.game.add(charlieMove%100000);
                 chairman.drawPlay.add(charlieMove%100000);
                 System.out.println(stringMove(charlieMove%100000));
                 if((charlieMove/1000)%10==1)
-                    chairman.pile.add(chairman.hands.get(2).remove((charlieMove/100000)));
+                    chairman.pile.add(chairman.hands.get(4).remove((charlieMove/100000)));
                 chairman.charlieGetsRect();
             }
         }
@@ -684,7 +685,7 @@ public class Mao{
         switch(accusation%10){
             case 1: hands.get((accusation/100)%10).add(pile.remove(pile.size()-1));
                     hands.get((accusation/100)%10).add(drawPile.remove(drawPile.size()-1));
-                    drawPlay.remove(drawPlay.size());
+                    drawPlay.remove(drawPlay.size()-1);
                     switch((accusation/100)%10){
                         case 1: System.out.println("The card was returned to your hand and you were dealt a penalty card.");
                                 break;
@@ -696,7 +697,7 @@ public class Mao{
                     break;
             case 2: hands.get((accusation/100)%10).add(pile.remove(pile.size()-1));
                     hands.get((accusation/100)%10).add(drawPile.remove(drawPile.size()-1));
-                    drawPlay.remove(drawPlay.size());
+                    drawPlay.remove(drawPlay.size()-1);
                     switch((accusation/100)%10){
                         case 1: System.out.println("The card was returned to your hand and you were dealt a penalty card.");
                                 break;
