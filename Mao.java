@@ -202,7 +202,8 @@ public class Mao{
                 chairman.game.add(currentMove%100000);
                 chairman.drawPlay.add(currentMove%100000);
                 System.out.println(stringMove(currentMove%100000));
-                chairman.pile.add(chairman.hands.get(1).remove((currentMove/100000)));
+                if((currentMove/1000)%10==1)
+                    chairman.pile.add(chairman.hands.get(1).remove((currentMove/100000)));
                 chairman.humanGetsRect();
             }
             //Alice moves.
@@ -284,6 +285,7 @@ public class Mao{
             System.out.println();
             System.out.println("Sometimes, a player may do something that you believe to be against the rules.");
             System.out.println("If this happens, punish them! Their action will be undone, and they will recieve a one-card penalty.");
+            System.out.println("However, penalty cards are not awarded for drawing out of turn. That would be like arresting someone for breaking into jail.");
             System.out.println("Remember-you can only punish the person who did something most recently.");
             System.out.println();
             System.out.println("During the game, I (the computer) will ask you what you want to do.");
@@ -710,7 +712,7 @@ public class Mao{
             case 3: drawPile.add(hands.get((accusation/100)%10).remove(hands.get((accusation/100)%10).size()-1));
                     System.out.println("The card was returned to the draw pile.");
                     break;
-            case 4: makeItEvenBetter(game.get(game.size()-2));
+            case 4: makeItEvenBetter(game.size()-2);
                     break;
         }
     }
@@ -874,7 +876,7 @@ public class Mao{
                                 makeItBetter(charlieMove);
                                 charlieGetsRect();
                             }else{
-                                int humanMove = humanAccuse(game.size()-1);
+                                int humanMove = humanAccuse(game.get(game.size()-1));
                                 if(humanMove!=0){
                                     game.add(humanMove);
                                     makeItBetter(humanMove);
@@ -896,7 +898,7 @@ public class Mao{
                              makeItBetter(charlieMove);
                              charlieGetsRect();
                          }else{
-                             int humanMove = humanAccuse(game.size()-1);
+                             int humanMove = humanAccuse(game.get(game.size()-1));
                              if(humanMove!=0){
                                  game.add(humanMove);
                                  makeItBetter(humanMove);
@@ -918,7 +920,7 @@ public class Mao{
                 case 2: break;
                 case 3: break;
                 case 4: break;
-                default: int humanMove = humanAccuse(game.size()-1);
+                default: int humanMove = humanAccuse(game.get(game.size()-1));
                          if(humanMove!=0){
                              game.add(humanMove);
                              makeItBetter(humanMove);
