@@ -31,7 +31,7 @@ public class Mao{
     public static void playMao(){
         Scanner searcher = new Scanner(System.in);
         
-        System.out.println("Welcome, friend. Do you know how to play Computer Mao?");
+        System.out.println("Welcome, friend. Do you know how to play Computer Mao? It's a little different from traditional Mao.");
         System.out.println("1 - Yes, and I want to play now.");
         System.out.println("2 - Yes, but I don't want to play now.");
         System.out.println("3 - No, but I want to play now.");
@@ -389,7 +389,7 @@ public class Mao{
     public static String stringRule(int rule){
         String str = "Rule created by";
         switch((rule/100000000)%10){
-            case 1: str += " Human:"; break;
+            case 1: str += " You:"; break;
             case 2: str += " Alice:"; break;
             case 3: str += " Bob:"; break;
             case 4: str += " Charlie:"; break;
@@ -539,7 +539,7 @@ public class Mao{
     }
     public static String numToPlaya(int num){
         switch(num){
-            case 1: return "Human";
+            case 1: return "you";
             case 2: return "Alice";
             case 3: return "Bob";
             case 4: return "Charlie";
@@ -736,11 +736,11 @@ public class Mao{
                     System.out.println("The penalty card given by "+numToPlaya(personWhoWronglyAccused)+" and an additional penalty card were given to "+numToPlaya(personWhoWronglyAccused)+".");
                     break;
             case 3: hands.get(personWhoWasWronglyAccused).add(drawPile.remove(drawPile.size()-1));
-                    hands.get(personWhoWronglyAccused).add(drawPile.remove(drawPile.size()));
+                    hands.get(personWhoWronglyAccused).add(drawPile.remove(drawPile.size()-1));
                     System.out.println(numToPlaya(personWhoWasWronglyAccused)+" got the card back.");
                     System.out.println(numToPlaya(personWhoWronglyAccused)+" got a penalty card.");
                     break;
-            case 4: makeItEvenBetter(positionOfFaultyAccusation-1);
+            case 4: makeItEvenBetter(positionOfFaultyAccusation-2);
                     break;
         }
     }
