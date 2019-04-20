@@ -893,116 +893,151 @@ public class Mao{
     }
     //Everyone can penalize human.
     public void humanGetsRect(){
-        switch(game.size()){
-                case 1: break;
-                case 2: break;
-                case 3: break;
-                case 4: break;
-                default: int aliceMove = compAccuse(2,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(2));
+        int fourthLast=0;
+        int thirdLast=0;
+        int secondLast=0;
+        int dp2Last=0;
+        int dp3Last=0;
+        if(drawPlay.size()>1)
+            dp2Last=drawPlay.get(drawPlay.size()-2);
+        if(drawPlay.size()>2)
+            dp3Last=drawPlay.get(drawPlay.size()-3);
+        if(game.size()>1)
+            secondLast=(int)game.get(game.size()-2);
+        if(game.size()>2)
+            thirdLast=(int)game.get(game.size()-3);
+        if(game.size()>3)
+            fourthLast=(int)game.get(game.size()-4);
+        int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(2));
+        if(aliceMove!=0){
+            game.add(aliceMove);
+            makeItBetter(aliceMove);
+            aliceGetsRect();
+        }else{
+            int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(3));
+            if(bobMove!=0){
+                game.add(bobMove);
+                makeItBetter(bobMove);
+                bobGetsRect();
+            }else{
+                int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
+                if(charlieMove!=0){
+                    game.add(charlieMove);
+                    makeItBetter(charlieMove);
+                    charlieGetsRect();
+                }
+            }
+        }
+    }
+    public void aliceGetsRect(){
+        int fourthLast=0;
+        int thirdLast=0;
+        int secondLast=0;
+        int dp2Last=0;
+        int dp3Last=0;
+        if(drawPlay.size()>1)
+            dp2Last=drawPlay.get(drawPlay.size()-2);
+        if(drawPlay.size()>2)
+            dp3Last=drawPlay.get(drawPlay.size()-3);
+        if(game.size()>1)
+            secondLast=(int)game.get(game.size()-2);
+        if(game.size()>2)
+            thirdLast=(int)game.get(game.size()-3);
+        if(game.size()>3)
+            fourthLast=(int)game.get(game.size()-4);
+        int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(3));
+        if(bobMove!=0){
+            game.add(bobMove);
+            makeItBetter(bobMove);
+            bobGetsRect();
+        }else{
+            int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
+            if(charlieMove!=0){
+                game.add(charlieMove);
+                makeItBetter(charlieMove);
+                charlieGetsRect();
+            }else{
+                int humanMove = humanAccuse(game.get(game.size()-1));
+                if(humanMove!=0){
+                    game.add(humanMove);
+                    makeItBetter(humanMove);
+                    humanGetsRect();
+                }
+            }
+        }
+    }
+    public void bobGetsRect(){
+        int fourthLast=0;
+        int thirdLast=0;
+        int secondLast=0;
+        int dp2Last=0;
+        int dp3Last=0;
+        if(drawPlay.size()>1)
+            dp2Last=drawPlay.get(drawPlay.size()-2);
+        if(drawPlay.size()>2)
+            dp3Last=drawPlay.get(drawPlay.size()-3);
+        if(game.size()>1)
+            secondLast=(int)game.get(game.size()-2);
+        if(game.size()>2)
+            thirdLast=(int)game.get(game.size()-3);
+        if(game.size()>3)
+            fourthLast=(int)game.get(game.size()-4);
+        int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
+        if(charlieMove!=0){
+            game.add(charlieMove);
+            makeItBetter(charlieMove);
+            charlieGetsRect();
+        }else{
+            int humanMove = humanAccuse(game.get(game.size()-1));
+            if(humanMove!=0){
+                game.add(humanMove);
+                makeItBetter(humanMove);
+                humanGetsRect();
+            }else{
+                int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(2));
                 if(aliceMove!=0){
                     game.add(aliceMove);
                     makeItBetter(aliceMove);
                     aliceGetsRect();
-                }else{
-                    int bobMove = compAccuse(3,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(3));
-                    if(bobMove!=0){
-                        game.add(bobMove);
-                        makeItBetter(bobMove);
-                        bobGetsRect();
-                    }else{
-                        int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
-                        if(charlieMove!=0){
-                            game.add(charlieMove);
-                            makeItBetter(charlieMove);
-                            charlieGetsRect();
-                        }
-                    }
                 }
-                break;
-        }
-    }
-    public void aliceGetsRect(){
-        switch(game.size()){
-                case 1: break;
-                case 2: break;
-                case 3: break;
-                case 4: break;
-                default: int bobMove = compAccuse(3,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(3));
-                         if(bobMove!=0){
-                         game.add(bobMove);
-                         makeItBetter(bobMove);
-                         bobGetsRect();
-                        }else{
-                            int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
-                            if(charlieMove!=0){
-                                game.add(charlieMove);
-                                makeItBetter(charlieMove);
-                                charlieGetsRect();
-                            }else{
-                                int humanMove = humanAccuse(game.get(game.size()-1));
-                                if(humanMove!=0){
-                                    game.add(humanMove);
-                                    makeItBetter(humanMove);
-                                    humanGetsRect();
-                                }
-                            }
-                        }
-        }
-    }
-    public void bobGetsRect(){
-        switch(game.size()){
-                case 1: break;
-                case 2: break;
-                case 3: break;
-                case 4: break;
-                default: int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
-                         if(charlieMove!=0){
-                             game.add(charlieMove);
-                             makeItBetter(charlieMove);
-                             charlieGetsRect();
-                         }else{
-                             int humanMove = humanAccuse(game.get(game.size()-1));
-                             if(humanMove!=0){
-                                 game.add(humanMove);
-                                 makeItBetter(humanMove);
-                                 humanGetsRect();
-                                }else{
-                                    int aliceMove = compAccuse(2,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(2));
-                                    if(aliceMove!=0){
-                                        game.add(aliceMove);
-                                        makeItBetter(aliceMove);
-                                        aliceGetsRect();
-                                    }
-                                }
-                         }
+            }
         }
     }
     public void charlieGetsRect(){
-        switch(game.size()){
-                case 1: break;
-                case 2: break;
-                case 3: break;
-                case 4: break;
-                default: int humanMove = humanAccuse(game.get(game.size()-1));
-                         if(humanMove!=0){
-                             game.add(humanMove);
-                             makeItBetter(humanMove);
-                             humanGetsRect();
-                         }else{
-                             int aliceMove = compAccuse(2,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(2));
-                             if(aliceMove!=0){
-                                 game.add(aliceMove);
-                                 makeItBetter(aliceMove);
-                                 aliceGetsRect();
-                             }else{
-                                 int bobMove = compAccuse(3,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(3));
-                                 if(bobMove!=0){
-                                     game.add(bobMove);
-                                     makeItBetter(bobMove);
-                                     bobGetsRect();
-                                 }
-                             }
-                         }
+        int fourthLast=0;
+        int thirdLast=0;
+        int secondLast=0;
+        int dp2Last=0;
+        int dp3Last=0;
+        if(drawPlay.size()>1)
+            dp2Last=drawPlay.get(drawPlay.size()-2);
+        if(drawPlay.size()>2)
+            dp3Last=drawPlay.get(drawPlay.size()-3);
+        if(game.size()>1)
+            secondLast=(int)game.get(game.size()-2);
+        if(game.size()>2)
+            thirdLast=(int)game.get(game.size()-3);
+        if(game.size()>3)
+            fourthLast=(int)game.get(game.size()-4);
+        int humanMove = humanAccuse(game.get(game.size()-1));
+        if(humanMove!=0){
+            game.add(humanMove);
+            makeItBetter(humanMove);
+            humanGetsRect();
+        }else{
+            int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(2));
+            if(aliceMove!=0){
+                game.add(aliceMove);
+                makeItBetter(aliceMove);
+                aliceGetsRect();
+            }else{
+                int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(3));
+                if(bobMove!=0){
+                    game.add(bobMove);
+                    makeItBetter(bobMove);
+                    bobGetsRect();
+                }
+            }
         }
     }
     public void humanWins(){
