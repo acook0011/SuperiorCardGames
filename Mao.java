@@ -644,7 +644,7 @@ public class Mao{
             case 1: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
             case 2: if(whatNext(rules,topCard).size()==1)
                         return !itsAMatch(secondLast%1000, whatNext(rules,topCard).get(0));
-                    return !((itsAMatch(secondLast%1000, whatNext(rules, topCard).get(0)))||itsAMatch(secondLast%1000,whatNext(rules, topCard).get(1)));
+                    return !((itsAMatch(secondLast%1000, whatNext(rules, topCard).get(0)))||itsAMatch(secondLast%1000,whatNext(rules,topCard).get(1)));
             case 3: return !(whoTurn(fourthLast, thirdLast, rules)==secondLast/10000);
             case 4: return true;
             default: return true;
@@ -754,37 +754,37 @@ public class Mao{
                     System.out.println("2 - Penalize "+numToPlaya(lastMove/10000)+" for playing an incorrect card.");
                     int choix = sniffer.nextInt();
                     if(choix==1||choix==2)
-                        return 11000+(lastMove/10000)*100+choix;
+                        return 13000+(lastMove/10000)*100+choix;
                     break;
             case 2: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for drawing out of turn.");
                     int choiy = sniffer.nextInt();
                     if(choiy==1)
-                        return 11003+(lastMove/10000)*100;
+                        return 13003+(lastMove/10000)*100;
                     break;
             case 3: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for false judgement.");
                     int choiz = sniffer.nextInt();
                     if(choiz==1)
-                        return 11004+(lastMove/10000)*100;
+                        return 13004+(lastMove/10000)*100;
                     break;
         }
         return 0;
     }
     //The computer can accuse.
-    public static int compAccuse(int whoAmI, int fourthLast, int thirdLast, int secondLast, int last, int thirdLastPD, int secondLastPD, int lastPD, int topCard, ArrayList<Integer> rules){
+    public static int compAccuse(int whoAmI, int fourthLast, int thirdLast, int secondLast, int last, int thirdLastPD, int secondLastPD, int lastPD, int prevTopCard, ArrayList<Integer> rules){
         switch((last/1000)%10){
             case 1: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
                         return whoAmI*10000+3000+(last/10000)*100+1;
-                    if(whatNext(secondLastPD%1000,rules).size()==1){
-                        if(!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(0)))
+                    if(whatNext(rules,prevTopCard).size()==1){
+                        if(!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(0)))
                             return whoAmI*10000+3000+(last/10000)*100+2;
                     }
-                    if(!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(0))&&!itsAMatch(last%1000,whatNext(secondLastPD%1000,rules).get(1)))
+                    if(!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(0))&&!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(1)))
                             return whoAmI*10000+3000+(last/10000)*100+2;
                     break;
             case 2: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
                         return whoAmI*10000+3000+(last/10000)*100+3;
                     break;
-            case 3: if(!wasThePenaltyRight(last, secondLast, thirdLast, fourthLast, topCard, rules))
+            case 3: if(!wasThePenaltyRight(last, secondLast, thirdLast, fourthLast, prevTopCard, rules))
                         return whoAmI*10000+3000+(last/10000)*100+4;
                     break;
         }
@@ -819,10 +819,10 @@ public class Mao{
             return 0;
         for(int i=0; i<hand.size(); i++){
             if(whatNext(secondLastPD%1000,rulies).size()==1){
-                if(itsAMatch(hand.get(i),whatNext(topCard, rulies).get(0)))
+                if(itsAMatch(hand.get(i),whatNext(rulies,topCard).get(0)))
                     return i*100000+whoAmI*10000+1000+numberCard(hand.get(i));
             }else{
-                if(itsAMatch(hand.get(i),whatNext(topCard, rulies).get(0))||itsAMatch(hand.get(i),whatNext(topCard, rulies).get(1)))
+                if(itsAMatch(hand.get(i),whatNext(rulies,topCard).get(0))||itsAMatch(hand.get(i),whatNext(rulies,topCard).get(1)))
                     return i*100000+whoAmI*10000+1000+numberCard(hand.get(i));
             }    
         }
@@ -835,19 +835,19 @@ public class Mao{
                 case 2: break;
                 case 3: break;
                 case 4: break;
-                default: int aliceMove = compAccuse(2,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(2));
+                default: int aliceMove = compAccuse(2,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(2));
                 if(aliceMove!=0){
                     game.add(aliceMove);
                     makeItBetter(aliceMove);
                     aliceGetsRect();
                 }else{
-                    int bobMove = compAccuse(3,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(3));
+                    int bobMove = compAccuse(3,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(3));
                     if(bobMove!=0){
                         game.add(bobMove);
                         makeItBetter(bobMove);
                         bobGetsRect();
                     }else{
-                        int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(4));
+                        int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
                         if(charlieMove!=0){
                             game.add(charlieMove);
                             makeItBetter(charlieMove);
@@ -864,13 +864,13 @@ public class Mao{
                 case 2: break;
                 case 3: break;
                 case 4: break;
-                default: int bobMove = compAccuse(3,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(3));
+                default: int bobMove = compAccuse(3,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(3));
                          if(bobMove!=0){
                          game.add(bobMove);
                          makeItBetter(bobMove);
                          bobGetsRect();
                         }else{
-                            int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(4));
+                            int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
                             if(charlieMove!=0){
                                 game.add(charlieMove);
                                 makeItBetter(charlieMove);
@@ -892,7 +892,7 @@ public class Mao{
                 case 2: break;
                 case 3: break;
                 case 4: break;
-                default: int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(4));
+                default: int charlieMove = compAccuse(4,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
                          if(charlieMove!=0){
                              game.add(charlieMove);
                              makeItBetter(charlieMove);
@@ -904,7 +904,7 @@ public class Mao{
                                  makeItBetter(humanMove);
                                  humanGetsRect();
                                 }else{
-                                    int aliceMove = compAccuse(2,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(2));
+                                    int aliceMove = compAccuse(2,(int)game.get(game.size()-4),(int)game.get(game.size()-3),(int)game.get(game.size()-2),(int)game.get(game.size()-1),(int)drawPlay.get(drawPlay.size()-3),(int)drawPlay.get(drawPlay.size()-2),(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(2));
                                     if(aliceMove!=0){
                                         game.add(aliceMove);
                                         makeItBetter(aliceMove);
