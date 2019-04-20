@@ -27,10 +27,8 @@ public class Mao{
     ArrayList<ArrayList<Integer>> m2 = new ArrayList<ArrayList<Integer>>();
     ArrayList<ArrayList<Integer>> m1 = new ArrayList<ArrayList<Integer>>();
     ArrayList<ArrayList<Integer>> topCards = new ArrayList<ArrayList<Integer>>();
-    
     public static void playMao(){
         Scanner searcher = new Scanner(System.in);
-        
         System.out.println("Welcome, friend. Do you know how to play Computer Mao? It's a little different from traditional Mao.");
         System.out.println("1 - Yes, and I want to play now.");
         System.out.println("2 - Yes, but I don't want to play now.");
@@ -85,9 +83,17 @@ public class Mao{
         rules.add(crules);
         ArrayList<Integer> fhypoSpecif = new ArrayList<Integer>();
         ArrayList<Integer> hhypoSpecif = new ArrayList<Integer>();
+        for(int i=0; i<6; i++)
+            hhypoSpecif.add(0);
         ArrayList<Integer> ahypoSpecif = new ArrayList<Integer>();
+        for(int i=0; i<6; i++)
+            ahypoSpecif.add(0);
         ArrayList<Integer> bhypoSpecif = new ArrayList<Integer>();
+        for(int i=0; i<6; i++)
+            bhypoSpecif.add(0);
         ArrayList<Integer> chypoSpecif = new ArrayList<Integer>();
+        for(int i=0; i<6; i++)
+            chypoSpecif.add(0);
         hypoSpecif.add(fhypoSpecif);
         hypoSpecif.add(hhypoSpecif);
         hypoSpecif.add(ahypoSpecif);
@@ -194,74 +200,134 @@ public class Mao{
         int numRounds = stalker.nextInt();
         Mao chairman = new Mao();
         boolean gameOn = true;
-        System.out.println("The "+chairman.pile.get(0)+" is in the middle.");
-        while(gameOn){
-            //Human moves.
-            int currentMove = humanMove(chairman.hands.get(1));
-            if((currentMove/1000)%10==1||(currentMove/1000)%10==2){
-                chairman.game.add(currentMove%100000);
-                chairman.drawPlay.add(currentMove%100000);
-                System.out.println(stringMove(currentMove%100000));
-                if((currentMove/1000)%10==1)
-                    chairman.pile.add(chairman.hands.get(1).remove((currentMove/100000)));
-                chairman.humanGetsRect();
-            }
-            //Alice moves.
-            int aone=0;
-            int atwo=0;
-            if(chairman.drawPlay.size()>1){
-               aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-               atwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
-            }
-            if(chairman.drawPlay.size()==1){
-                aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-            }
-            int aliceMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(2),chairman.hands.get(2),2);
-            if((aliceMove/1000)%10==1||(aliceMove/1000)%10==2){
-                chairman.game.add(aliceMove%100000);
-                chairman.drawPlay.add(aliceMove%100000);
-                System.out.println(stringMove(aliceMove%100000));
-                if((aliceMove/1000)%10==1)
-                    chairman.pile.add(chairman.hands.get(2).remove((aliceMove/100000)));
-                chairman.aliceGetsRect();
-            }
-            //Bob moves.
-            int bone=0;
-            int btwo=0;
-            if(chairman.drawPlay.size()>1){
-               bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-               btwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
-            }
-            if(chairman.drawPlay.size()==1){
-                bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-            }
-            int bobMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(3),chairman.hands.get(3),3);
-            if((bobMove/1000)%10==1||(bobMove/1000)%10==2){
-                chairman.game.add(bobMove%100000);
-                chairman.drawPlay.add(bobMove%100000);
-                System.out.println(stringMove(bobMove%100000));
-                if((bobMove/1000)%10==1)
-                    chairman.pile.add(chairman.hands.get(3).remove((bobMove/100000)));
-                chairman.bobGetsRect();
-            }
-            //Charlie moves.
-            int cone=0;
-            int ctwo=0;
-            if(chairman.drawPlay.size()>1){
-               cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-               ctwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
-            }
-            if(chairman.drawPlay.size()==1){
-                cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-            }
-            int charlieMove  = compMove(cone,ctwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(4),chairman.hands.get(4),4);
-            if((charlieMove/1000)%10==1||(charlieMove/1000)%10==2){
-                chairman.game.add(charlieMove%100000);
-                chairman.drawPlay.add(charlieMove%100000);
-                System.out.println(stringMove(charlieMove%100000));
-                if((charlieMove/1000)%10==1)
-                    chairman.pile.add(chairman.hands.get(4).remove((charlieMove/100000)));
-                chairman.charlieGetsRect();
+        int wins=0;
+        for(int i=0;i<numRounds;i++){
+            System.out.println("The "+chairman.pile.get(0)+" is in the middle.");
+            while(true){
+                //Human moves.
+                int currentMove = humanMove(chairman.hands.get(1));
+                if((currentMove/1000)%10==1||(currentMove/1000)%10==2){
+                    chairman.game.add(currentMove%100000);
+                    chairman.drawPlay.add(currentMove%100000);
+                    System.out.println(stringMove(currentMove%100000));
+                    if((currentMove/1000)%10==1)
+                        chairman.pile.add(chairman.hands.get(1).remove((currentMove/100000)));
+                    if((currentMove/1000)%10==2){
+                        chairman.hands.get(1).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
+                        if(chairman.drawPile.size()==0){
+                            chairman.deck.reset();
+                            for(int j=0; j<52; j++)
+                               chairman.drawPile.add(chairman.deck.deal()); 
+                        }
+                    }
+                    chairman.humanGetsRect();
+                }
+                if(chairman.hands.get(1).size()==0){
+                    System.out.println("You won!");
+                    System.out.println("Now you get to create a new rule!");
+                    wins++;
+                    chairman.humanWins();
+                    continue;
+                }
+                //Alice moves.
+                int aone=0;
+                int atwo=0;
+                if(chairman.drawPlay.size()>1){
+                    aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                    atwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+                }
+                if(chairman.drawPlay.size()==1){
+                    aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                }
+                int aliceMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(2),chairman.hands.get(2),2);
+                if((aliceMove/1000)%10==1||(aliceMove/1000)%10==2){
+                    chairman.game.add(aliceMove%100000);
+                    chairman.drawPlay.add(aliceMove%100000);
+                    System.out.println(stringMove(aliceMove%100000));
+                    if((aliceMove/1000)%10==1)
+                        chairman.pile.add(chairman.hands.get(2).remove((aliceMove/100000)));
+                    if((currentMove/1000)%10==2){
+                        chairman.hands.get(2).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
+                        if(chairman.drawPile.size()==0){
+                            chairman.deck.reset();
+                            for(int j=0; j<52; j++)
+                               chairman.drawPile.add(chairman.deck.deal()); 
+                        }
+                    }
+                    chairman.aliceGetsRect();
+                }
+                if(chairman.hands.get(2).size()==0){
+                    System.out.println("Alice won!");
+                    System.out.println("Now she gets to create a new rule!");
+                    chairman.aliceWins();
+                    continue;
+                }
+                //Bob moves.
+                int bone=0;
+                int btwo=0;
+                if(chairman.drawPlay.size()>1){
+                    bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                    btwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+                }
+                if(chairman.drawPlay.size()==1){
+                    bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                }
+                int bobMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(3),chairman.hands.get(3),3);
+                if((bobMove/1000)%10==1||(bobMove/1000)%10==2){
+                    chairman.game.add(bobMove%100000);
+                    chairman.drawPlay.add(bobMove%100000);
+                    System.out.println(stringMove(bobMove%100000));
+                    if((bobMove/1000)%10==1)
+                        chairman.pile.add(chairman.hands.get(3).remove((bobMove/100000)));
+                    if((currentMove/1000)%10==2){
+                        chairman.hands.get(3).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
+                        if(chairman.drawPile.size()==0){
+                            chairman.deck.reset();
+                            for(int j=0; j<52; j++)
+                               chairman.drawPile.add(chairman.deck.deal()); 
+                        }
+                    }
+                    chairman.bobGetsRect();
+                }
+                if(chairman.hands.get(3).size()==0){
+                    System.out.println("Bob won!");
+                    System.out.println("Now he gets to create a new rule!");
+                    chairman.bobWins();
+                    continue;
+                }
+                //Charlie moves.
+                int cone=0;
+                int ctwo=0;
+                if(chairman.drawPlay.size()>1){
+                    cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                    ctwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+                }
+                if(chairman.drawPlay.size()==1){
+                    cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                }
+                int charlieMove  = compMove(cone,ctwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(4),chairman.hands.get(4),4);
+                if((charlieMove/1000)%10==1||(charlieMove/1000)%10==2){
+                    chairman.game.add(charlieMove%100000);
+                    chairman.drawPlay.add(charlieMove%100000);
+                    System.out.println(stringMove(charlieMove%100000));
+                    if((charlieMove/1000)%10==1)
+                        chairman.pile.add(chairman.hands.get(4).remove((charlieMove/100000)));
+                    if((currentMove/1000)%10==2){
+                        chairman.hands.get(4).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
+                        if(chairman.drawPile.size()==0){
+                            chairman.deck.reset();
+                            for(int j=0; j<52; j++)
+                               chairman.drawPile.add(chairman.deck.deal()); 
+                        }
+                    }
+                    chairman.charlieGetsRect();
+                }
+                if(chairman.hands.get(4).size()==0){
+                    System.out.println("Charlie won!");
+                    System.out.println("Now he gets to create a new rule!");
+                    chairman.charlieWins();
+                    continue;
+                }
             }
         }
     }
@@ -552,9 +618,6 @@ public class Mao{
         int rule = 0;
         int yea = 2;
         while(yea==2){
-            System.out.println();
-            System.out.println();
-            System.out.println();
             System.out.println("What type of rule is this going to be?");
             System.out.println("1 - Skipping turns.");
             System.out.println("2 - Changing what type of cards may and must be played.");
@@ -718,8 +781,8 @@ public class Mao{
     }
     //Redoing a crime.
     public void makeItEvenBetter(int positionOfFaultyAccusation){
-        int personWhoWronglyAccused = (game.get(positionOfFaultyAccusation)/100)%10;
-        int personWhoWasWronglyAccused = (game.get(positionOfFaultyAccusation-1)/100)%10;
+        int personWhoWronglyAccused = (game.get(positionOfFaultyAccusation)/10000)%10;
+        int personWhoWasWronglyAccused = (game.get(positionOfFaultyAccusation-1)/10000)%10;
         switch(game.get(positionOfFaultyAccusation)%10){
             case 1: pile.add(hands.get(personWhoWasWronglyAccused).remove(hands.get(personWhoWasWronglyAccused).size()-2));
                     drawPlay.add(personWhoWasWronglyAccused*10000+1000+numberCard(pile.get(pile.size()-1)));
@@ -940,6 +1003,107 @@ public class Mao{
                                  }
                              }
                          }
+        }
+    }
+    public void humanWins(){
+        deck.reset();
+        for(int i=1; i<5; i++){
+            for(int j=hands.get(i).size()-1; j>-1; j--)
+                hands.get(i).remove(j);
+        }
+        deck.shuffle();
+        for(int i=game.size()-1; i>-1; i--)
+            game.remove(i);
+        for(int i=drawPlay.size()-1; i>0; i--)
+            drawPlay.remove(i);
+        for(int i=0; i<7; i++){
+            for(int j=1; j<5; j++)
+                hands.get(j).add(deck.deal());
+        }
+        rules.get(1).add(humanRule());
+        for(int i=2; i<5; i++){
+            int guess = randyRules(i);
+            hypos.get(i).add(guess);
+            hypoSpecif.get(i).set(1,guess);
+        }
+        for(int i=0; i<24; i++)
+            drawPile.add(deck.deal());
+        pile.add(drawPile.remove(drawPile.size()-1));
+    }
+    public void aliceWins(){
+        deck.reset();
+        for(int i=1; i<5; i++){
+            for(int j=hands.get(i).size()-1; j>-1; j--)
+                hands.get(i).remove(j);
+        }
+        deck.shuffle();
+        for(int i=game.size()-1; i>-1; i--)
+            game.remove(i);
+        for(int i=drawPlay.size()-1; i>0; i--)
+            drawPlay.remove(i);
+        for(int i=0; i<7; i++){
+            for(int j=1; j<5; j++)
+                hands.get(j).add(deck.deal());
+        }
+        for(int i=0; i<24; i++)
+            drawPile.add(deck.deal());
+        pile.add(drawPile.remove(drawPile.size()-1));
+        rules.get(2).add(randyRules(2));
+        for(int i=3; i<5; i++){
+            int guess = randyRules(i);
+            hypos.get(i).add(guess);
+            hypoSpecif.get(i).set(1, guess);
+        }
+    }
+    public void bobWins(){
+        deck.reset();
+        for(int i=1; i<5; i++){
+            for(int j=hands.get(i).size()-1; j>-1; j--)
+                hands.get(i).remove(j);
+        }
+        deck.shuffle();
+        for(int i=game.size()-1; i>-1; i--)
+            game.remove(i);
+        for(int i=drawPlay.size()-1; i>0; i--)
+            drawPlay.remove(i);
+        for(int i=0; i<7; i++){
+            for(int j=1; j<5; j++)
+                hands.get(j).add(deck.deal());
+        }
+        for(int i=0; i<24; i++)
+            drawPile.add(deck.deal());
+        pile.add(drawPile.remove(drawPile.size()-1));
+        rules.get(3).add(randyRules(3));
+        int aguess = randyRules(2);
+        hypos.get(2).add(aguess);
+        hypoSpecif.get(2).set(3,aguess);
+        int cguess = randyRules(4);
+        hypos.get(4).add(aguess);
+        hypoSpecif.get(4).set(3,aguess);
+    }
+    public void charlieWins(){
+        deck.reset();
+        for(int i=1; i<5; i++){
+            for(int j=hands.get(i).size()-1; j>-1; j--)
+                hands.get(i).remove(j);
+        }
+        deck.shuffle();
+        for(int i=game.size()-1; i>-1; i--)
+            game.remove(i);
+        for(int i=drawPlay.size()-1; i>0; i--)
+            drawPlay.remove(i);
+        for(int i=0; i<7; i++){
+            for(int j=1; j<5; j++)
+                hands.get(j).add(deck.deal());
+        }
+        for(int i=0; i<24; i++)
+            drawPile.add(deck.deal());
+        pile.add(drawPile.remove(drawPile.size()-1));
+        rules.get(3).add(randyRules(3));
+        for(int i=2; i<4; i++){
+            int guess = randyRules(i);
+            hypos.get(i).add(guess);
+            hypoSpecif.get(i).set(4,guess);
         }
     }
 }
