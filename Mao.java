@@ -27,6 +27,7 @@ public class Mao{
     ArrayList<ArrayList<Integer>> m2 = new ArrayList<ArrayList<Integer>>();
     ArrayList<ArrayList<Integer>> m1 = new ArrayList<ArrayList<Integer>>();
     ArrayList<ArrayList<Integer>> topCards = new ArrayList<ArrayList<Integer>>();
+    int rounds;
     public static void playMao(){
         Scanner searcher = new Scanner(System.in);
         System.out.println("Welcome, friend. Do you know how to play Computer Mao? It's a little different from traditional Mao.");
@@ -159,6 +160,7 @@ public class Mao{
         topCards.add(atopCards);
         topCards.add(btopCards);
         topCards.add(ctopCards);
+        rounds=0;
     }
     //Accessors
     public ArrayList<Integer> game(){
@@ -199,66 +201,63 @@ public class Mao{
         System.out.println("How many rounds would you like to play?");
         int numRounds = stalker.nextInt();
         Mao chairman = new Mao();
-        boolean gameOn = true;
-        int wins=0;
-        for(int i=0;i<numRounds;i++){
-            System.out.println("The "+chairman.pile.get(0)+" is in the middle.");
-            while(true){
-                //Human moves.
-                int currentMove = humanMove(chairman.hands.get(1));
-                if((currentMove/1000)%10==1||(currentMove/1000)%10==2){
-                    chairman.game.add(currentMove%100000);
-                    chairman.drawPlay.add(currentMove%100000);
-                    System.out.println(stringMove(currentMove%100000));
-                    if((currentMove/1000)%10==1)
-                        chairman.pile.add(chairman.hands.get(1).remove((currentMove/100000)));
-                    if((currentMove/1000)%10==2){
-                        chairman.hands.get(1).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
-                        if(chairman.drawPile.size()==0){
-                            chairman.deck.reset();
-                            for(int j=0; j<52; j++)
-                               chairman.drawPile.add(chairman.deck.deal()); 
-                        }
+        int wins=0; 
+        while(chairman.rounds!=numRounds){
+            //Human moves.
+            int currentMove = humanMove(chairman.hands.get(1));
+            if((currentMove/1000)%10==1||(currentMove/1000)%10==2){
+                chairman.game.add(currentMove%100000);
+                chairman.drawPlay.add(currentMove%100000);
+                System.out.println(stringMove(currentMove%100000));
+                if((currentMove/1000)%10==1)
+                    chairman.pile.add(chairman.hands.get(1).remove((currentMove/100000)));
+                if((currentMove/1000)%10==2){
+                    chairman.hands.get(1).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
+                    if(chairman.drawPile.size()==0){
+                        chairman.deck.reset();
+                        for(int j=0; j<52; j++)
+                        chairman.drawPile.add(chairman.deck.deal()); 
                     }
-                    chairman.humanGetsRect();
                 }
-                if(chairman.hands.get(1).size()==0){
-                    System.out.println("You won!");
-                    System.out.println("Now you get to create a new rule!");
-                    wins++;
-                    chairman.humanWins();
-                    continue;
-                }
-                //Alice moves.
-                int aone=0;
-                int atwo=0;
-                if(chairman.drawPlay.size()>1){
-                    aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-                    atwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
-                }
-                if(chairman.drawPlay.size()==1){
-                    aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-                }
-                int aliceMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(2),chairman.hands.get(2),2);
-                if((aliceMove/1000)%10==1||(aliceMove/1000)%10==2){
-                    chairman.game.add(aliceMove%100000);
-                    chairman.drawPlay.add(aliceMove%100000);
-                    System.out.println(stringMove(aliceMove%100000));
-                    if((aliceMove/1000)%10==1)
-                        chairman.pile.add(chairman.hands.get(2).remove((aliceMove/100000)));
-                    if((currentMove/1000)%10==2){
-                        chairman.hands.get(2).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
-                        if(chairman.drawPile.size()==0){
-                            chairman.deck.reset();
-                            for(int j=0; j<52; j++)
-                               chairman.drawPile.add(chairman.deck.deal()); 
-                        }
+                chairman.humanGetsRect();
+            }
+            if(chairman.hands.get(1).size()==0){
+                System.out.println("You won!");
+                System.out.println("Now you get to create a new rule!");
+                wins++;
+                chairman.humanWins();
+                continue;
+            }
+            //Alice moves.
+            int aone=0;
+            int atwo=0;
+            if(chairman.drawPlay.size()>1){
+                aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                atwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+            }
+            if(chairman.drawPlay.size()==1){
+                aone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+            }
+            int aliceMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(2),chairman.hands.get(2),2);
+            if((aliceMove/1000)%10==1||(aliceMove/1000)%10==2){
+                chairman.game.add(aliceMove%100000);
+                chairman.drawPlay.add(aliceMove%100000);
+                System.out.println(stringMove(aliceMove%100000));
+                if((aliceMove/1000)%10==1)
+                    chairman.pile.add(chairman.hands.get(2).remove((aliceMove/100000)));
+                if((currentMove/1000)%10==2){
+                    chairman.hands.get(2).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
+                    if(chairman.drawPile.size()==0){
+                        chairman.deck.reset();
+                        for(int j=0; j<52; j++)
+                           chairman.drawPile.add(chairman.deck.deal()); 
                     }
-                    chairman.aliceGetsRect();
                 }
-                if(chairman.hands.get(2).size()==0){
-                    System.out.println("Alice won!");
-                    System.out.println("Now she gets to create a new rule!");
+                chairman.aliceGetsRect();
+            }
+            if(chairman.hands.get(2).size()==0){
+                System.out.println("Alice won!");
+                System.out.println("Now she gets to create a new rule!");
                     chairman.aliceWins();
                     continue;
                 }
@@ -329,7 +328,6 @@ public class Mao{
                     continue;
                 }
             }
-        }
     }
     public static void letsLearn(){
         Scanner spot = new Scanner(System.in);
@@ -1092,6 +1090,7 @@ public class Mao{
         for(int i=0; i<24; i++)
             drawPile.add(deck.deal());
         pile.add(drawPile.remove(drawPile.size()-1));
+        rounds++;
     }
     public void aliceWins(){
         deck.reset();
@@ -1117,6 +1116,7 @@ public class Mao{
             hypos.get(i).add(guess);
             hypoSpecif.get(i).set(1, guess);
         }
+        rounds++;
     }
     public void bobWins(){
         deck.reset();
@@ -1143,6 +1143,7 @@ public class Mao{
         int cguess = randyRules(4);
         hypos.get(4).add(aguess);
         hypoSpecif.get(4).set(3,aguess);
+        rounds++;
     }
     public void charlieWins(){
         deck.reset();
@@ -1168,5 +1169,6 @@ public class Mao{
             hypos.get(i).add(guess);
             hypoSpecif.get(i).set(4,guess);
         }
+        rounds++;
     }
 }
