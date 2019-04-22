@@ -11,8 +11,9 @@ public class Blackjack
 {
     private static Deck deck;
     private static ArrayList<ArrayList<Card>> p;
+    private static String[] names = Casino.names;
     private static int[] score;
-    private static int[] cash;
+    private static int[] cash = Casino.money;
     private static boolean[] bust;
     
     public static void Jack(){
@@ -22,7 +23,7 @@ public class Blackjack
 
         deck.shuffle();
         System.out.println("How many will be gambling against The Dealer? ");
-        int players = reader.nextInt();
+        int players = Casino.players;
         score = new int[players+1];
         bust = new boolean[players+1];
         for (int i = 0; i < bust.length; i++){
@@ -32,7 +33,7 @@ public class Blackjack
         System.out.println("\nDealer's visible hand: \n" + 
                            "- " + p.get(0).get(0) + "\n");
         for (int i = 1; i < players+1; i++){
-            System.out.println("Player " + i + "'s Hand: \n" +
+            System.out.println(names[i-1] + "'s Hand: \n" +
                                "- " + p.get(i).get(0) + "\n" +
                                "- " + p.get(i).get(1) + "\n");
         }
@@ -50,9 +51,9 @@ public class Blackjack
         
         for (int x = 1; x < players+1; x++){
             if (bust[x]){
-                System.out.println("Player " + x + " busted at " + score[x]);
+                System.out.println(names[x-1] + " busted at " + score[x]);
             } else {
-                System.out.println("Player " + x + " scored " + score[x]);
+                System.out.println(names[x-1] + " scored " + score[x]);
             }
         }
 
@@ -76,7 +77,7 @@ public class Blackjack
         Boolean[] stay = new Boolean[bust.length];
         for (int i = 0; i < stay.length; i++){
            if ((score[i] == 21) && (i != 0)){ //Checks for Naturals
-               System.out.println("! Player " + i + " has a Natural 21 !\n");
+               System.out.println("!" + names[i-1] + " has a Natural 21 !\n");
                stay[i] = true;
            } else {
                stay[i] = false;
@@ -89,9 +90,9 @@ public class Blackjack
           
           if (!bust[x] && !stay[x]){
            // Displays current hand
-           System.out.println("~~Player " + x + "'s turn~~"); 
+           System.out.println("~~" + names[x-1] + "'s turn~~"); 
            score[x] = score(p.get(x));
-           System.out.println("Player " + x + "'s current hand: ");
+           System.out.println(names[x-1] + "'s current hand: ");
            for (int i = 0; i < p.get(x).size(); i++){
               System.out.println("- " + p.get(x).get(i));
            }
@@ -105,12 +106,12 @@ public class Blackjack
                    || reply.toUpperCase().equals("HIT")){
                    p.get(x).add(deck.deal());
                    score[x] = score(p.get(x));
-                   System.out.println("Player " + x + " was dealt a " + 
+                   System.out.println(names[x-1] + " was dealt a " + 
                                p.get(x).get(p.get(x).size()-1) +
                               "\nNew Score: " + score[x]);
                    // Checks if 21
                    if (score[x] == 21){
-                       System.out.println("Player " + x + " reached 21!");
+                       System.out.println(names[x-1] + " reached 21!");
                        stay[x] = true;
                    }
                    // Checks if over 21
