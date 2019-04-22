@@ -91,8 +91,7 @@ public class Casino
             } else if (reply.toUpperCase().equals("N") || reply.toUpperCase().equals("NO")){
                 for (int i = 0; i < ingame.length; i++){
                     valid = false;
-                    int count = i+1;
-                    System.out.println("Will Player " + count + " be playing? [Y/N]");
+                    System.out.println("Will " + names[i] + " be playing? [Y/N]");
                     while (!valid){
                         reply = reader.nextLine();
                         if (reply.toUpperCase().equals("Y") || reply.toUpperCase().equals("YES")){
