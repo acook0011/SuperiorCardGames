@@ -14,6 +14,7 @@ public class TestJack
     public static void main(String [] args){
         //Scanner reader = new Scanner(System.in);
         //players = reader.nextInt();
+        // Using this tester is broken atm use the casino
         Blackjack.Jack();
         
     }
