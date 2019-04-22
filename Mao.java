@@ -896,8 +896,14 @@ public class Mao{
         int fourthLast=0;
         int thirdLast=0;
         int secondLast=0;
+        int dpLast=0;
         int dp2Last=0;
         int dp3Last=0;
+        int secondTop=0;
+        if(pile.size()>1)
+            secondTop=numberCard(pile.get(pile.size()-2));
+        if(drawPlay.size()>0)
+            dpLast=(int)drawPlay.get(drawPlay.size()-1);
         if(drawPlay.size()>1)
             dp2Last=drawPlay.get(drawPlay.size()-2);
         if(drawPlay.size()>2)
@@ -908,19 +914,19 @@ public class Mao{
             thirdLast=(int)game.get(game.size()-3);
         if(game.size()>3)
             fourthLast=(int)game.get(game.size()-4);
-        int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(2));
+        int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(2));
         if(aliceMove!=0){
             game.add(aliceMove);
             makeItBetter(aliceMove);
             aliceGetsRect();
         }else{
-            int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(3));
+            int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(3));
             if(bobMove!=0){
                 game.add(bobMove);
                 makeItBetter(bobMove);
                 bobGetsRect();
             }else{
-                int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
+                int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(4));
                 if(charlieMove!=0){
                     game.add(charlieMove);
                     makeItBetter(charlieMove);
@@ -933,25 +939,31 @@ public class Mao{
         int fourthLast=0;
         int thirdLast=0;
         int secondLast=0;
+        int dpLast=0;
         int dp2Last=0;
         int dp3Last=0;
+        int secondTop=0;
+        if(pile.size()>1)
+            secondTop=numberCard(pile.get(pile.size()-2));
+        if(drawPlay.size()>0)
+            dpLast=(int)drawPlay.get(drawPlay.size()-1);
         if(drawPlay.size()>1)
-            dp2Last=drawPlay.get(drawPlay.size()-2);
+            dp2Last=(int)drawPlay.get(drawPlay.size()-2);
         if(drawPlay.size()>2)
-            dp3Last=drawPlay.get(drawPlay.size()-3);
+            dp3Last=(int)drawPlay.get(drawPlay.size()-3);
         if(game.size()>1)
             secondLast=(int)game.get(game.size()-2);
         if(game.size()>2)
             thirdLast=(int)game.get(game.size()-3);
         if(game.size()>3)
             fourthLast=(int)game.get(game.size()-4);
-        int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(3));
+        int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(3));
         if(bobMove!=0){
             game.add(bobMove);
             makeItBetter(bobMove);
             bobGetsRect();
         }else{
-            int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
+            int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(4));
             if(charlieMove!=0){
                 game.add(charlieMove);
                 makeItBetter(charlieMove);
@@ -970,8 +982,14 @@ public class Mao{
         int fourthLast=0;
         int thirdLast=0;
         int secondLast=0;
+        int dpLast=0;
         int dp2Last=0;
         int dp3Last=0;
+        int secondTop=0;
+        if(pile.size()>1)
+            secondTop=numberCard(pile.get(pile.size()-2));
+        if(drawPlay.size()>0)
+            dpLast=(int)drawPlay.get(drawPlay.size()-1);
         if(drawPlay.size()>1)
             dp2Last=drawPlay.get(drawPlay.size()-2);
         if(drawPlay.size()>2)
@@ -982,7 +1000,7 @@ public class Mao{
             thirdLast=(int)game.get(game.size()-3);
         if(game.size()>3)
             fourthLast=(int)game.get(game.size()-4);
-        int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(4));
+        int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(4));
         if(charlieMove!=0){
             game.add(charlieMove);
             makeItBetter(charlieMove);
@@ -994,7 +1012,7 @@ public class Mao{
                 makeItBetter(humanMove);
                 humanGetsRect();
             }else{
-                int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-2)),hypos.get(2));
+                int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(2));
                 if(aliceMove!=0){
                     game.add(aliceMove);
                     makeItBetter(aliceMove);
@@ -1007,8 +1025,14 @@ public class Mao{
         int fourthLast=0;
         int thirdLast=0;
         int secondLast=0;
+        int dpLast=0;
         int dp2Last=0;
         int dp3Last=0;
+        int secondTop=0;
+        if(pile.size()>1)
+            secondTop=numberCard(pile.get(pile.size()-2));
+        if(drawPlay.size()>0)
+            dpLast=(int)drawPlay.get(drawPlay.size()-1);
         if(drawPlay.size()>1)
             dp2Last=drawPlay.get(drawPlay.size()-2);
         if(drawPlay.size()>2)
@@ -1025,13 +1049,13 @@ public class Mao{
             makeItBetter(humanMove);
             humanGetsRect();
         }else{
-            int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(2));
+            int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(2));
             if(aliceMove!=0){
                 game.add(aliceMove);
                 makeItBetter(aliceMove);
                 aliceGetsRect();
             }else{
-                int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,(int)drawPlay.get(drawPlay.size()-1),numberCard(pile.get(pile.size()-1)),hypos.get(3));
+                int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(3));
                 if(bobMove!=0){
                     game.add(bobMove);
                     makeItBetter(bobMove);
