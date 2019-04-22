@@ -196,6 +196,9 @@ public class Mao{
     public ArrayList<ArrayList<Integer>> topCards(){
         return topCards;
     }
+    public int rounds(){
+        return rounds;
+    }
     public static void gamer(){
         Scanner stalker = new Scanner(System.in);
         System.out.println("How many rounds would you like to play?");
@@ -226,7 +229,7 @@ public class Mao{
             if(chairman.hands.get(1).size()==0){
                 System.out.println("You won!");
                 wins++;
-                if(chairman.rounds!=numRounds){
+                if(chairman.rounds()!=numRounds){
                     System.out.println("Now you get to create a new rule!");
                     chairman.humanWins();
                 }
@@ -261,7 +264,7 @@ public class Mao{
             }
             if(chairman.hands.get(2).size()==0){
                 System.out.println("Alice won!");
-                if(chairman.rounds!=numRounds){
+                if(chairman.rounds()!=numRounds){
                     System.out.println("Now she gets to create a new rule!");
                     chairman.aliceWins();
                 }
@@ -296,7 +299,7 @@ public class Mao{
             }
             if(chairman.hands.get(3).size()==0){
                 System.out.println("Bob won!");
-                if(chairman.rounds!=numRounds){
+                if(chairman.rounds()!=numRounds){
                     System.out.println("Now he gets to create a new rule!");
                     chairman.bobWins();
                 }
@@ -331,7 +334,7 @@ public class Mao{
             }
             if(chairman.hands.get(4).size()==0){
                 System.out.println("Charlie won!");
-                    if(chairman.rounds!=numRounds){
+                    if(chairman.rounds()!=numRounds){
                         System.out.println("Now he gets to create a new rule!");
                         chairman.charlieWins();
                     }
@@ -825,46 +828,84 @@ public class Mao{
         Scanner sniffer = new Scanner(System.in);
         System.out.println("What do you want to do?");
         System.out.println("0 - Do nothing.");
+        int result=0;
         switch((lastMove/1000)%10){
             case 1: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for playing out of turn.");
                     System.out.println("2 - Penalize "+numToPlaya(lastMove/10000)+" for playing an incorrect card.");
                     int choix = sniffer.nextInt();
                     if(choix==1||choix==2)
-                        return 13000+(lastMove/10000)*100+choix;
+                        result=13000+(lastMove/10000)*100+choix;
                     break;
             case 2: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for drawing out of turn.");
                     int choiy = sniffer.nextInt();
                     if(choiy==1)
-                        return 13003+(lastMove/10000)*100;
+                        result=13003+(lastMove/10000)*100;
                     break;
             case 3: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for false judgement.");
                     int choiz = sniffer.nextInt();
                     if(choiz==1)
-                        return 13004+(lastMove/10000)*100;
+                        result=13004+(lastMove/10000)*100;
                     break;
         }
-        return 0;
+        int four=0;
+        int three=0;
+        int two=0;
+        int one=0;
+        int top=0;
+        if(game.size()>3)
+            four=game.get(game.size()-4);
+        m4.get(1).add(four);
+        if(game.size()>2)
+            three=game.get(game.size()-3);
+        m3.get(1).add(three);
+        if(game.size()>1)
+            two=game.get(game.size()-2);
+        m2.get(1).add(two);
+        m1.get(1).add(game.get(game.size()-1));
+        if(pile.size()>0)
+            top=numberCard(pile.get(pile.size()-1));
+        topCards.get(1).add(top);
+        return result;
     }
     //The computer can accuse.
-    public static int compAccuse(int whoAmI, int fourthLast, int thirdLast, int secondLast, int last, int thirdLastPD, int secondLastPD, int lastPD, int prevTopCard, ArrayList<Integer> rules){
+    public int compAccuse(int whoAmI, int fourthLast, int thirdLast, int secondLast, int last, int thirdLastPD, int secondLastPD, int lastPD, int prevTopCard, ArrayList<Integer> rules){
+        int result=0;
         switch((last/1000)%10){
             case 1: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
-                        return whoAmI*10000+3000+(last/10000)*100+1;
+                        result=whoAmI*10000+3000+(last/10000)*100+1;
                     if(whatNext(rules,prevTopCard).size()==1){
                         if(!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(0)))
-                            return whoAmI*10000+3000+(last/10000)*100+2;
+                            result=whoAmI*10000+3000+(last/10000)*100+2;
                     }
                     if(!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(0))&&!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(1)))
-                            return whoAmI*10000+3000+(last/10000)*100+2;
+                            result=whoAmI*10000+3000+(last/10000)*100+2;
                     break;
             case 2: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
-                        return whoAmI*10000+3000+(last/10000)*100+3;
+                        result=whoAmI*10000+3000+(last/10000)*100+3;
                     break;
             case 3: if(!wasThePenaltyRight(last, secondLast, thirdLast, fourthLast, prevTopCard, rules))
-                        return whoAmI*10000+3000+(last/10000)*100+4;
+                        result=whoAmI*10000+3000+(last/10000)*100+4;
                     break;
         }
-        return 0;
+        int four=0;
+        int three=0;
+        int two=0;
+        int one=0;
+        int top=0;
+        if(game.size()>3)
+            four=game.get(game.size()-4);
+        m4.get(whoAmI).add(four);
+        if(game.size()>2)
+            three=game.get(game.size()-3);
+        m3.get(whoAmI).add(three);
+        if(game.size()>1)
+            two=game.get(game.size()-2);
+        m2.get(whoAmI).add(two);
+        m1.get(whoAmI).add(game.get(game.size()-1));
+        if(pile.size()>0)
+            top=numberCard(pile.get(pile.size()-1));
+        topCards.get(whoAmI).add(top);
+        return result;
     }
     //Human move. Returns a six-digit integer where the last five are what happened and the first is what position in hand the player is plaing from.
     public static int humanMove(ArrayList<Card> phand){
@@ -927,18 +968,39 @@ public class Mao{
             thirdLast=(int)game.get(game.size()-3);
         if(game.size()>3)
             fourthLast=(int)game.get(game.size()-4);
+        int newAoi=0;
+        if(rules.get(1).size()>0)
+            hypoSpecif.get(2).set(1,science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(2),1));
+        for(int i=hypos.get(2).size()-1; i>0; i--){
+            if((hypos.get(2).get(i)/100000000)%10==1)
+                hypos.get(2).set(i,newAoi);
+        }
         int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(2));
         if(aliceMove!=0){
             game.add(aliceMove);
             makeItBetter(aliceMove);
             aliceGetsRect();
         }else{
+            int newBoi=0;
+            if(rules.get(1).size()>0)
+                hypoSpecif.get(3).set(1,science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(3),1));
+            for(int i=hypos.get(3).size()-1; i>0; i--){
+                if((hypos.get(3).get(i)/100000000)%10==1)
+                    hypos.get(3).set(i,newBoi);
+            }
             int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(3));
             if(bobMove!=0){
                 game.add(bobMove);
                 makeItBetter(bobMove);
                 bobGetsRect();
             }else{
+                int newCoi=0;
+                if(rules.get(1).size()>0)
+                    hypoSpecif.get(2).set(1,science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(2),1));
+                for(int i=hypos.get(2).size()-1; i>0; i--){
+                    if((hypos.get(2).get(i)/100000000)%10==1)
+                        hypos.get(2).set(i,newCoi);
+                }
                 int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(4));
                 if(charlieMove!=0){
                     game.add(charlieMove);
