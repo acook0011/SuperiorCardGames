@@ -343,6 +343,7 @@ public class Mao{
             System.out.println("When it's your turn, you can place a card from your hand on top of the card in the center.");
             System.out.println("The card you play must be either the same suit or the same rank as the card in the center.");
             System.out.println("If you are unable to or don't want to play, take a card from the draw pile and add it to your hand instead of playing.");
+            System.out.println("Just FYI, when the draw pile is exhausted, we simply grab another deck and keep on truckin'.");
             System.out.println();
             System.out.println("When someone empties their hand, they win, and the round is over.");
             System.out.println("The player who won creates a new secret rule, and the next round begins with the new rule in effect.");
@@ -355,7 +356,10 @@ public class Mao{
             System.out.println("Remember-you can only punish the person who did something most recently.");
             System.out.println();
             System.out.println("During the game, I (the computer) will ask you what you want to do.");
-            System.out.println("If you think it's your turn, play or draw. If not, you can penalize another player or just sit tight and do nothing.");
+            System.out.println("If you think it's your turn, play or draw. If not, just do nothing.");
+            System.out.println();
+            System.out.println("One more thing: remember that all but the most fundamental rules are enforced by the players themselves.");
+            System.out.println("For this reason, Mao is the most fun if players consider obeying rules their first priority and winning their second priority.");
             System.out.println("I think that just about covers everything. Get it?");
             System.out.println();
             System.out.println();
