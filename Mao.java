@@ -203,6 +203,8 @@ public class Mao{
         Mao chairman = new Mao();
         int wins=0; 
         while(chairman.rounds!=numRounds){
+            if(chairman.game.size()==1)
+                System.out.println(chairman.pile.get(0)+" is in the middle.");
             //Human moves.
             int currentMove = humanMove(chairman.hands.get(1));
             if((currentMove/1000)%10==1||(currentMove/1000)%10==2){
