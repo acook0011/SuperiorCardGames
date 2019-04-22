@@ -203,7 +203,7 @@ public class Mao{
         Mao chairman = new Mao();
         int wins=0; 
         while(chairman.rounds!=numRounds){
-            if(chairman.game.size()==1)
+            if(chairman.game.size()==0)
                 System.out.println(chairman.pile.get(0)+" is in the middle.");
             //Human moves.
             int currentMove = humanMove(chairman.hands.get(1));
@@ -225,9 +225,11 @@ public class Mao{
             }
             if(chairman.hands.get(1).size()==0){
                 System.out.println("You won!");
-                System.out.println("Now you get to create a new rule!");
                 wins++;
-                chairman.humanWins();
+                if(chairman.rounds!=numRounds){
+                    System.out.println("Now you get to create a new rule!");
+                    chairman.humanWins();
+                }
                 continue;
             }
             //Alice moves.
@@ -259,77 +261,84 @@ public class Mao{
             }
             if(chairman.hands.get(2).size()==0){
                 System.out.println("Alice won!");
-                System.out.println("Now she gets to create a new rule!");
+                if(chairman.rounds!=numRounds){
+                    System.out.println("Now she gets to create a new rule!");
                     chairman.aliceWins();
-                    continue;
                 }
-                //Bob moves.
-                int bone=0;
-                int btwo=0;
-                if(chairman.drawPlay.size()>1){
-                    bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-                    btwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
-                }
-                if(chairman.drawPlay.size()==1){
-                    bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-                }
-                int bobMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(3),chairman.hands.get(3),3);
-                if((bobMove/1000)%10==1||(bobMove/1000)%10==2){
-                    chairman.game.add(bobMove%100000);
-                    chairman.drawPlay.add(bobMove%100000);
-                    System.out.println(stringMove(bobMove%100000));
-                    if((bobMove/1000)%10==1)
-                        chairman.pile.add(chairman.hands.get(3).remove((bobMove/100000)));
-                    if((currentMove/1000)%10==2){
-                        chairman.hands.get(3).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
-                        if(chairman.drawPile.size()==0){
-                            chairman.deck.reset();
-                            for(int j=0; j<52; j++)
-                               chairman.drawPile.add(chairman.deck.deal()); 
-                        }
+                continue;
+            }
+            //Bob moves.
+            int bone=0;
+            int btwo=0;
+            if(chairman.drawPlay.size()>1){
+                bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                btwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+            }
+            if(chairman.drawPlay.size()==1){
+                bone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+            }
+            int bobMove  = compMove(aone,atwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(3),chairman.hands.get(3),3);
+            if((bobMove/1000)%10==1||(bobMove/1000)%10==2){
+                chairman.game.add(bobMove%100000);
+                chairman.drawPlay.add(bobMove%100000);
+                System.out.println(stringMove(bobMove%100000));
+                if((bobMove/1000)%10==1)
+                    chairman.pile.add(chairman.hands.get(3).remove((bobMove/100000)));
+                if((currentMove/1000)%10==2){
+                    chairman.hands.get(3).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
+                    if(chairman.drawPile.size()==0){
+                        chairman.deck.reset();
+                        for(int j=0; j<52; j++)
+                            chairman.drawPile.add(chairman.deck.deal()); 
                     }
-                    chairman.bobGetsRect();
                 }
-                if(chairman.hands.get(3).size()==0){
-                    System.out.println("Bob won!");
+                chairman.bobGetsRect();
+            }
+            if(chairman.hands.get(3).size()==0){
+                System.out.println("Bob won!");
+                if(chairman.rounds!=numRounds){
                     System.out.println("Now he gets to create a new rule!");
                     chairman.bobWins();
-                    continue;
                 }
-                //Charlie moves.
-                int cone=0;
-                int ctwo=0;
-                if(chairman.drawPlay.size()>1){
-                    cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-                    ctwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
-                }
-                if(chairman.drawPlay.size()==1){
-                    cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
-                }
-                int charlieMove  = compMove(cone,ctwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(4),chairman.hands.get(4),4);
-                if((charlieMove/1000)%10==1||(charlieMove/1000)%10==2){
-                    chairman.game.add(charlieMove%100000);
-                    chairman.drawPlay.add(charlieMove%100000);
-                    System.out.println(stringMove(charlieMove%100000));
-                    if((charlieMove/1000)%10==1)
-                        chairman.pile.add(chairman.hands.get(4).remove((charlieMove/100000)));
-                    if((currentMove/1000)%10==2){
-                        chairman.hands.get(4).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
-                        if(chairman.drawPile.size()==0){
-                            chairman.deck.reset();
-                            for(int j=0; j<52; j++)
-                               chairman.drawPile.add(chairman.deck.deal()); 
-                        }
-                    }
-                    chairman.charlieGetsRect();
-                }
-                if(chairman.hands.get(4).size()==0){
-                    System.out.println("Charlie won!");
-                    System.out.println("Now he gets to create a new rule!");
-                    chairman.charlieWins();
-                    continue;
-                }
+                continue;
             }
+            //Charlie moves.
+            int cone=0;
+            int ctwo=0;
+            if(chairman.drawPlay.size()>1){
+                cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+                ctwo = (int)chairman.drawPlay.get(chairman.drawPlay.size()-2); 
+            }
+            if(chairman.drawPlay.size()==1){
+                cone = (int)chairman.drawPlay.get(chairman.drawPlay.size()-1);
+            }
+            int charlieMove  = compMove(cone,ctwo,numberCard(chairman.pile.get(chairman.pile.size()-1)),chairman.hypos.get(4),chairman.hands.get(4),4);
+            if((charlieMove/1000)%10==1||(charlieMove/1000)%10==2){
+                chairman.game.add(charlieMove%100000);
+                chairman.drawPlay.add(charlieMove%100000);
+                System.out.println(stringMove(charlieMove%100000));
+                if((charlieMove/1000)%10==1)
+                    chairman.pile.add(chairman.hands.get(4).remove((charlieMove/100000)));
+                if((currentMove/1000)%10==2){
+                    chairman.hands.get(4).add(chairman.drawPile.remove(chairman.drawPile.size()-1));
+                    if(chairman.drawPile.size()==0){
+                        chairman.deck.reset();
+                        for(int j=0; j<52; j++)
+                           chairman.drawPile.add(chairman.deck.deal()); 
+                    }
+                }
+                chairman.charlieGetsRect();
+            }
+            if(chairman.hands.get(4).size()==0){
+                System.out.println("Charlie won!");
+                    if(chairman.rounds!=numRounds){
+                        System.out.println("Now he gets to create a new rule!");
+                        chairman.charlieWins();
+                    }
+                continue;
+            }
+        }
+        System.out.println("You won "+wins+" out of "+numRounds+" rounds. Not bad!");
     }
     public static void letsLearn(){
         Scanner spot = new Scanner(System.in);
