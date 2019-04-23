@@ -58,8 +58,9 @@ public class Casino
         System.out.println("Everyone starts with $10,000.\n" + 
                            "What game would you like to play?\n" +
                            "1) Blackjack\n" + 
-                           "2) more later :)");
-        final int OPTS = 1;
+                           "2) Mao\n" +
+                           "3) more later :)");
+        final int OPTS = 2;
         int choice = -1;
         Boolean valid = false;
         while (!valid){
@@ -74,8 +75,13 @@ public class Casino
             chooseMulti();
             Blackjack.Jack();
         } else {
-            System.out.println("! !CHOICE ERROR! !\n! !PASSED RANGE CHECK! !");
+            if(choice ==2){
+            chooseMulti();
+            Mao.playMao();
+        } else {
+                System.out.println("! !CHOICE ERROR! !\n! !PASSED RANGE CHECK! !");
         }
+    }
     }
     
     public static void chooseMulti(){
