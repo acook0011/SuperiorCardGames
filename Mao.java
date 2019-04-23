@@ -735,9 +735,10 @@ public class Mao{
             if(whatNext(rules,topCard).size()==1){
                 if(itsAMatch(hand.get(i),whatNext(rules,topCard).get(0)))
                     return i;
+            }else{
+                if(itsAMatch(hand.get(i), whatNext(rules,topCard).get(0))||itsAMatch(hand.get(i), whatNext(rules,topCard).get(1)))
+                    return i;
             }
-            if(itsAMatch(hand.get(i), whatNext(rules,topCard).get(0))||itsAMatch(hand.get(i), whatNext(rules,topCard).get(1)))
-                return i;
         }
         return -1;
     }
@@ -763,6 +764,11 @@ public class Mao{
     //Undoing a crime.
     public void makeItBetter(int accusation){
         System.out.println(stringMove(accusation));
+        if(drawPile.size()==0){
+            deck.reset();
+            for(int j=0; j<52; j++)
+                drawPile.add(deck.deal()); 
+        }
         switch(accusation%10){
             case 1: hands.get((accusation/100)%10).add(pile.remove(pile.size()-1));
                     hands.get((accusation/100)%10).add(drawPile.remove(drawPile.size()-1));
@@ -797,8 +803,19 @@ public class Mao{
     }
     //Redoing a crime.
     public void makeItEvenBetter(int positionOfFaultyAccusation){
+        if(drawPile.size()==0){
+            deck.reset();
+            for(int j=0; j<52; j++)
+                drawPile.add(deck.deal()); 
+        }
         int personWhoWronglyAccused = (game.get(positionOfFaultyAccusation)/10000)%10;
         int personWhoWasWronglyAccused = (game.get(positionOfFaultyAccusation-1)/10000)%10;
+        String pwwa = numToPlaya(personWhoWronglyAccused);
+        if(personWhoWronglyAccused==0)
+            pwwa = "You";
+        String pwwwa = numToPlaya(personWhoWasWronglyAccused);
+        if(personWhoWasWronglyAccused==0)
+            pwwwa = "You";
         switch(game.get(positionOfFaultyAccusation)%10){
             case 1: pile.add(hands.get(personWhoWasWronglyAccused).remove(hands.get(personWhoWasWronglyAccused).size()-2));
                     drawPlay.add(personWhoWasWronglyAccused*10000+1000+numberCard(pile.get(pile.size()-1)));
@@ -816,8 +833,8 @@ public class Mao{
                     break;
             case 3: hands.get(personWhoWasWronglyAccused).add(drawPile.remove(drawPile.size()-1));
                     hands.get(personWhoWronglyAccused).add(drawPile.remove(drawPile.size()-1));
-                    System.out.println(numToPlaya(personWhoWasWronglyAccused)+" got the card back.");
-                    System.out.println(numToPlaya(personWhoWronglyAccused)+" got a penalty card.");
+                    System.out.println(pwwwa+" got the card back.");
+                    System.out.println(pwwa+" got a penalty card.");
                     break;
             case 4: makeItEvenBetter(positionOfFaultyAccusation-2);
                     break;
@@ -876,9 +893,10 @@ public class Mao{
                     if(whatNext(rules,prevTopCard).size()==1){
                         if(!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(0)))
                             result=whoAmI*10000+3000+(last/10000)*100+2;
-                    }
-                    if(!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(0))&&!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(1)))
+                    }else{
+                        if(!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(0))&&!itsAMatch(last%1000,whatNext(rules,prevTopCard).get(1)))
                             result=whoAmI*10000+3000+(last/10000)*100+2;
+                    }
                     break;
             case 2: if(whoTurn(thirdLastPD, secondLastPD, rules)!=last/10000)
                         result=whoAmI*10000+3000+(last/10000)*100+3;
@@ -935,7 +953,7 @@ public class Mao{
         if(whoTurn(secondLastPD, lastPD, rulies)!=whoAmI)
             return 0;
         for(int i=0; i<hand.size(); i++){
-            if(whatNext(secondLastPD%1000,rulies).size()==1){
+            if(whatNext(rulies,topCard).size()==1){
                 if(itsAMatch(hand.get(i),whatNext(rulies,topCard).get(0)))
                     return i*100000+whoAmI*10000+1000+numberCard(hand.get(i));
             }else{
