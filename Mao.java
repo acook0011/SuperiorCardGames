@@ -360,7 +360,7 @@ public class Mao{
             System.out.println("When someone empties their hand, they win, and the round is over.");
             System.out.println("The player who won creates a new secret rule, and the next round begins with the new rule in effect.");
             System.out.println("It is up to the other players to try to figure out the rule and play accordingly.");
-            System.out.println("You may play as many rounds as you want, and all rules stay in effect as long as no other rule contradicts them.");
+            System.out.println("You may play as many rounds as you want, and all rules stay in effect, newer ones overriding older ones.");
             System.out.println();
             System.out.println("Sometimes, a player may do something that you believe to be against the rules.");
             System.out.println("If this happens, punish them! Their action will be undone, and they will recieve a one-card penalty.");
@@ -969,11 +969,31 @@ public class Mao{
         if(game.size()>3)
             fourthLast=(int)game.get(game.size()-4);
         int newAoi=0;
-        if(rules.get(1).size()>0)
-            hypoSpecif.get(2).set(1,science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(2),1));
+        if(rules.get(1).size()>0){
+            newAoi=science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(2),1);
+            hypoSpecif.get(2).set(1,newAoi);
+        }
         for(int i=hypos.get(2).size()-1; i>0; i--){
             if((hypos.get(2).get(i)/100000000)%10==1)
                 hypos.get(2).set(i,newAoi);
+        }
+        int newBoi=0;
+        if(rules.get(1).size()>0){
+            newAoi=science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(3),1);
+            hypoSpecif.get(3).set(1,newBoi);
+        }
+        for(int i=hypos.get(3).size()-1; i>0; i--){
+            if((hypos.get(3).get(i)/100000000)%10==1)
+                hypos.get(3).set(i,newBoi);
+        }
+        int newCoi=0;
+        if(rules.get(1).size()>0){
+            newCoi=science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(4),1);
+            hypoSpecif.get(4).set(1,newCoi);
+        }
+        for(int i=hypos.get(4).size()-1; i>0; i--){
+            if((hypos.get(4).get(i)/100000000)%10==1)
+                hypos.get(4).set(i,newCoi);
         }
         int aliceMove = compAccuse(2,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(2));
         if(aliceMove!=0){
@@ -981,26 +1001,12 @@ public class Mao{
             makeItBetter(aliceMove);
             aliceGetsRect();
         }else{
-            int newBoi=0;
-            if(rules.get(1).size()>0)
-                hypoSpecif.get(3).set(1,science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(3),1));
-            for(int i=hypos.get(3).size()-1; i>0; i--){
-                if((hypos.get(3).get(i)/100000000)%10==1)
-                    hypos.get(3).set(i,newBoi);
-            }
             int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(3));
             if(bobMove!=0){
                 game.add(bobMove);
                 makeItBetter(bobMove);
                 bobGetsRect();
             }else{
-                int newCoi=0;
-                if(rules.get(1).size()>0)
-                    hypoSpecif.get(2).set(1,science(m1.get(1),m2.get(1),m3.get(1),m4.get(1),topCards.get(1),hypos.get(2),1));
-                for(int i=hypos.get(2).size()-1; i>0; i--){
-                    if((hypos.get(2).get(i)/100000000)%10==1)
-                        hypos.get(2).set(i,newCoi);
-                }
                 int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(4));
                 if(charlieMove!=0){
                     game.add(charlieMove);
@@ -1032,6 +1038,24 @@ public class Mao{
             thirdLast=(int)game.get(game.size()-3);
         if(game.size()>3)
             fourthLast=(int)game.get(game.size()-4);
+        int newBoi=0;
+        if(rules.get(2).size()>0){
+            newBoi=science(m1.get(2),m2.get(2),m3.get(2),m4.get(2),topCards.get(2),hypos.get(3),2);
+            hypoSpecif.get(3).set(2,newBoi);
+        }
+        for(int i=hypos.get(3).size()-1; i>0; i--){
+            if((hypos.get(3).get(i)/100000000)%10==2)
+                hypos.get(3).set(i,newBoi);
+        }
+        int newCoi=0;
+        if(rules.get(2).size()>0){
+            newCoi=science(m1.get(2),m2.get(2),m3.get(2),m4.get(2),topCards.get(2),hypos.get(4),2);
+            hypoSpecif.get(4).set(2,newCoi);
+        }
+        for(int i=hypos.get(4).size()-1; i>0; i--){
+            if((hypos.get(4).get(i)/100000000)%10==2)
+            hypos.get(4).set(i,newCoi);
+        }
         int bobMove = compAccuse(3,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(3));
         if(bobMove!=0){
             game.add(bobMove);
@@ -1075,6 +1099,24 @@ public class Mao{
             thirdLast=(int)game.get(game.size()-3);
         if(game.size()>3)
             fourthLast=(int)game.get(game.size()-4);
+        int newAoi=0;
+        if(rules.get(3).size()>0){
+            newAoi=science(m1.get(3),m2.get(3),m3.get(3),m4.get(3),topCards.get(3),hypos.get(2),3);
+            hypoSpecif.get(2).set(3,newAoi);
+        }
+        for(int i=hypos.get(2).size()-1; i>0; i--){
+            if((hypos.get(2).get(i)/100000000)%10==3)
+            hypos.get(2).set(i,newAoi);
+        }
+        int newCoi=0;
+        if(rules.get(3).size()>0){
+            newCoi=science(m1.get(3),m2.get(3),m3.get(3),m4.get(3),topCards.get(3),hypos.get(4),3);
+            hypoSpecif.get(4).set(3,newCoi);
+        }
+        for(int i=hypos.get(4).size()-1; i>0; i--){
+            if((hypos.get(4).get(i)/100000000)%10==3)
+                hypos.get(4).set(i,newCoi);
+        }
         int charlieMove = compAccuse(4,fourthLast,thirdLast,secondLast,(int)game.get(game.size()-1),dp3Last,dp2Last,dpLast,secondTop,hypos.get(4));
         if(charlieMove!=0){
             game.add(charlieMove);
@@ -1118,6 +1160,24 @@ public class Mao{
             thirdLast=(int)game.get(game.size()-3);
         if(game.size()>3)
             fourthLast=(int)game.get(game.size()-4);
+        int newAoi=0;
+        if(rules.get(4).size()>0){
+            newAoi=science(m1.get(4),m2.get(4),m3.get(4),m4.get(4),topCards.get(4),hypos.get(2),4);
+            hypoSpecif.get(2).set(4,newAoi);
+        }
+        for(int i=hypos.get(2).size()-1; i>0; i--){
+            if((hypos.get(2).get(i)/100000000)%10==4)
+            hypos.get(2).set(i,newAoi);
+        }
+        int newBoi=0;
+        if(rules.get(4).size()>0){
+            newBoi=science(m1.get(4),m2.get(4),m3.get(4),m4.get(4),topCards.get(4),hypos.get(3),4);
+            hypoSpecif.get(3).set(4,newBoi);
+        }
+        for(int i=hypos.get(3).size()-1; i>0; i--){
+            if((hypos.get(3).get(i)/100000000)%10==4)
+            hypos.get(3).set(i,newBoi);
+        }
         int humanMove = humanAccuse(game.get(game.size()-1));
         if(humanMove!=0){
             game.add(humanMove);
