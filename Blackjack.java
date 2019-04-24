@@ -14,6 +14,7 @@ public class Blackjack
     private static String[] names = Casino.names;
     private static int[] score;
     private static int[] cash = Casino.money;
+    private static int[] bet;
     private static boolean[] bust;
     private static boolean[] natural;
     
@@ -21,15 +22,32 @@ public class Blackjack
         deck = new Deck();
         p = new ArrayList<ArrayList<Card>>(); // p.get(0) = Dealer
         Scanner reader = new Scanner(System.in);
+        
 
         deck.shuffle();
         int players = Casino.players;
         score = new int[players+1];
+        bet = new int[players+1];
         bust = new boolean[players+1];
         natural = new boolean[players+1];
         for (int i = 0; i < bust.length; i++){
             bust[i] = false;
             natural[i] = false;
+        }
+        bet[0] = 0;
+        for (int i = 1; i < players+1; i++){
+            System.out.println(names[i-1] + ", how much do you want to bet between $20 and $5,000?");
+            
+            Boolean valid = false;
+            while (!valid){
+                int want = reader.nextInt();
+                if (want >= 20 && want <= 5000){
+                    bet[i] = want;
+                    valid = true;
+                } else {
+                    System.out.println("Please bet between $20 and $5,000.");
+                }
+            }
         }
         dealHand(p, players);
         System.out.println("\nDealer's visible hand: \n" + 
@@ -47,6 +65,8 @@ public class Blackjack
         
         if (bust[0]){
             System.out.println("The Dealer busted at " + score[0]);
+        } else if (natural[0]){
+            System.out.println("The Dealer had a natural " +score[0]);
         } else {
             System.out.println("The Dealer scored " + score[0]);
         }
@@ -54,7 +74,9 @@ public class Blackjack
         for (int x = 1; x < players+1; x++){
             if (bust[x]){
                 System.out.println(names[x-1] + " busted at " + score[x]);
-            } else {
+            } else if (natural[x]){
+                System.out.println(names[x-1] + " had a natural " + score[x]);
+            } else{
                 System.out.println(names[x-1] + " scored " + score[x]);
             }
         }
