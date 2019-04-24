@@ -60,7 +60,7 @@ public class Casino
                            "1) Blackjack\n" + 
                            "2) Mao\n" +
                            "3) more later :)");
-        final int OPTS = 2;
+        final int OPTS = 2; // Amount of choices
         int choice = -1;
         Boolean valid = false;
         while (!valid){
@@ -74,14 +74,13 @@ public class Casino
         if (choice == 1){
             chooseMulti();
             Blackjack.Jack();
-        } else {
-            if(choice ==2){
+        } else if(choice == 2){
             chooseMulti();
             Mao.playMao();
         } else {
                 System.out.println("! !CHOICE ERROR! !\n! !PASSED RANGE CHECK! !");
         }
-    }
+        
     }
     
     public static void chooseMulti(){
