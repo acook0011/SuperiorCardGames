@@ -21,6 +21,6 @@ public class War
     }
     
     public void play(List d1, List d2){
-        
+        System.out.println(d1.remove(0));
     }
 }
