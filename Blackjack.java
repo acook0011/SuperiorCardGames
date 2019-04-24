@@ -15,6 +15,7 @@ public class Blackjack
     private static int[] score;
     private static int[] cash = Casino.money;
     private static boolean[] bust;
+    private static boolean[] natural;
     
     public static void Jack(){
         deck = new Deck();
@@ -22,12 +23,13 @@ public class Blackjack
         Scanner reader = new Scanner(System.in);
 
         deck.shuffle();
-        System.out.println("How many will be gambling against The Dealer? ");
         int players = Casino.players;
         score = new int[players+1];
         bust = new boolean[players+1];
+        natural = new boolean[players+1];
         for (int i = 0; i < bust.length; i++){
             bust[i] = false;
+            natural[i] = false;
         }
         dealHand(p, players);
         System.out.println("\nDealer's visible hand: \n" + 
@@ -80,6 +82,7 @@ public class Blackjack
         for (int i = 0; i < stay.length; i++){
            if ((score[i] == 21) && (i != 0)){ //Checks for Naturals
                System.out.println("!" + names[i-1] + " has a Natural 21 !\n");
+               natural[i] = true;
                stay[i] = true;
            } else {
                stay[i] = false;

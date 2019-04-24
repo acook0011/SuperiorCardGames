@@ -15,6 +15,7 @@ public class Casino
     public static int[] money;
     public static boolean[] ingame;
     
+    // Specific Players
     
     public static void main(String [] args){
         System.out.println("How many players will be in the casino tonight?");
@@ -24,7 +25,7 @@ public class Casino
             money[i] = 10000;
         }
         names = new String[players];
-        System.out.println("Do you want to give your names? [Y/N]"); 
+        System.out.println("Do you want to give your names? [Y/N]"); reader.nextLine();
         
         Boolean valid = false;
         while (!valid){ 
@@ -80,13 +81,13 @@ public class Casino
             chooseMulti();
             Mao.playMao();
         } else {
-                System.out.println("! !CHOICE ERROR! !\n! !PASSED RANGE CHECK! !");
+            System.out.println("! !CHOICE ERROR! !\n! !PASSED RANGE CHECK! !");
         }
         
     }
     
     public static void chooseMulti(){
-        System.out.println("Will everyone be playing?");
+        System.out.println("Will everyone be playing?"); reader.nextLine();
         Boolean valid = false;
         while (!valid){
             String reply = reader.nextLine();
