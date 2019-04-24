@@ -229,6 +229,7 @@ public class Mao{
             if(chairman.hands.get(1).size()==0){
                 System.out.println("You won!");
                 wins++;
+                chairman.rounds++;
                 if(chairman.rounds()!=numRounds){
                     System.out.println("Now you get to create a new rule!");
                     chairman.humanWins();
@@ -264,6 +265,7 @@ public class Mao{
             }
             if(chairman.hands.get(2).size()==0){
                 System.out.println("Alice won!");
+                chairman.rounds++;
                 if(chairman.rounds()!=numRounds){
                     System.out.println("Now she gets to create a new rule!");
                     chairman.aliceWins();
@@ -299,6 +301,7 @@ public class Mao{
             }
             if(chairman.hands.get(3).size()==0){
                 System.out.println("Bob won!");
+                chairman.rounds++;
                 if(chairman.rounds()!=numRounds){
                     System.out.println("Now he gets to create a new rule!");
                     chairman.bobWins();
@@ -334,10 +337,11 @@ public class Mao{
             }
             if(chairman.hands.get(4).size()==0){
                 System.out.println("Charlie won!");
-                    if(chairman.rounds()!=numRounds){
-                        System.out.println("Now he gets to create a new rule!");
-                        chairman.charlieWins();
-                    }
+                chairman.rounds++;
+                if(chairman.rounds()!=numRounds){
+                    System.out.println("Now he gets to create a new rule!");
+                    chairman.charlieWins();
+                }
                 continue;
             }
         }
@@ -1241,7 +1245,6 @@ public class Mao{
         for(int i=0; i<24; i++)
             drawPile.add(deck.deal());
         pile.add(drawPile.remove(drawPile.size()-1));
-        rounds++;
     }
     public void aliceWins(){
         deck.reset();
@@ -1267,7 +1270,6 @@ public class Mao{
             hypos.get(i).add(guess);
             hypoSpecif.get(i).set(1, guess);
         }
-        rounds++;
     }
     public void bobWins(){
         deck.reset();
@@ -1294,7 +1296,6 @@ public class Mao{
         int cguess = randyRules(4);
         hypos.get(4).add(aguess);
         hypoSpecif.get(4).set(3,aguess);
-        rounds++;
     }
     public void charlieWins(){
         deck.reset();
@@ -1320,6 +1321,5 @@ public class Mao{
             hypos.get(i).add(guess);
             hypoSpecif.get(i).set(4,guess);
         }
-        rounds++;
     }
 }
