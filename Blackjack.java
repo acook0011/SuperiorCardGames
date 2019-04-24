@@ -56,7 +56,9 @@ public class Blackjack
                 System.out.println(names[x-1] + " scored " + score[x]);
             }
         }
-
+        
+        
+        
     }
     
     public static void dealHand(ArrayList<ArrayList<Card>> p, 

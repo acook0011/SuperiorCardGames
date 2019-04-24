@@ -8,11 +8,13 @@ import java.util.Scanner;
  */
 public class Casino
 {
+    public static Scanner reader = new Scanner(System.in);
+    // Universal
     public static int players;
     public static String[] names;
     public static int[] money;
     public static boolean[] ingame;
-    public static Scanner reader = new Scanner(System.in);
+    
     
     public static void main(String [] args){
         System.out.println("How many players will be in the casino tonight?");
@@ -65,7 +67,7 @@ public class Casino
         Boolean valid = false;
         while (!valid){
             choice = reader.nextInt();
-            if (choice > OPTS || choice < OPTS){
+            if (choice > OPTS || choice < 1){
                 System.out.println("Please choosen within the range: [1-" + OPTS + "]");
             } else{
                 valid = true;
