@@ -206,8 +206,11 @@ public class Mao{
         Mao chairman = new Mao();
         int wins=0; 
         while(chairman.rounds!=numRounds){
-            if(chairman.game.size()==0)
+            if(chairman.game.size()==0){
+                System.out.println();
+                System.out.println();
                 System.out.println(chairman.pile.get(0)+" is in the middle.");
+            }
             //Human moves.
             int currentMove = humanMove(chairman.hands.get(1));
             if((currentMove/1000)%10==1||(currentMove/1000)%10==2){
@@ -345,7 +348,13 @@ public class Mao{
                 continue;
             }
         }
+        System.out.println();
         System.out.println("You won "+wins+" out of "+numRounds+" rounds. Not bad!");
+        System.out.println("Here were the secret rules.");
+        for(int i=0; i<chairman.rules.size(); i++){
+            for(int j=0; j<chairman.rules.get(i).size(); j++)
+                System.out.println(chairman.rules.get(i).get(j));
+        }
     }
     public static void letsLearn(){
         Scanner spot = new Scanner(System.in);
