@@ -50,6 +50,6 @@ public class Player
     }
     
     public void nowIG(){
-        ingame= true;
+        ingame = true;
     }
 }
