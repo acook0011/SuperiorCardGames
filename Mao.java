@@ -890,6 +890,7 @@ public class Mao{
                             break;
                         System.out.println("Please try again.");
                     }
+                    break;
             case 3: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for false judgement.");
                     while(true){
                         int choiz = sniffer.nextInt();
@@ -901,6 +902,7 @@ public class Mao{
                             break;
                         System.out.println("Please try again.");
                     }
+                    break;
         }
         int four=0;
         int three=0;
