@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Eventually, the collective player of all the games.
@@ -6,10 +6,12 @@ import java.util.Scanner;
  * @aj
  * @casino
  */
+
 public class Casino
 {
     public static Scanner reader = new Scanner(System.in);
     // Universal
+    public static ArrayList<Player> guests;
     public static int players;
     public static String[] names;
     public static int[] money;
@@ -18,11 +20,18 @@ public class Casino
     // Specific Players
     
     public static void main(String [] args){
+        guests = new ArrayList<Player>();
+        
         System.out.println("How many players will be in the casino tonight?");
         players = reader.nextInt();
+        for (int i = 0; i < players; i++){
+            
+        }
+        
+        
         money = new int[players];
         for (int i = 0; i < money.length; i++){
-            money[i] = 10000;
+            money[i] = 1000;
         }
         names = new String[players];
         System.out.println("Do you want to give your names? [Y/N]"); reader.nextLine();
@@ -58,7 +67,7 @@ public class Casino
     }
     
     public static void menu(){
-        System.out.println("Everyone starts with $10,000.\n" + 
+        System.out.println("Everyone starts with $1,000.\n" + 
                            "What game would you like to play?\n" +
                            "1) Blackjack\n" + 
                            "2) Mao\n" +
