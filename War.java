@@ -21,6 +21,12 @@ public class War
     }
     
     public void play(List d1, List d2){
-        System.out.println(d1.remove(0));
+        System.out.println("You play " + d1.get(0) + ".");
+        System.out.println("Your opponent plays " + d2.get(0) + ".");
+        evaluate(d1,d2);
+    }
+    
+    public void evaluate(List d1, List d2){
+        
     }
 }
