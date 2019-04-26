@@ -203,7 +203,7 @@ public class Mao{
         Scanner stalker = new Scanner(System.in);
         System.out.println("How many rounds would you like to play?");
         int numRounds = stalker.nextInt();
-        System.out.println("How much money shall each player be wagering each round?");
+        System.out.println("How many dollars shall each player be wagering each round?");
         int wager = stalker.nextInt();
         Mao chairman = new Mao();
         int wins=0; 
@@ -868,20 +868,39 @@ public class Mao{
         switch((lastMove/1000)%10){
             case 1: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for playing out of turn.");
                     System.out.println("2 - Penalize "+numToPlaya(lastMove/10000)+" for playing an incorrect card.");
-                    int choix = sniffer.nextInt();
-                    if(choix==1||choix==2)
-                        result=13000+(lastMove/10000)*100+choix;
+                    while(true){
+                        int choix = sniffer.nextInt();
+                        if(choix==1||choix==2){
+                            result=13000+(lastMove/10000)*100+choix;
+                            break;
+                        }
+                        if(choix==0)
+                            break;
+                        System.out.println("Please try again.");
+                    }
                     break;
             case 2: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for drawing out of turn.");
-                    int choiy = sniffer.nextInt();
-                    if(choiy==1)
-                        result=13003+(lastMove/10000)*100;
-                    break;
+                    while(true){
+                        int choiy = sniffer.nextInt();
+                        if(choiy==1){
+                            result=13003+(lastMove/10000)*100;
+                            break;
+                        }
+                        if(choiy==0)
+                            break;
+                        System.out.println("Please try again.");
+                    }
             case 3: System.out.println("1 - Penalize "+numToPlaya(lastMove/10000)+" for false judgement.");
-                    int choiz = sniffer.nextInt();
-                    if(choiz==1)
-                        result=13004+(lastMove/10000)*100;
-                    break;
+                    while(true){
+                        int choiz = sniffer.nextInt();
+                        if(choiz==1){
+                            result=13004+(lastMove/10000)*100;
+                            break;
+                        }
+                        if(choiz==0)
+                            break;
+                        System.out.println("Please try again.");
+                    }
         }
         int four=0;
         int three=0;
