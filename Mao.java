@@ -203,6 +203,8 @@ public class Mao{
         Scanner stalker = new Scanner(System.in);
         System.out.println("How many rounds would you like to play?");
         int numRounds = stalker.nextInt();
+        System.out.println("How much money shall each player be wagering each round?");
+        int wager = stalker.nextInt();
         Mao chairman = new Mao();
         int wins=0; 
         while(chairman.rounds!=numRounds){
@@ -350,10 +352,14 @@ public class Mao{
         }
         System.out.println();
         System.out.println("You won "+wins+" out of "+numRounds+" rounds. Not bad!");
-        System.out.println("Here were the secret rules.");
-        for(int i=0; i<chairman.rules.size(); i++){
-            for(int j=0; j<chairman.rules.get(i).size(); j++)
-                System.out.println(chairman.rules.get(i).get(j));
+        System.out.println("Your antes totalled to "+(numRounds*wager)+" dollars. Your winnings total to "+(wager*4*wins)+" dollars.");
+        System.out.println("You netted "+(4*wager*wins-numRounds*wager)+" dollars. Quite the jackpot!");
+        if(numRounds>1){
+            System.out.println("BTW, Here were the secret rules.");
+            for(int i=0; i<chairman.rules.size(); i++){
+                for(int j=0; j<chairman.rules.get(i).size(); j++)
+                    System.out.println(chairman.rules.get(i).get(j));
+            }
         }
     }
     public static void letsLearn(){
