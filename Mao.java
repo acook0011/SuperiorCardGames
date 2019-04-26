@@ -57,7 +57,7 @@ public class Mao{
         ArrayList<Card> ahand = new ArrayList<Card>();
         ArrayList<Card> bhand = new ArrayList<Card>();
         ArrayList<Card> chand = new ArrayList<Card>();
-        for(int i=0; i<7; i++){
+        for(int i=0; i<3; i++){
             hhand.add(deck.deal());
             ahand.add(deck.deal());
             bhand.add(deck.deal());
@@ -68,7 +68,7 @@ public class Mao{
         hands.add(ahand);
         hands.add(bhand);
         hands.add(chand);
-        for(int i=0; i<24; i++)
+        for(int i=0; i<40; i++)
             drawPile.add(deck.deal());
         pile.add(drawPile.remove(drawPile.size()-1));
         //Getting the ArrayLists ready.
@@ -368,7 +368,7 @@ public class Mao{
         while(understand==2){
             System.out.println();
             System.out.println("Mao is a shedding card game. That means that the object of the game is to get rid of all the cards in your hand.");
-            System.out.println("Every player starts with a hand of seven cards. There is one card face-up in the center of the table.");
+            System.out.println("Every player starts with a hand of three cards. There is one card face-up in the center of the table.");
             System.out.println("We take turns. It goes you, Alice, Bob, Charlie, you, Alice, Bob, Charlie, you, Alice, Bob, Charlie, and so on.");
             System.out.println();
             System.out.println("When it's your turn, you can place a card from your hand on top of the card in the center.");
@@ -1268,7 +1268,7 @@ public class Mao{
             game.remove(i);
         for(int i=drawPlay.size()-1; i>0; i--)
             drawPlay.remove(i);
-        for(int i=0; i<7; i++){
+        for(int i=0; i<3; i++){
             for(int j=1; j<5; j++)
                 hands.get(j).add(deck.deal());
         }
@@ -1293,7 +1293,7 @@ public class Mao{
             game.remove(i);
         for(int i=drawPlay.size()-1; i>0; i--)
             drawPlay.remove(i);
-        for(int i=0; i<7; i++){
+        for(int i=0; i<3; i++){
             for(int j=1; j<5; j++)
                 hands.get(j).add(deck.deal());
         }
@@ -1318,7 +1318,7 @@ public class Mao{
             game.remove(i);
         for(int i=drawPlay.size()-1; i>0; i--)
             drawPlay.remove(i);
-        for(int i=0; i<7; i++){
+        for(int i=0; i<3; i++){
             for(int j=1; j<5; j++)
                 hands.get(j).add(deck.deal());
         }
@@ -1344,7 +1344,7 @@ public class Mao{
             game.remove(i);
         for(int i=drawPlay.size()-1; i>0; i--)
             drawPlay.remove(i);
-        for(int i=0; i<7; i++){
+        for(int i=0; i<3; i++){
             for(int j=1; j<5; j++)
                 hands.get(j).add(deck.deal());
         }
