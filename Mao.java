@@ -36,6 +36,12 @@ public class Mao{
         System.out.println("3 - No, but I want to play now.");
         System.out.println("4 - No, and I don't want to play now.");
         int gamer = searcher.nextInt();
+        while(true){
+            if(gamer>0&&gamer<5)
+                break;
+            System.out.println("Wanna try that again?"); 
+            gamer = searcher.nextInt();
+        }
         switch(gamer){
             case 1: gamer();
                     break;
@@ -397,6 +403,12 @@ public class Mao{
             System.out.println("1 - I understand and agree to the rules you just said. Let's play!");
             System.out.println("2 - I don't understand. Can you please repeat?");
             understand = spot.nextInt();
+            while(true){
+                if(understand>0&&understand<3)
+                    break;
+                System.out.println("Press 1 or 2, simpleton.");
+                understand = spot.nextInt();
+            }
         }
     }
     //Finding the suit of a card.
@@ -657,13 +669,37 @@ public class Mao{
             System.out.println("1 - Skipping turns.");
             System.out.println("2 - Changing what type of cards may and must be played.");
             int genre = inspector.nextInt();
+            while(true){
+                if(genre>0&&genre<3)
+                    break;
+                System.out.println("You need to choose one of the options I presented to you.");
+                System.out.println("If you think that these multiple choice questions are trammeling your creativity,"); 
+                System.out.println("plz remember that Computer Mao currently supports the genesis of 14,580 distinct rules.");
+                genre = inspector.nextInt();
+            }
             if(genre==1){
                 System.out.println("How many players will we be skipping? Type 1, 2, or 3.");
                 int losers = inspector.nextInt();
+                while(true){
+                    if(losers>0&&losers<4)
+                        break;
+                    System.out.println("You need to choose one of the options I presented to you.");
+                    System.out.println("If you think that these multiple choice questions are trammeling your creativity,"); 
+                    System.out.println("plz remember that Computer Mao currently supports the genesis of 14,580 distinct rules.");
+                    losers = inspector.nextInt();
+                }
                 System.out.println("Under what condition will these players be skipped?");
                 System.out.println("1 - When a card of a certain type is played.");
                 System.out.println("2 - When a card of a certain type is played on a card of a certain type.");
                 int numKillers = inspector.nextInt();
+                while(true){
+                    if(numKillers>0&&numKillers<3)
+                        break;
+                    System.out.println("You need to choose one of the options I presented to you.");
+                    System.out.println("If you think that these multiple choice questions are trammeling your creativity,"); 
+                    System.out.println("plz remember that Computer Mao currently supports the genesis of 14,580 distinct rules.");
+                    numKillers = inspector.nextInt();
+                }
                 if(numKillers == 1){
                     System.out.println("So what type of card makes these turns get skipped?");
                     int card1 = humanType();
