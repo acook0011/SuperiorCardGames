@@ -364,7 +364,7 @@ public class Mao{
             System.out.println("BTW, Here were the secret rules.");
             for(int i=0; i<chairman.rules.size(); i++){
                 for(int j=0; j<chairman.rules.get(i).size(); j++)
-                    System.out.println(chairman.rules.get(i).get(j));
+                    System.out.println(stringRule(chairman.rules.get(i).get(j)));
             }
         }
     }
@@ -724,6 +724,12 @@ public class Mao{
             System.out.println("1 - It's perfect! Let's get on with the game!");
             System.out.println("2 - That's not really what I had in mind. Can we please start over the rule-making process, sir?");
             yea = inspector.nextInt();
+            while(true){
+                if(yea>0&&yea<3)
+                    break;
+                System.out.println("Can you read?");
+                yea = inspector.nextInt();
+            }
         }
         return rule;
     }
