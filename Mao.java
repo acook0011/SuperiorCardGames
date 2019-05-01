@@ -1043,7 +1043,7 @@ public class Mao{
             System.out.println("Type a number indicating what position in your hand you would like to play from.");
             int cardy = hawk.nextInt();
             while(true){
-                if(desire>0&&desire<phand.size()+1)
+                if(cardy>0&&cardy<phand.size()+1)
                     break;
                 System.out.println("Can you count? Please try again.");
                 cardy = hawk.nextInt();
