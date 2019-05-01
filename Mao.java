@@ -727,7 +727,7 @@ public class Mao{
             while(true){
                 if(yea>0&&yea<3)
                     break;
-                System.out.println("Can you read?");
+                System.out.println("Can you read? Please try again.");
                 yea = inspector.nextInt();
             }
         }
@@ -744,10 +744,22 @@ public class Mao{
         System.out.println("6 - Numbered cards with rank in a specific range.");
         System.out.println("7 - Numbered cards with rank divisible by a specific number.");
         int genre = retriever.nextInt();
+        while(true){
+            if(genre>0&&genre<8)
+                break;
+            System.out.println("It seems there was a slight communication problem. I asked for a number from 1 to 7.");
+            genre = retriever.nextInt();
+        }
         switch(genre){
             case 1: System.out.println("Just type the number indicating the required rank.");
                     System.out.println("TIP: 1 = Ace, 11 = Jack, 12 = Queen, 13 = King.");
                     int rank = retriever.nextInt();
+                    while(true){
+                        if(rank>0&&rank<14)
+                            break;
+                        System.out.println("In a deck of cards there are aces, twos, threes, fours, fives, sixes, sevens, eights, nines, tens, jacks, queens, and kings.");
+                        rank = retriever.nextInt();
+                    }
                     switch(rank){
                         case 1: return 600;
                         case 11: return 900;
@@ -1020,9 +1032,22 @@ public class Mao{
         System.out.println("1 - Play a card.");
         System.out.println("2 - Draw a card.");
         int desire = hawk.nextInt();
+        while(true){
+            if(desire>-1&&desire<3)
+                break;
+            System.out.println("You: 'Sadusky, I'm still not against you. But I found Door Number "+desire+", and I'm taking it.'");
+            System.out.println("Me: 'There are only 2 doors.'");
+            desire = hawk.nextInt();
+        }
         if(desire==1){
             System.out.println("Type a number indicating what position in your hand you would like to play from.");
             int cardy = hawk.nextInt();
+            while(true){
+                if(desire>0&&desire<phand.size()+1)
+                    break;
+                System.out.println("Can you count? Please try again.");
+                cardy = hawk.nextInt();
+            }
             return (cardy-1)*100000+11000+numberCard(phand.get(cardy-1));
         }
         if(desire==2){
