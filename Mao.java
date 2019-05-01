@@ -28,7 +28,9 @@ public class Mao{
     ArrayList<ArrayList<Integer>> m1 = new ArrayList<ArrayList<Integer>>();
     ArrayList<ArrayList<Integer>> topCards = new ArrayList<ArrayList<Integer>>();
     int rounds;
-    public static void playMao(){
+    int swag;
+    public static double playMao(){
+        Mao chairman = new Mao();
         Scanner searcher = new Scanner(System.in);
         System.out.println("Welcome, friend. Do you know how to play Computer Mao? It's a little different from traditional Mao.");
         System.out.println("1 - Yes, and I want to play now.");
@@ -43,17 +45,18 @@ public class Mao{
             gamer = searcher.nextInt();
         }
         switch(gamer){
-            case 1: gamer();
+            case 1: gamer(chairman);
                     break;
             case 2: System.out.println("I get it. No worries. Just come on back anytime if you change your mind.");
                     break;
             case 3: System.out.println("Pull up chair, fella. I can teach you.");
                     letsLearn();
-                    gamer();
+                    gamer(chairman);
                     break;
             case 4: System.out.println("That's fine. There are plenty of other card games out there.");
                     break;
         }
+        return chairman.swag;
     }
     public Mao(){
         //Dealing.
@@ -205,13 +208,12 @@ public class Mao{
     public int rounds(){
         return rounds;
     }
-    public static void gamer(){
+    public static void gamer(Mao chairman){
         Scanner stalker = new Scanner(System.in);
         System.out.println("How many rounds would you like to play?");
         int numRounds = stalker.nextInt();
         System.out.println("How many dollars shall each player be wagering each round?");
         int wager = stalker.nextInt();
-        Mao chairman = new Mao();
         int wins=0; 
         while(chairman.rounds!=numRounds){
             if(chairman.game.size()==0){
@@ -367,6 +369,7 @@ public class Mao{
                     System.out.println(stringRule(chairman.rules.get(i).get(j)));
             }
         }
+        chairman.swag=4*wager*wins-numRounds*wager;
     }
     public static void letsLearn(){
         Scanner spot = new Scanner(System.in);
