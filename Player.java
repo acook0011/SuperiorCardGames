@@ -9,7 +9,7 @@ public class Player
 {
     private int player;
     private String name;
-    private int money;
+    private double money;
     private boolean ingame;
     
     public Player(){
@@ -41,7 +41,7 @@ public class Player
         return name;
     }
     
-    public int getMoney(){
+    public double getMoney(){
         return money;
     }
     
@@ -51,5 +51,13 @@ public class Player
     
     public void nowIG(){
         ingame = true;
+    }
+    
+    public void earn(double bet){
+        money += bet;
+    }
+    
+    public void loss(double bet){
+        money -= bet;
     }
 }
