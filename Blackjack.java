@@ -11,9 +11,9 @@ public class Blackjack
 {
     private static Deck deck;
     private static ArrayList<ArrayList<Card>> p;
-    private static String[] names = Casino.names;
+    private static ArrayList<Player> plyr = Casino.playing;
+    private static int total;
     private static int[] score;
-    private static int[] cash = Casino.money;
     private static int[] bet;
     private static boolean[] bust;
     private static boolean[] natural;
@@ -22,21 +22,26 @@ public class Blackjack
         deck = new Deck();
         p = new ArrayList<ArrayList<Card>>(); // p.get(0) = Dealer
         Scanner reader = new Scanner(System.in);
+        plyr.add(new Player(0, "The Dealer"));
+        total = plyr.size();
         
-
+        for (int i = 0; i < total; i++){
+            System.out.println(plyr.get(i).getName() + " " + plyr.get(i).getPlayer() + " " + i);
+        }
+        
         deck.shuffle();
         int players = Casino.players;
-        score = new int[players+1];
-        bet = new int[players+1];
-        bust = new boolean[players+1];
-        natural = new boolean[players+1];
-        for (int i = 0; i < bust.length; i++){
+        score = new int[total];
+        bet = new int[total];
+        bust = new boolean[total];
+        natural = new boolean[total];
+        for (int i = 0; i < total-1; i++){
             bust[i] = false;
             natural[i] = false;
         }
         bet[0] = 0;
-        for (int i = 1; i < players+1; i++){
-            System.out.println(names[i-1] + ", how much do you want to bet between $20 and $5,000?");
+        for (int i = 0; i < total-1; i++){
+            System.out.println(plyr.get(i).getName() + ", how much do you want to bet between $20 and $5,000?");
             
             Boolean valid = false;
             while (!valid){
@@ -49,49 +54,38 @@ public class Blackjack
                 }
             }
         }
-        dealHand(p, players);
+        dealHand(p, total);
         System.out.println("\nDealer's visible hand: \n" + 
-                           "- " + p.get(0).get(0) + "\n");
-        for (int i = 1; i < players+1; i++){
-            System.out.println(names[i-1] + "'s Hand: \n" +
+                           "- " + p.get(total-1).get(0) + "\n");
+        for (int i = 0; i < total-1; i++){
+            System.out.println(plyr.get(i).getName() + "'s Hand: \n" +
                                "- " + p.get(i).get(0) + "\n" +
                                "- " + p.get(i).get(1) + "\n");
         }
         // Calculates Starting Score
-        for (int i = 0; i < players+1; i++){
+        for (int i = 0; i < total-1; i++){
             score[i] = score(p.get(i));
         }
         play(p, score, bust);
         
-        if (bust[0]){
-            System.out.println("The Dealer busted at " + score[0]);
-        } else if (natural[0]){
-            System.out.println("The Dealer had a natural " +score[0]);
-        } else {
-            System.out.println("The Dealer scored " + score[0]);
-        }
-        
-        for (int x = 1; x < players+1; x++){
+        for (int x = 0; x < total; x++){
             if (bust[x]){
-                System.out.println(names[x-1] + " busted at " + score[x]);
+                System.out.println(plyr.get(x).getName() + " busted at " + score[x]);
             } else if (natural[x]){
-                System.out.println(names[x-1] + " had a natural " + score[x]);
+                System.out.println(plyr.get(x).getName() + " had a natural " + score[x]);
             } else{
-                System.out.println(names[x-1] + " scored " + score[x]);
+                System.out.println(plyr.get(x).getName() + " scored " + score[x]);
             }
         }
-        
         
         
     }
     
     public static void dealHand(ArrayList<ArrayList<Card>> p, 
                                 int players){
-        // 0 = The Dealer
-        for (int i = 0; i < players+1; i++){
+        // total = The Dealer
+        for (int i = 0; i < total; i++){
             p.add(new ArrayList<Card>());
-        }
-        for (int i = 0; i < players+1; i++){
             p.get(i).add(deck.deal());
             p.get(i).add(deck.deal());
         }
@@ -100,10 +94,10 @@ public class Blackjack
     public static void play(ArrayList<ArrayList<Card>> p, 
                             int[] score, boolean[] bust){                                                      
         Scanner reader = new Scanner(System.in);
-        Boolean[] stay = new Boolean[bust.length];
-        for (int i = 0; i < stay.length; i++){
+        Boolean[] stay = new Boolean[total];
+        for (int i = 0; i < total; i++){
            if ((score[i] == 21) && (i != 0)){ //Checks for Naturals
-               System.out.println("!" + names[i-1] + " has a Natural 21 !\n");
+               System.out.println("!" + plyr.get(i).getName() + " has a Natural 21 !\n");
                natural[i] = true;
                stay[i] = true;
            } else {
@@ -113,13 +107,13 @@ public class Blackjack
         Boolean playing = true;
         // Players
         while (playing){
-         for (int x = 1; x < p.size(); x++){
+         for (int x = 0; x < total-1; x++){
           
           if (!bust[x] && !stay[x]){
            // Displays current hand
-           System.out.println("~~" + names[x-1] + "'s turn~~"); 
+           System.out.println("~~" + plyr.get(x).getName() + "'s turn~~"); 
            score[x] = score(p.get(x));
-           System.out.println(names[x-1] + "'s current hand: ");
+           System.out.println(plyr.get(x).getName() + "'s current hand: ");
            for (int i = 0; i < p.get(x).size(); i++){
               System.out.println("- " + p.get(x).get(i));
            }
@@ -133,12 +127,12 @@ public class Blackjack
                    || reply.toUpperCase().equals("HIT")){
                    p.get(x).add(deck.deal());
                    score[x] = score(p.get(x));
-                   System.out.println(names[x-1] + " was dealt a " + 
+                   System.out.println(plyr.get(x).getName() + " was dealt a " + 
                                p.get(x).get(p.get(x).size()-1) +
                               "\nNew Score: " + score[x]);
                    // Checks if 21
                    if (score[x] == 21){
-                       System.out.println(names[x-1] + " reached 21!");
+                       System.out.println(plyr.get(x).getName() + " reached 21!");
                        stay[x] = true;
                    }
                    // Checks if over 21
@@ -158,8 +152,8 @@ public class Blackjack
             System.out.println();
            }
          }
-         int a = p.size()-1; // Amount of players who have not busted or stayed
-         for (int j = 1; j < p.size(); j++){
+         int a = total-1; // Amount of players who have not busted or stayed
+         for (int j = 0; j < total-1; j++){
             if (bust[j] || stay[j]){
                 a--;
             }
@@ -171,26 +165,26 @@ public class Blackjack
        
        // Dealer's Turn
        System.out.println("~~The Dealer's Turn~~");
-       while (!bust[0] && !stay[0]){
-           score[0] = score(p.get(0));
+       while (!bust[total-1] && !stay[total-1]){
+           score[total-1] = score(p.get(total-1));
            System.out.println("The Dealer's current hand: ");
-           for (int i = 0; i < p.get(0).size(); i++){
-              System.out.println("- " + p.get(0).get(i));
+           for (int i = 0; i < p.get(total-1).size(); i++){
+              System.out.println("- " + p.get(total-1).get(i));
            }
-           System.out.println("Score: " + score(p.get(0)));
+           System.out.println("Score: " + score(p.get(total-1)));
            
-           if (score[0] >= 17){
+           if (score[total-1] >= 17){
                System.out.println("The Dealer has to stay.");
                stay[0] = true;
-           } else if (score[0] < 17){
-               p.get(0).add(deck.deal());
-               score[0] = score(p.get(0));
-               System.out.println("The Dealer was dealt a " + 
-                                   p.get(0).get(p.get(0).size()-1) +
-                                  "\nNew Score: " + score[0]);
-               if (score[0] > 21){
+           } else if (score[total-1] < 17){
+               p.get(total-1).add(deck.deal());
+               score[total-1] = score(p.get(total-1));
+               System.out.println(plyr.get(total-1).getName() + " was dealt a " + 
+                                   p.get(total-1).get(p.get(0).size()-1) +
+                                  "\nNew Score: " + score[total-1]);
+               if (score[total-1] > 21){
                    System.out.println("The Dealer has B U S T E D");
-                   bust[0] = true;
+                   bust[total-1] = true;
                }
            }
            System.out.println();

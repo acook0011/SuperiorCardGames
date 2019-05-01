@@ -11,7 +11,8 @@ public class Casino
 {
     public static Scanner reader = new Scanner(System.in);
     // Universal
-    public static ArrayList<Player> guests;
+    public static ArrayList<Player> guests;   // All registered players
+    public static ArrayList<Player> playing;  // Players who will play next game.
     public static int players;
     public static String[] names;
     public static int[] money;
@@ -24,49 +25,30 @@ public class Casino
         
         System.out.println("How many players will be in the casino tonight?");
         players = reader.nextInt();
-        for (int i = 0; i < players; i++){
-            
-        }
-        
-        
-        money = new int[players];
-        for (int i = 0; i < money.length; i++){
-            money[i] = 1000;
-        }
-        names = new String[players];
         System.out.println("Do you want to give your names? [Y/N]"); reader.nextLine();
-        
-        Boolean valid = false;
-        while (!valid){ 
-        String reply = reader.nextLine();
-        if (reply.toUpperCase().equals("Y") || reply.toUpperCase().equals("YES")){
+        if (choice()){
             int count = 0;
             for (int i = 0; i < players; i++){
-                count++;
+                count ++;
                 System.out.println("What is Player " + count + "'s name?");
-                names[i] = reader.nextLine();
+                String name = reader.nextLine();
+                guests.add(new Player(count, name));
+                System.out.println(guests.get(i).getName() + ", you are Player " + guests.get(i).getPlayer() + ".");
             }
-            valid = true;
-        } else if (reply.toUpperCase().equals("N") || reply.toUpperCase().equals("NO")){
+        } else {
             int count = 0;
             for (int i = 0; i < players; i++){
                 count++;
-                names[i] = ("Player " + count); 
+                guests.add(new Player(count));
+                System.out.println(guests.get(i).getName() + ", you are Player " + guests.get(i).getPlayer() + ".");
             }
-            valid = true;
-        } else {
-            System.out.println("Respond with Y or N.");
-        }
-        }
-        ingame = new boolean[players];
-        for (int i = 0; i < ingame.length; i++){
-            ingame[i] = false;
         }
         
         menu();
     }
     
     public static void menu(){
+        playing = new ArrayList<Player>();
         System.out.println("Everyone starts with $1,000.\n" + 
                            "What game would you like to play?\n" +
                            "1) Blackjack\n" + 
@@ -97,37 +79,34 @@ public class Casino
     
     public static void chooseMulti(){
         System.out.println("Will everyone be playing?"); reader.nextLine();
+        if (choice()){
+            for (int i = 0; i < players; i++){
+                guests.get(i).nowIG();
+                playing.add(guests.get(i));
+            }
+        } else {
+            for (int i = 0; i < players; i++){
+                System.out.println("Will " + guests.get(i).getName() + " be playing? [Y/N]");
+                if (choice()){
+                    guests.get(i).nowIG();
+                    playing.add(guests.get(i));
+                }
+            }
+        }
+    }
+    
+    public static boolean choice(){
         Boolean valid = false;
-        while (!valid){
+        while (!valid){ 
             String reply = reader.nextLine();
             if (reply.toUpperCase().equals("Y") || reply.toUpperCase().equals("YES")){
-                for (int i = 0; i < ingame.length; i++){
-                    ingame[i] = true;
-                }
-                valid = true;
+                return true;
             } else if (reply.toUpperCase().equals("N") || reply.toUpperCase().equals("NO")){
-                for (int i = 0; i < ingame.length; i++){
-                    valid = false;
-                    System.out.println("Will " + names[i] + " be playing? [Y/N]");
-                    while (!valid){
-                        reply = reader.nextLine();
-                        if (reply.toUpperCase().equals("Y") || reply.toUpperCase().equals("YES")){
-                            ingame[i] = true;
-                            valid = true;
-                        } else if (reply.toUpperCase().equals("N") || reply.toUpperCase().equals("NO")){
-                            ingame[i] = false;
-                            valid = true;
-                        } else {
-                            System.out.println("Respond with Y or N.");
-                        }
-                    }
-                }
-                valid = true;
+                return false;
             } else {
                 System.out.println("Respond with Y or N.");
             }
         }
-        
-        
+        return false;
     }
 }
