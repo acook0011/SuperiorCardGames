@@ -66,4 +66,17 @@ public class Card implements Comparable{
       else
          return "" + rank;
    }
+   
+   public static String getCardByRank(int i){
+      if (i == 1)
+         return "Ace";
+      else if (i == 11)
+         return "Jack";
+      else if (i == 12)
+         return "Queen";
+      else if (i == 13)
+         return "King";
+      else
+         return "" + i;
+   }
 }
