@@ -15,7 +15,7 @@ public class Casino
     public static ArrayList<Player> playing;  // Players who will play next game.
     public static int players;
     public static String[] names;
-    public static int[] money;
+    public static double[] money;
     public static boolean[] ingame;
     
     // Specific Players
