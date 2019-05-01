@@ -223,6 +223,11 @@ public class Mao{
             }
             //Human moves.
             int currentMove = humanMove(chairman.hands.get(1));
+            if(currentMove==-1){
+                System.out.println("Got a little too intense for you, eh?");
+                System.out.println("Go Fish might be a little more your speed.");
+                break;
+            }
             if((currentMove/1000)%10==1||(currentMove/1000)%10==2){
                 chairman.game.add(currentMove%100000);
                 chairman.drawPlay.add(currentMove%100000);
@@ -397,6 +402,7 @@ public class Mao{
             System.out.println();
             System.out.println("During the game, I (the computer) will ask you what you want to do.");
             System.out.println("If you think it's your turn, play or draw. If not, just do nothing.");
+            System.out.println("You also have the option to leave the table, with no refunds whatsoeer.");
             System.out.println();
             System.out.println("One more thing: remember that all but the most fundamental rules are enforced by the players themselves.");
             System.out.println("For this reason, Mao is the most fun if players consider obeying rules their first priority and winning their second priority.");
@@ -1031,10 +1037,13 @@ public class Mao{
         }
         System.out.println();
         System.out.println("What do you want to do?");
-        System.out.println("0 - Do nothing.");
-        System.out.println("1 - Play a card.");
-        System.out.println("2 - Draw a card.");
+        System.out.println("-1 - Leave the table.");
+        System.out.println(" 0 - Do nothing.");
+        System.out.println(" 1 - Play a card.");
+        System.out.println(" 2 - Draw a card.");
         int desire = hawk.nextInt();
+        if(desire==-1)
+            return -1;
         while(true){
             if(desire>-1&&desire<3)
                 break;
