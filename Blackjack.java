@@ -81,8 +81,12 @@ public class Blackjack
                 plyr.get(x).loss(bet[x]);
                 System.out.println(plyr.get(x).getName() + " lost $" + plyr.get(x).getMoney());
             } else if (natural[x] || score[x] == 21){
-                System.out.println(plyr.get(x).getName() + " had " + score[x] + "!");
+                System.out.println(plyr.get(x).getName() + " had a natural " + score[x] + "!");
                 plyr.get(x).earn(bet[x] + bet[x] * .5);
+                System.out.println(plyr.get(x).getName() + " earned $" + plyr.get(x).getMoney());
+            } else if (score[x] == 21){
+                System.out.println(plyr.get(x).getName() + " reached " + score[x] + "!");
+                plyr.get(x).earn(bet[x] + bet[x]);
                 System.out.println(plyr.get(x).getName() + " earned $" + plyr.get(x).getMoney());
             } else{
                 System.out.println(plyr.get(x).getName() + " scored " + score[x]);
