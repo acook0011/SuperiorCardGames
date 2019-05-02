@@ -756,7 +756,7 @@ public class Mao{
         while(true){
             if(genre>0&&genre<8)
                 break;
-            System.out.println("It seems there was a slight communication problem. I asked for a number from 1 to 7.");
+            System.out.println("It seems there was a slight communication problem,sir. I asked for a number from 1 to 7.");
             genre = retriever.nextInt();
         }
         switch(genre){
