@@ -46,7 +46,7 @@ public class Casino
                 System.out.println(guests.get(i).getName() + ", you are Player " + guests.get(i).getPlayer() + ".");
             }
         }
-        System.out.println("Everyone starts with $1,000.");
+        System.out.println("Everyone starts with $10,000.");
         menu();
     }
     
@@ -56,9 +56,10 @@ public class Casino
                            "1) Blackjack\n" + 
                            "2) Mao\n" +
                            "3) Go Fish\n" +
-                           "4) Check Score\n" +
-                           "5) Quit"); // Keep these two at the bottom of list.
-        final int OPTS = 5; // Amount of choices: make sure equals final non-temp choice
+                           "4) War\n" +
+                           "5) Check Score\n" +
+                           "6) Quit"); // Keep these two at the bottom of list.
+        final int OPTS = 6; // Amount of choices: make sure equals final non-temp choice
         int choice = -1;
         boolean wantsToPlay = true; //
         boolean valid = false;
@@ -76,18 +77,22 @@ public class Casino
             Blackjack.Jack();
         } else if(choice == 2){ // Play Mao
             chooseSingle();
-            Mao.playMao();
-        } else if (choice == 3){ // Play GoFish
+            playing.get(0).earn(Mao.playMao());
+        } else if (choice == 3){ // Play Go Fish
+            chooseSingle();
             System.out.println("How much do you want to bet?");
             double bet = reader.nextInt();
             GoFishGame play = new GoFishGame();
             if (play.getWinnerID() == 0){
-                play.players.size();
+                playing.get(0).earn(bet*(play.players.size()-1));
             }
+            
+        } else if (choice == 4){ // Play War
+            
         
-        } else if (choice == 4){ // Check Scores
+        } else if (choice == 5){ // Check Scores
             menuScore();
-        } else if (choice == 5){ // Quit Game
+        } else if (choice == 6){ // Quit Game
             System.out.println("Come gamble your life away with us next time!");
             wantsToPlay = false;
         } else{ // Error Message
@@ -95,11 +100,17 @@ public class Casino
         }
         
         if (wantsToPlay){
-            System.out.println("\nDo you want to do something else? [Y/N]");
+            System.out.println("\nDo you want to do something else? [Y/N]"); reader.nextLine();
             if (choice()){ // Recalls menu to make another choice
                 int rem = playing.size()-1;
                 for (int i = rem; i >= 0; i--){ // Clears 'Playing' ArrayList
                     playing.remove(i);
+                }
+                for (int i = 0; i < playing.size(); i++){
+                    System.out.println("Playing: " + i + " " + playing.get(i).getName());                
+                }
+                for (int i = 0; i < guests.size(); i++){
+                    System.out.println("Guests: " + i + " " + guests.get(i).getName());
                 }
                 menu();
             } else { // Ends Program
@@ -117,10 +128,10 @@ public class Casino
     }
     
     public static void chooseMulti(){
-        if (players == 1){ // Doesn't ask if 
+        if (players == 1){ // Doesn't ask if single
             playing.add(guests.get(0));
         } else{
-            System.out.println("Will everyone be playing?"); reader.nextLine();
+            System.out.println("Will everyone be playing? [Y/N]"); reader.nextLine();
             if (choice()){
                 for (int i = 0; i < players; i++){
                     guests.get(i).nowIG();

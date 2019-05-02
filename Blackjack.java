@@ -90,6 +90,8 @@ public class Blackjack
                 System.out.println(plyr.get(x).getName() + " scored " + score[x]);
                 if (score[x] > score[total-1]){
                     plyr.get(x).earn(bet[x]);
+                } else{
+                    plyr.get(x).loss(bet[x]);
                 }
             }
         }
@@ -192,12 +194,12 @@ public class Blackjack
            
            if (score[total-1] >= 17){
                System.out.println("The Dealer has to stay.");
-               stay[0] = true;
+               stay[total-1] = true;
            } else if (score[total-1] < 17){
                p.get(total-1).add(deck.deal());
                score[total-1] = score(p.get(total-1));
                System.out.println(plyr.get(total-1).getName() + " was dealt a " + 
-                                   p.get(total-1).get(p.get(0).size()-1) +
+                                   p.get(total-1).get(p.get(total-1).size()-1) +
                                   "\nNew Score: " + score[total-1]);
                if (score[total-1] > 21){
                    System.out.println("The Dealer has B U S T E D");
