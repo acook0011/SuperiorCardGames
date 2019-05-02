@@ -8,8 +8,9 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
-public class ThisIsMyTester
+public class WarGame
 {
     public static void main (String[] args){
         Scanner reader = new Scanner(System.in);
@@ -22,10 +23,22 @@ public class ThisIsMyTester
         List Deck2 = DeckMain.subList(26,52);
         //System.out.println(Deck2.size());
         System.out.println("Here is your deck: \n" + Deck1);
+        System.out.println("Your deck: " + Deck1.size());
         
         System.out.println("Ready for War!?");
         if (reader.nextLine().toLowerCase().equals("yes")){
+            //Iterator<Card> iterator = Deck1.iterator();
             war.play(Deck1, Deck2);
+            /* while (iterator.hasNext()){
+                Card temp = iterator.next();
+                iterator.remove();
+                break;
+            } */
+            //System.out.println(Deck1);
         }
+        //Deck1.remove(0);
+        //Deck2.remove(0);
+        //System.out.println(Deck1);
+        //System.out.println("Your deck: " + Deck1.size());
     }
 }

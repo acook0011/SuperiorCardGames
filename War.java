@@ -27,6 +27,10 @@ public class War
         System.out.println("You play " + card1 + ".");
         System.out.println("Your opponent plays " + card2 + ".");
         evaluate(card1, card2, d1, d2);
+        //d1.remove(0);
+        //d2.remove(0);
+        //System.out.println(d1);
+        
     }
 
     public void evaluate(String c1, String c2, List d1, List d2){
@@ -35,16 +39,21 @@ public class War
         
         if (rank1 > rank2){
             System.out.println("Your card triumphs!");
-            d1.add(d1.remove(0));
-            d1.add(d2.remove(0));
+            d1.add(c1);
+            d1.add(c2);
             System.out.println("Take both cards into your deck.");
         }else
         if (rank2 > rank1){
             System.out.println("Your card fails!");
-            d2.add(d1.remove(0));
-            d2.add(d2.remove(0));
+            d2.add(c1);
+            d2.add(c2);
             System.out.println("Lose both cards to opponent.");
         }
+        
+        d1.remove(c1); //Throws exception when fails.
+        d2.remove(c2); //Throws exception when triumphs.
+        //System.out.println(d1);
+        //System.out.println("Your deck: " + d1.size());
     }
 
     public int getRank(String card){
