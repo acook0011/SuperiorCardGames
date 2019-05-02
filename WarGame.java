@@ -13,7 +13,7 @@ import java.util.Iterator;
 
 public class WarGame
 {
-    public static void main (String[] args){
+    public static void playWar(){
         Scanner reader = new Scanner(System.in);
         //String ask = reader.nextLine();
         War war = new War();
@@ -37,6 +37,7 @@ public class WarGame
             } */
             //System.out.println(Deck1);
         }
+        
         //Deck1.remove(0);
         //Deck2.remove(0);
         //System.out.println(Deck1);
