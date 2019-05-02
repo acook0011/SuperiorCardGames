@@ -12,6 +12,11 @@ public class GoFishGame
     Deck d;
     int winnerID;
     
+    public int getWinnerID()
+    {
+        return winnerID;
+    }
+    
     public GoFishGame() throws IOException
     {
         //init scanners
