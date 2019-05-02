@@ -19,10 +19,12 @@ public class War
         deck.shuffle();
         Card[] card = deck.deal(52);
         ArrayList<Card> newDeck = new ArrayList<Card>(Arrays.asList(card));
+        //System.out.println(card[0].getRank());
+        //System.out.println(newDeck.get(0).getRank());
         return newDeck;
     }
 
-    public void play(List d1, List d2){
+    public void play(List<Card> d1, List<Card> d2){
         String card1 = d1.get(0).toString();
         String card2 = d2.get(0).toString();
 
@@ -35,9 +37,11 @@ public class War
         
     }
 
-    public void evaluate(String c1, String c2, List d1, List d2){
-        int rank1 = getRank(c1);
-        int rank2 = getRank(c2);
+    public void evaluate(String c1, String c2, List<Card> d1, List<Card> d2){
+        //int rank1 = getRank(c1);
+        //int rank2 = getRank(c2);
+        int rank1 = d1.get(0).getRank();
+        int rank2 = d2.get(0).getRank();
         
         if (rank1 > rank2){
             System.out.println("Your card triumphs!");
@@ -64,6 +68,7 @@ public class War
         System.out.println("Your deck: " + d1.size());
     }
 
+    /*
     public int getRank(String card){
         int rank = 0;
         if (card.contains("Ace"))
@@ -94,4 +99,5 @@ public class War
             rank = 0;
         return rank;
     }
+    */
 }

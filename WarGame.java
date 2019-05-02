@@ -17,14 +17,16 @@ public class WarGame
         Scanner reader = new Scanner(System.in);
         //String ask = reader.nextLine();
         War war = new War();
-        ArrayList<String> DeckMain = new ArrayList<String>();
+        ArrayList<Card> DeckMain = new ArrayList<Card>();
         DeckMain = war.getDeck();
-        List Deck1 = DeckMain.subList(0,26); //The other half will be the opponent's.
+        List<Card> Deck1 = DeckMain.subList(0,26); //The other half will be the opponent's.
         //System.out.println(Deck1.size());
-        List Deck2 = DeckMain.subList(26,52);
+        List<Card> Deck2 = DeckMain.subList(26,52);
         //System.out.println(Deck2.size());
         System.out.println("Here is your deck: \n" + Deck1);
         System.out.println("Your deck: " + Deck1.size());
+        System.out.println(Deck1.get(0).getRank());
+        
         
         System.out.println("Ready for War!? (Type yes to play.)");
         if (reader.nextLine().toLowerCase().equals("yes")){
