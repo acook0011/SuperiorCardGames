@@ -43,7 +43,6 @@ public class Casino
             for (int i = 0; i < players; i++){
                 count++;
                 guests.add(new Player(count));
-                System.out.println(guests.get(i).getName() + ", you are Player " + guests.get(i).getPlayer() + ".");
             }
         }
         System.out.println("Everyone starts with $10,000.");
@@ -99,18 +98,29 @@ public class Casino
             System.out.println("! !CHOICE ERROR! !\n! !PASSED RANGE CHECK! !");
         }
         
+        int reme = players;
+        for (int i = 0; i < reme; i++){
+            if (guests.get(i).getMoney() < 0){
+                System.out.println(guests.get(i).getName() + " was kicked out from the Casino!\n" + 
+                                   "They are now $" + guests.get(i).getMoney() + " in debt.");
+                guests.remove(i);
+                i--;
+                players--;
+            } else if (guests.get(i).getMoney() == 0){
+                System.out.println(guests.get(i).getName() + " was kicked out from the Casino!\n" + 
+                                   "They don't have any money.");
+                guests.remove(i);
+                i--;
+                players--;
+            }
+        }
+        
         if (wantsToPlay){
             System.out.println("\nDo you want to do something else? [Y/N]");
             if (choice()){ // Recalls menu to make another choice
                 int rem = playing.size()-1;
                 for (int i = rem; i >= 0; i--){ // Clears 'Playing' ArrayList
                     playing.remove(i);
-                }
-                for (int i = 0; i < playing.size(); i++){
-                    System.out.println("Playing: " + i + " " + playing.get(i).getName());                
-                }
-                for (int i = 0; i < guests.size(); i++){
-                    System.out.println("Guests: " + i + " " + guests.get(i).getName());
                 }
                 menu();
             } else { // Ends Program

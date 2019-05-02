@@ -28,10 +28,6 @@ public class Blackjack
         plyr.add(new Player(0, "The Dealer"));
         total = plyr.size();
         
-        for (int i = 0; i < total; i++){
-            System.out.println(plyr.get(i).getName() + " " + plyr.get(i).getPlayer() + " " + i);
-        }
-        
         deck.shuffle();
         int players = Casino.players;
         score = new int[total];
@@ -42,7 +38,6 @@ public class Blackjack
             bust[i] = false;
             natural[i] = false;
         }
-        bet[0] = 0;
         for (int i = 0; i < total-1; i++){
             System.out.println(plyr.get(i).getName() + ", how much do you want to bet between $20 and $5,000?");
             
@@ -58,9 +53,9 @@ public class Blackjack
             }
         }
         dealHand(p, total);
-        System.out.println("\nDealer's visible hand: \n" + 
+        System.out.println("\nDealer's visible hand: \n" +  // Prints Dealer's Hand
                            "- " + p.get(total-1).get(0) + "\n");
-        for (int i = 0; i < total-1; i++){
+        for (int i = 0; i < total-1; i++){ // Prints Players' Hands
             System.out.println(plyr.get(i).getName() + "'s Hand: \n" +
                                "- " + p.get(i).get(0) + "\n" +
                                "- " + p.get(i).get(1) + "\n");
@@ -84,17 +79,19 @@ public class Blackjack
             if (bust[x]){
                 System.out.println(plyr.get(x).getName() + " busted at " + score[x]);
                 plyr.get(x).loss(bet[x]);
-                System.out.println(plyr.get(x).getName() + " " + plyr.get(x).getMoney());
+                System.out.println(plyr.get(x).getName() + " lost $" + plyr.get(x).getMoney());
             } else if (natural[x] || score[x] == 21){
                 System.out.println(plyr.get(x).getName() + " had " + score[x] + "!");
                 plyr.get(x).earn(bet[x] + bet[x] * .5);
-                System.out.println(plyr.get(x).getName() + " " + plyr.get(x).getMoney());
+                System.out.println(plyr.get(x).getName() + " earned $" + plyr.get(x).getMoney());
             } else{
                 System.out.println(plyr.get(x).getName() + " scored " + score[x]);
                 if (bust[total-1] || score[x] > score[total-1]){
                     plyr.get(x).earn(bet[x]); // Earns money bet
+                    System.out.println(plyr.get(x).getName() + " earned $" + plyr.get(x).getMoney());
                 } else{
                     plyr.get(x).loss(bet[x]); // Loses money bet
+                    System.out.println(plyr.get(x).getName() + " lost $" + plyr.get(x).getMoney());
                 }
             }
         }
