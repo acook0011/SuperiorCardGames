@@ -1,8 +1,9 @@
 
 /**
- * Temp Tester for War.
+ * Player for War!.
  *
  * @Makai Romero
+ * @1.0
  */
 
 import java.util.Scanner;

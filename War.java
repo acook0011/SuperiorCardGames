@@ -3,7 +3,7 @@
  * War
  *
  * @Makai Romero
- * @0.0
+ * @1.0
  */
 
 import java.util.ArrayList;
