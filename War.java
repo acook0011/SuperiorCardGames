@@ -1,6 +1,7 @@
 
 /**
  * War
+ * Depends on: Card; Deck; Suit.
  *
  * @Makai Romero
  * @1.0
