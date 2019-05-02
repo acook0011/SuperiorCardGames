@@ -17,15 +17,15 @@ public class Casino
     
 
     
-    public static void main(String [] args){
+    public static void main(String [] args)throws Exception{
         guests = new ArrayList<Player>();
         
         System.out.println("How many players will be in the casino tonight?");
         players = reader.nextInt();
         if (players == 1){ // Single Person
-            System.out.println("Do you want to give your names? [Y/N]");
-        } else { // Multiple People
             System.out.println("Do you want to give your name? [Y/N]");
+        } else { // Multiple People
+            System.out.println("Do you want to give your names? [Y/N]");
         }
         reader.nextLine();
         
@@ -50,16 +50,17 @@ public class Casino
         menu();
     }
     
-    public static void menu(){
+    public static void menu() throws Exception{
         playing = new ArrayList<Player>();
         System.out.println("What would you like to do?\n" +
                            "1) Blackjack\n" + 
                            "2) Mao\n" +
-                           "3) Check Score\n" +
-                           "4) Quit"); // Keep these two at the bottom of list.
-        final int OPTS = 4; // Amount of choices: make sure equals final non-temp choice
+                           "3) Go Fish\n" +
+                           "4) Check Score\n" +
+                           "5) Quit"); // Keep these two at the bottom of list.
+        final int OPTS = 5; // Amount of choices: make sure equals final non-temp choice
         int choice = -1;
-        boolean wantsToPlay = true; 
+        boolean wantsToPlay = true; //
         boolean valid = false;
         while (!valid){
             choice = reader.nextInt();
@@ -74,11 +75,19 @@ public class Casino
             chooseMulti();
             Blackjack.Jack();
         } else if(choice == 2){ // Play Mao
-            chooseMulti();
+            chooseSingle();
             Mao.playMao();
-        } else if (choice == 3){ // Check Scores
+        } else if (choice == 3){ // Play GoFish
+            System.out.println("How much do you want to bet?");
+            double bet = reader.nextInt();
+            GoFishGame play = new GoFishGame();
+            if (play.getWinnerID() == 0){
+                play.players.size();
+            }
+        
+        } else if (choice == 4){ // Check Scores
             menuScore();
-        } else if (choice == 4){ // Quit Game
+        } else if (choice == 5){ // Quit Game
             System.out.println("Come gamble your life away with us next time!");
             wantsToPlay = false;
         } else{ // Error Message
@@ -87,9 +96,13 @@ public class Casino
         
         if (wantsToPlay){
             System.out.println("\nDo you want to do something else? [Y/N]");
-            if (choice()){
+            if (choice()){ // Recalls menu to make another choice
+                int rem = playing.size()-1;
+                for (int i = rem; i >= 0; i--){ // Clears 'Playing' ArrayList
+                    playing.remove(i);
+                }
                 menu();
-            } else {
+            } else { // Ends Program
                 System.out.println("Come gamble your life away with us next time!");
                 wantsToPlay = false;
             }
@@ -104,7 +117,7 @@ public class Casino
     }
     
     public static void chooseMulti(){
-        if (players == 1){
+        if (players == 1){ // Doesn't ask if 
             playing.add(guests.get(0));
         } else{
             System.out.println("Will everyone be playing?"); reader.nextLine();
@@ -122,6 +135,30 @@ public class Casino
                     }
                 }
             }
+        }
+    }
+    
+    public static void chooseSingle(){
+        if (players == 1){ // If one person, auto selects
+            playing.add(guests.get(0));
+        } else{
+            System.out.println("Who will be playing?"); reader.nextLine();
+            for (int i = 0; i < players; i++){ // Makes list of players
+                int x = i + 1;
+                System.out.println(x + ") " + guests.get(i).getName());
+            }
+            boolean valid = false; 
+            int choice = -1;
+            while (!valid){ //
+                choice = reader.nextInt();
+                if (choice > players || choice < 1){ // Out of Range
+                    System.out.println("Please choosen within the range: [1-" + players + "]");
+                } else{ // In Range, break loop
+                    valid = true;
+                }
+            }
+            
+            playing.add(guests.get(choice-1)); // Adds to 'playing' list
         }
     }
     
