@@ -10,6 +10,7 @@
 import java.util.ArrayList;
 import java.util.Arrays; //I need this to convert Array to ArrayList.
 import java.util.List;
+import java.util.Collections;
 
 public class War
 {
@@ -40,21 +41,27 @@ public class War
         
         if (rank1 > rank2){
             System.out.println("Your card triumphs!");
-            d1.add(c1);
-            d1.add(c2);
+            //d1.add(c1);
+            d1.add(c2); //Adds to player's deck.
+            d2.remove(c2); //Removes from opponent's deck.
+            Collections.shuffle(d1);
             System.out.println("Take both cards into your deck.");
         }else
         if (rank2 > rank1){
             System.out.println("Your card fails!");
             d2.add(c1);
-            d2.add(c2);
+            d1.remove(c1);
+            //d2.add(c2);
+            Collections.shuffle(d2);
             System.out.println("Lose both cards to opponent.");
+        }else{
+            //Do nothing
         }
         
-        d1.remove(c1); //Throws exception when fails.
-        d2.remove(c2); //Throws exception when triumphs.
-        //System.out.println(d1);
-        //System.out.println("Your deck: " + d1.size());
+        //d1.remove(c1); //Throws exception when fails.
+        //d2.remove(c2); //Throws exception when triumphs.
+        System.out.println(d1);
+        System.out.println("Your deck: " + d1.size());
     }
 
     public int getRank(String card){
