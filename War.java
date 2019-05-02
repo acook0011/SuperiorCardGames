@@ -47,7 +47,7 @@ public class War
             System.out.println("Your card triumphs!");
             //d1.add(c1);
             d1.add(c2); //Adds to player's deck.
-            d2.remove(0); //Removes from opponent's deck.
+            d2.remove(c2); //Removes from opponent's deck.
             Collections.shuffle(d1);
             System.out.println("Take both cards into your deck.");
         }else
@@ -59,7 +59,7 @@ public class War
             Collections.shuffle(d2);
             System.out.println("Lose both cards to opponent.");
         }else{
-            //Do nothing
+            //Code for War!
         }
         
         //d1.remove(c1); //Throws exception when fails.
