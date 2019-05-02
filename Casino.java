@@ -98,8 +98,7 @@ public class Casino
             System.out.println("! !CHOICE ERROR! !\n! !PASSED RANGE CHECK! !");
         }
         
-        int reme = players;
-        for (int i = 0; i < reme; i++){
+        for (int i = 0; i < guests.size(); i++){
             if (guests.get(i).getMoney() < 0){
                 System.out.println(guests.get(i).getName() + " was kicked out from the Casino!\n" + 
                                    "They are now $" + guests.get(i).getMoney() + " in debt.");
