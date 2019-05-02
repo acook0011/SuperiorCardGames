@@ -25,8 +25,8 @@ public class War
     }
 
     public void play(List<Card> d1, List<Card> d2){
-        String card1 = d1.get(0).toString();
-        String card2 = d2.get(0).toString();
+        Card card1 = d1.get(0);
+        Card card2 = d2.get(0);
 
         System.out.println("You play " + card1 + ".");
         System.out.println("Your opponent plays " + card2 + ".");
@@ -37,7 +37,7 @@ public class War
         
     }
 
-    public void evaluate(String c1, String c2, List<Card> d1, List<Card> d2){
+    public void evaluate(Card c1, Card c2, List<Card> d1, List<Card> d2){
         //int rank1 = getRank(c1);
         //int rank2 = getRank(c2);
         int rank1 = d1.get(0).getRank();
@@ -47,7 +47,7 @@ public class War
             System.out.println("Your card triumphs!");
             //d1.add(c1);
             d1.add(c2); //Adds to player's deck.
-            d2.remove(c2); //Removes from opponent's deck.
+            d2.remove(0); //Removes from opponent's deck.
             Collections.shuffle(d1);
             System.out.println("Take both cards into your deck.");
         }else
@@ -68,6 +68,7 @@ public class War
         System.out.println("Your deck: " + d1.size());
     }
 
+    //This method was removed since one already exists.
     /*
     public int getRank(String card){
         int rank = 0;
