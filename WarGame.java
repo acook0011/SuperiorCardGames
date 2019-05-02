@@ -1,6 +1,7 @@
 
 /**
  * Player for War!.
+ * Requires War.
  *
  * @Makai Romero
  * @1.0
@@ -26,7 +27,7 @@ public class WarGame
         System.out.println("Here is your deck: \n" + Deck1);
         System.out.println("Your deck: " + Deck1.size());
         
-        System.out.println("Ready for War!?");
+        System.out.println("Ready for War!? (Type yes to play)");
         if (reader.nextLine().toLowerCase().equals("yes")){
             //Iterator<Card> iterator = Deck1.iterator();
             war.play(Deck1, Deck2);
