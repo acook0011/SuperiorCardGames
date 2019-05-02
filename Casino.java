@@ -114,6 +114,12 @@ public class Casino
             }
         }
         
+        if (guests.size() <= 0){ // Ends Program
+            System.out.println("Come gamble your life away with us next time!\n" +
+                               "Just make sure you have money.");
+            wantsToPlay = false;
+        }
+        
         if (wantsToPlay){
             System.out.println("\nDo you want to do something else? [Y/N]");
             if (choice()){ // Recalls menu to make another choice
