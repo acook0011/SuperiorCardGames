@@ -11,7 +11,7 @@ public class Blackjack
 {
     private static Deck deck;
     private static ArrayList<ArrayList<Card>> p;
-    private static ArrayList<Player> plyr = Casino.playing;
+    private static ArrayList<Player> plyr;
     private static int total;
     
     // 
@@ -21,6 +21,7 @@ public class Blackjack
     private static boolean[] natural;
     
     public static void Jack(){
+        plyr = Casino.playing;
         deck = new Deck();
         p = new ArrayList<ArrayList<Card>>(); // p.get(0) = Dealer
         Scanner reader = new Scanner(System.in);
@@ -83,15 +84,17 @@ public class Blackjack
             if (bust[x]){
                 System.out.println(plyr.get(x).getName() + " busted at " + score[x]);
                 plyr.get(x).loss(bet[x]);
-            } else if (natural[x]){
-                System.out.println(plyr.get(x).getName() + " had a natural " + score[x]);
+                System.out.println(plyr.get(x).getName() + " " + plyr.get(x).getMoney());
+            } else if (natural[x] || score[x] == 21){
+                System.out.println(plyr.get(x).getName() + " had " + score[x] + "!");
                 plyr.get(x).earn(bet[x] + bet[x] * .5);
+                System.out.println(plyr.get(x).getName() + " " + plyr.get(x).getMoney());
             } else{
                 System.out.println(plyr.get(x).getName() + " scored " + score[x]);
-                if (score[x] > score[total-1]){
-                    plyr.get(x).earn(bet[x]);
+                if (bust[total-1] || score[x] > score[total-1]){
+                    plyr.get(x).earn(bet[x]); // Earns money bet
                 } else{
-                    plyr.get(x).loss(bet[x]);
+                    plyr.get(x).loss(bet[x]); // Loses money bet
                 }
             }
         }
