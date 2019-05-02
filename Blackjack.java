@@ -23,7 +23,7 @@ public class Blackjack
     public static void Jack(){
         plyr = Casino.playing;
         deck = new Deck();
-        p = new ArrayList<ArrayList<Card>>(); // p.get(0) = Dealer
+        p = new ArrayList<ArrayList<Card>>(); // p.get(total-1) = Dealer
         Scanner reader = new Scanner(System.in);
         plyr.add(new Player(0, "The Dealer"));
         total = plyr.size();

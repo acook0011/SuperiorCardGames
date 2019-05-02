@@ -100,7 +100,7 @@ public class Casino
         }
         
         if (wantsToPlay){
-            System.out.println("\nDo you want to do something else? [Y/N]"); reader.nextLine();
+            System.out.println("\nDo you want to do something else? [Y/N]");
             if (choice()){ // Recalls menu to make another choice
                 int rem = playing.size()-1;
                 for (int i = rem; i >= 0; i--){ // Clears 'Playing' ArrayList
