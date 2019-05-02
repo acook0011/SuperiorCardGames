@@ -15,21 +15,21 @@ public class Player
     public Player(){
         player = 0;
         name = "Player 0";
-        money = 1000;
+        money = 10000;
         ingame = false;
     }
     
     public Player(int num){
         player = num;
         name = "Player " + Integer.toString(num);
-        money = 1000;
+        money = 10000;
         ingame = false;
     }
     
     public Player(int num, String nm){
         player = num;
         name = nm;
-        money = 1000;
+        money = 10000;
         ingame = false;
     }
     
