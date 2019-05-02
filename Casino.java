@@ -87,7 +87,7 @@ public class Casino
             }
             
         } else if (choice == 4){ // Play War
-            
+            WarGame.playWar();
         
         } else if (choice == 5){ // Check Scores
             menuScore();
