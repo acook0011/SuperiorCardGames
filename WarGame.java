@@ -1,6 +1,7 @@
 
 /**
  * Player for War!.
+ * Requires War.
  *
  * @Makai Romero
  * @1.0
