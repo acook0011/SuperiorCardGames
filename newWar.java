@@ -18,7 +18,7 @@ public class newWar
         }
         boolean gameOn=true;
         System.out.println("How much do you bet?");
-        double wager = me.nextInt();
+        double wager = me.nextDouble();
         while(gameOn){
             Card h = one.remove(0);
             Card c = two.remove(0);
