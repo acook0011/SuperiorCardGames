@@ -87,8 +87,8 @@ public class Casino
             }
             
         } else if (choice == 4){ // Play War
-            WarGame.playWar();
-        
+            chooseSingle();
+            playing.get(0).earn(newWar.newWar());
         } else if (choice == 5){ // Check Scores
             menuScore();
         } else if (choice == 6){ // Quit Game
