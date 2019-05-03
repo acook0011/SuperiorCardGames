@@ -21,7 +21,16 @@ public class Casino
         guests = new ArrayList<Player>();
         
         System.out.println("How many players will be in the casino tonight?");
-        players = reader.nextInt();
+        boolean valid = false;
+        while (!valid){
+            players = reader.nextInt();
+            if (players <= 0){
+                System.out.println("Please enter an existing amount of people.");
+            } else {
+                valid = true;
+            }
+        }
+
         if (players == 1){ // Single Person
             System.out.println("Do you want to give your name? [Y/N]");
         } else { // Multiple People
