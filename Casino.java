@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.text.*;
 /**
  * Eventually, the collective player of all the games.
  *
@@ -10,7 +10,7 @@ import java.util.*;
 public class Casino
 {
     public static Scanner reader = new Scanner(System.in);
-
+    public static NumberFormat f = NumberFormat.getCurrencyInstance();
     public static ArrayList<Player> guests;   // All registered players
     public static ArrayList<Player> playing;  // Players who will play next game.
     public static int players;                // Count of players
@@ -100,8 +100,9 @@ public class Casino
         
         for (int i = 0; i < guests.size(); i++){
             if (guests.get(i).getMoney() < 0){
+                double debt = guests.get(i).getMoney() * -1;
                 System.out.println(guests.get(i).getName() + " was kicked out from the Casino!\n" + 
-                                   "They are now $" + guests.get(i).getMoney() + " in debt.");
+                                   "They are now " + f.format(debt) + " in debt.");
                 guests.remove(i);
                 i--;
                 players--;
@@ -121,7 +122,7 @@ public class Casino
         }
         
         if (wantsToPlay){
-            System.out.println("\nDo you want to do something else? [Y/N]");
+            System.out.println("\nDo you want to do something else? [Y/N]"); reader.nextLine();
             if (choice()){ // Recalls menu to make another choice
                 int rem = playing.size()-1;
                 for (int i = rem; i >= 0; i--){ // Clears 'Playing' ArrayList
@@ -138,7 +139,7 @@ public class Casino
     public static void menuScore(){
         System.out.println("~~~Current Scores~~~");
         for (int i = 0; i < players; i++){
-            System.out.println(guests.get(i).getName() + ": $" + guests.get(i).getMoney());
+            System.out.println(guests.get(i).getName() + ": " + f.format(guests.get(i).getMoney()));
         }
     }
     
